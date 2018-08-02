@@ -89,6 +89,24 @@ App.filter('UserFilter',function(){
     };
 });
 
+App.filter('UserInIDArrayFilter',function(){
+    return function(users,array){
+        if(users===undefined)
+            return;
+        var filtered=[];
+        
+        for(var i=0;i<array.length;i++){
+            for(var j=0;j<users.length;j++){
+                if(users[j].id===array[i]){
+                    filtered[filtered.length]=users[j];
+                    break;
+                }
+            }
+        }
+        return filtered;
+    };
+});
+
 App.filter('CourseFilter',function(){
     return function(courses,flag,id){
         if(courses===undefined)

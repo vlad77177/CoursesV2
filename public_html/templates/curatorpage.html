@@ -1,21 +1,24 @@
-<div>
+<div ng-controller="PageController">
     <div id="admin-panel-top" class="page-top-block flex row center cross-center">
         <div>Панель куратора</div>
     </div>
     
     <div class="menu-block flex row space-between">
-        <div class="flex column center cross-center">
-            <div>Пользователи</div>
+        <div class="flex column center cross-center hover" ng-click="openPage('Users')">
+            <div class="hover">Пользователи</div>
         </div>
-        <div class="flex column center cross-center">
-            <div>Курсы</div>
+        <div class="flex column center cross-center hover" ng-click="openPage('Courses')">
+            <div class="hover">Курсы</div>
         </div>
-        <div class="flex column center cross-center">
-            <div>Тесты</div>
+        <div class="flex column center cross-center hover" ng-click="openPage('Texts')">
+            <div class="hover">Тексты</div>
+        </div>
+        <div class="flex column center cross-center hover"  ng-click="openPage('Tests')">
+            <div class="hover">Тесты</div>
         </div>
     </div>
     
-    <div class="flex row" ng-controller="CuratorUserPageController">
+    <div class="flex row" ng-controller="CuratorUserPageController" ng-show="openedPage==='Users'">
         <div id="list-of-users" class="flex column">
             
             <div id="create-user-form" class="grey-border-radius">
@@ -43,13 +46,13 @@
                         </td>
                     </tr>
                 </table>
-                <button class="button" ng-click="createNewUser()">Добавить пользователя</button>
+                <button ng-click="createNewUser()">Добавить пользователя</button>
             </div>
 
             <div ng-show="(users | UserFilter:'administrator').length>0">
                 <div>Администраторы</div>
                 <div>
-                    <table class="list-users-table">
+                    <table class="list-table">
                         <tr>
                             <td>№</td>
                             <td>ID</td>
@@ -67,7 +70,7 @@
             <div ng-show="(users | UserFilter:'curator').length>0">
                 <div>Кураторы</div>
                 <div>
-                    <table class="list-users-table">
+                    <table class="list-table">
                         <tr>
                             <td>№</td>
                             <td>ID</td>
@@ -85,7 +88,7 @@
             <div ng-show="(users | UserFilter:'teacher').length>0">
                 <div>Преподаватели</div>
                 <div>
-                    <table class="list-users-table">
+                    <table class="list-table">
                         <tr>
                             <td>№</td>
                             <td>ID</td>
@@ -103,7 +106,7 @@
             <div ng-show="(users | UserFilter:'student').length>0">
                 <div>Студенты</div>
                 <div>
-                    <table class="list-users-table">
+                    <table class="list-table">
                         <tr>
                             <td>№</td>
                             <td>ID</td>
@@ -143,9 +146,81 @@
                         <td><input ng-model="currentUser.repeat" type="password"></td>
                     </tr>
                 </table>
-                <button class="button" ng-click="saveUserData()">Сохранить</button>
+                <button ng-click="saveUserData()">Сохранить</button>
+            </div>
+            
+            <curator-extended ng-show="currentUser.is_curator==true"></curator-extended>
+            <teacher-extended ng-show="currentUser.is_teacher==true"></teacher-extended>
+
+        </div>
+    </div>
+    
+    <div ng-show="openedPage==='Courses'" ng-controller="AdminCoursesPageController" class="flex row">
+        
+        <div id="list-of-courses" ng-show="courses.length>0">
+            <div>Курсы</div>
+            <div>
+                <table class="list-table">
+                    <tr>
+                        <td>№</td>
+                        <td>ID</td>
+                        <td>Название</td>
+                    </tr>
+                    <tr ng-repeat="course in courses" class="hover" ng-click="getCourseInfo(course.id,true)">
+                        <td ng-bind="$index+1"></td>
+                        <td ng-bind="course.id"></td>
+                        <td ng-bind="course.name"></td>
+                    </tr>
+                </table>
             </div>
         </div>
+        
+        <course-extended></course-extended>
+        
+    </div>
+    
+    <div ng-show="openedPage==='Texts'" ng-controller="AdminTextPageController" class="flex row">
+        <div class="left-sidebar">
+            <div class="courses-left-sidebar" ng-repeat="course in courses">
+                <div class="courses-left-sidebar-name hover" ng-bind="course.name" ng-click="getCourseInfo(course.id,true)"></div>
+                <div class="lessons-left-sidebar hover" ng-repeat="lesson in course.lessons" ng-bind="lesson.name" ng-click="getLessonInfo(course.id,lesson.id)"></div>
+            </div>
+        </div>
+        
+        <div id="courses-text-block" class="flex row">
+            
+            <div ng-show="textOpen==='Course'">
+                <div ng-bind-html="currentCourse.data.description.text"></div>
+                <button ng-show="editableTextArea.value===false" ng-click="setEditableArea(currentCourse.data.description.text,'course',editableTextArea)">Редактировать</button>
+                <textarea ng-show="editableTextArea.value===true" id="input-course" name="input-course"></textarea>
+                <button ng-show="editableTextArea.value===true" ng-click="saveChanges(currentCourse.data.description.id_text,currentCourse.data.description.text,'course',editableTextArea);getCourseInfo(currentCourse.data.description.id_course,true)">Сохранить</button>
+            </div>
+            
+            <div ng-show="textOpen==='Lesson'">
+                <div ng-bind-html="currentLesson.data.text"></div>
+                <button ng-show="editableTextArea.value===false" ng-click="setEditableArea(currentLesson.data.text,'lesson',editableTextArea)">Редактировать</button>
+                <textarea ng-show="editableTextArea.value===true" id="input-lesson" name="input-lesson"></textarea>
+                <button ng-show="editableTextArea.value===true" ng-click="saveChanges(currentLesson.data.id_text,currentLesson.data.text,'lesson',editableTextArea);getLessonInfo(currentCourse.data.description.id_course,currentLesson.id)">Сохранить</button>
+            </div>
+
+        </div>
+    </div>
+    
+    <div ng-show="openedPage==='Tests'" ng-controller="AdminTestPageController" class="flex row">
+        
+         <div class="left-sidebar">
+            <div class="test-left-sidebar" ng-repeat="test in tests">
+                <div class="tests-left-sidebar-name hover" ng-bind="test.name" ng-click="getTestInfo(test.id)"></div>
+                <div class="questions-left-sidebar hover" ng-repeat="question in test.questions" ng-bind="question.name" ng-click="getQuestionInfo(question,test.id)"></div>
+                <div><button class="button" ng-click="addQuestion(test.id)">Добавить вопрос</button></div>
+            </div>
+             <div><button class="button" ng-click="addTest()">Добавить тест</button></div>
+        </div>
+        
+        <test-extended></test-extended>
+        <!--
+        <question-extended></question-extended>-->
+        
     </div>
     
 </div>

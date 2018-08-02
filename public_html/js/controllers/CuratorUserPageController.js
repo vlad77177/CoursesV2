@@ -1,6 +1,6 @@
-App.controller('CuratorUserPageController',['$scope','$http','$filter','LoggedUserService','UsersService',
-    function CuratorUserPageController($scope, $http,$filter,LoggedUser,Users){
-        /*
+App.controller('CuratorUserPageController',['$scope','$http','$filter','LoggedUserService','UsersService','CoursesService',
+    function CuratorUserPageController($scope, $http,$filter,LoggedUser,Users,Courses){
+        
         $scope.selectedUserID=undefined;
         
         $scope.currentUser={
@@ -15,6 +15,20 @@ App.controller('CuratorUserPageController',['$scope','$http','$filter','LoggedUs
             is_student:false
         };
         
+        $scope.unlinkStudents={
+            value:undefined,
+            students:[]
+        };
+        $scope.unlinkTeachers={
+            value:undefined,
+            teachers:[]
+        };
+        
+        $scope.unlinkCourses={
+            value:undefined,
+            courses:[]
+        };
+        
         $scope.newUser={
             login:undefined,
             email:undefined,
@@ -22,7 +36,6 @@ App.controller('CuratorUserPageController',['$scope','$http','$filter','LoggedUs
             repeat:undefined,
             user_type:1,
             type_variants:[
-                {id:1,name:'Куратор'},
                 {id:2,name:'Преподаватель'},
                 {id:3,name:'Студент'}
             ]
@@ -34,14 +47,34 @@ App.controller('CuratorUserPageController',['$scope','$http','$filter','LoggedUs
             var user=$filter('UserFilter')($scope.users,'id',id);
             $scope.currentUser.login=user[0].login;
             $scope.currentUser.email=user[0].email;
-            if(user[0].admin===true)
+            $scope.currentUser.cur_students=user[0]['cur_students'];
+            $scope.currentUser.cur_teachers=user[0]['cur_teachers'];
+            $scope.currentUser.teach_courses=user[0]['teach_courses'];
+            $scope.currentUser.teach_students=user[0]['teach_students'];
+            if(user[0].administrator==true)
                 $scope.currentUser.is_admin=true;
-            if(user[0].curator===true)
+            else
+                $scope.currentUser.is_admin=false;
+            if(user[0].curator==true){
                 $scope.currentUser.is_curator=true;
-            if(user[0].teacher===true)
+                //фильтрую сначала неподписанных, потом ищу среди них студентов
+                $scope.unlinkStudents.students=$filter('UserFilter')(($filter('UserFilter')($scope.users,'unids',$scope.currentUser.cur_students)),'student');
+                //по аналогии
+                $scope.unlinkTeachers.teachers=$filter('UserFilter')(($filter('UserFilter')($scope.users,'unids',$scope.currentUser.cur_teachers)),'teacher');
+            }
+            else
+                $scope.currentUser.is_curator=false;
+            if(user[0].teacher==true){
                 $scope.currentUser.is_teacher=true;
-            if(user[0].admin===true)
+                $scope.unlinkCourses.courses=$filter('CourseFilter')($scope.courses,'unids',$scope.currentUser.teach_courses);
+            }
+            else
+                $scope.currentUser.is_teacher=false;
+            if(user[0].student==true){
                 $scope.currentUser.is_student=true;
+            }
+            else
+                $scope.currentUser.is_student=false;
         };
         
         $scope.saveUserData=function(){
@@ -81,7 +114,7 @@ App.controller('CuratorUserPageController',['$scope','$http','$filter','LoggedUs
             else{
                 alert('Введите все данные!');
             }
-        };*/
+        };
     }]
 );
 

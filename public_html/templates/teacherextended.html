@@ -31,13 +31,11 @@
                     <td>№</td>
                     <td>ID</td>
                     <td>Логин</td>
-                    <td></td>
                 </tr>
-                <tr ng-repeat="student in (users | UserFilter:'ids':currentUser.cur_students)" class="hover">
+                <tr ng-repeat="student in (users | UserFilter:'ids':currentUser.teach_students)" class="hover">
                     <td ng-bind="$index+1" ng-click="selectUser(student.id)"></td>
                     <td ng-bind="student.id" ng-click="selectUser(student.id)"></td>
                     <td ng-bind="student.login" ng-click="selectUser(student.id)"></td>
-                    <td><button class="button" ng-click="unlinkStudentCourse(student.id,currentUser.id)">Отписать</button></td>
                 </tr>
             </table>
         </div>

@@ -14,13 +14,13 @@ App.controller('AppController',['$scope','$http','LoggedUserService','UsersServi
             $scope.loggedUser.uteaher=u.uteacher;
             $scope.loggedUser.ustudent=u.ustudent;
             $scope.loggedUser.signed=u.usersigned;
-            Users.get($scope.loggedUser.login,$scope.loggedUser.password).then(function(us){
+            Users.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(us){
                 $scope.users=us;
             });
-            Courses.get($scope.loggedUser.login,$scope.loggedUser.password).then(function(c){
+            Courses.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(c){
                 $scope.courses=c;
             });
-            Tests.get($scope.loggedUser.login,$scope.loggedUser.password).then(function(t){
+            Tests.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(t){
                 $scope.tests=t;
             });
         });

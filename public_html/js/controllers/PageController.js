@@ -1,4 +1,4 @@
-App.controller('AdminPageController',['$scope','$http','LoggedUserService','UsersService',
+App.controller('PageController',['$scope','$http','LoggedUserService','UsersService',
     function AdminPageController($scope, $http,LoggedUser,Users){
         $scope.openedPage='Users';
         

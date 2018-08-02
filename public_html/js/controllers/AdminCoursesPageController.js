@@ -21,18 +21,24 @@ App.controller('AdminCoursesPageController',['$scope','$http','$filter','LoggedU
                 .then(function(data){
                     $scope.currentCourse.data=data.data;
                     $scope.currentCourse.curator=data.data.curator;
+                    console.log($scope.currentCourse);
                     
-                    if($scope.currentCourse.data.teachers!==undefined){
-                        $scope.unlinkTeachersCourse.teachers=$filter('UserFilter')(($filter('UserFilter')($scope.users,'unids',$scope.currentCourse.data.teachers)),'teacher');
+                    var cur=$filter('UserFilter')($scope.users,'id',$scope.currentCourse.curator);//куратор, который привязан к курсу
+                    
+                    var u=$filter('UserInIDArrayFilter')($scope.users,cur[0].cur_teachers);    //список пользователей, прин куратору                
+                    if($scope.currentCourse.data.teachers!==undefined){                        
+                        $scope.unlinkTeachersCourse.teachers=$filter('UserFilter')(($filter('UserFilter')(u,'unids',$scope.currentCourse.data.teachers)),'teacher');
                     }
                     else{
-                        $scope.unlinkTeachersCourse.teachers=$filter('UserFilter')($scope.users,'teacher');
+                        $scope.unlinkTeachersCourse.teachers=$filter('UserFilter')(u,'teacher');
                     }
+                    
+                    var stud=$filter('UserInIDArrayFilter')($scope.users,cur[0].cur_students); //список студентов                    
                     if($scope.currentCourse.data.users!==undefined){
-                        $scope.unlinkStudentsCourse.students=$filter('UserFilter')(($filter('UserFilter')($scope.users,'unids',$scope.currentCourse.data.users)),'student');
+                        $scope.unlinkStudentsCourse.students=$filter('UserFilter')(($filter('UserFilter')(stud,'unids',$scope.currentCourse.data.users)),'student');
                     }
                     else{
-                        $scope.unlinkStudentsCourse.students=$filter('UserFilter')($scope.users,'student');
+                        $scope.unlinkStudentsCourse.students=$filter('UserFilter')(stud,'student');
                     }
             });
         };
