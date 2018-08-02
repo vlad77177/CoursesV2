@@ -14,14 +14,10 @@
                     <td ng-bind="$index+1"></td>
                     <td ng-bind="course.id"></td>
                     <td ng-bind="course.name"></td>
-                    <td><button class="button" ng-click="unlinkCourse(course.id,currentUser.id)">Отписать</button></td>
                 </tr>
             </table>
         </div>
     </div>
-    
-    <select ng-show="unlinkCourses.courses.length>0" ng-model="unlinkCourses.value" ng-options="course.id as course.name for course in unlinkCourses.courses"></select>
-    <button class="button" ng-show="unlinkCourses.value!==undefined && unlinkCourses.courses.length>0" ng-click="linkCourse()">Добавить курс</button>
 
     <div>
         <div>Закрепленные cтуденты:</div>
@@ -40,8 +36,5 @@
             </table>
         </div>
     </div>
-    <!--
-    <select ng-show="unlinkStudents.students.length>0" ng-model="unlinkStudents.value" ng-options="student.id as student.login for student in unlinkStudents.students"></select>
-    <button ng-show="unlinkStudents.value!==undefined && unlinkStudents.students.length>0" ng-click="linkStudent()">Добавить</button>
-    -->
+
 </div>

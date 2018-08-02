@@ -67,10 +67,44 @@ App.controller('AdminUserPageController',['$scope','$http','$filter','LoggedUser
                 $scope.currentUser.is_admin=false;
             if(user[0].curator==true){
                 $scope.currentUser.is_curator=true;
-                //фильтрую сначала неподписанных, потом ищу среди них студентов
-                $scope.unlinkStudents.students=$filter('UserFilter')(($filter('UserFilter')($scope.users,'unids',$scope.currentUser.cur_students)),'student');
+                
+                //фильтрую сначала неподписанных, потом ищу среди них студентов               
+                var stud=new Array();
+                var curators=$filter('UserFilter')($scope.users,'curator');
+                /*
+                 * Надо выбрать только тех студентов, которые не принадлежат другим кураторам
+                 */
+                var used_students_ids=new Array();
+                for(var i=0;i<curators.length;i++){
+                    used_students_ids=used_students_ids.concat(curators[i].cur_students);
+                }
+                stud=$filter('UserFilter')($scope.users,'unids',used_students_ids);
+                
+                if($scope.currentUser.cur_students!==undefined){
+                    $scope.unlinkStudents.students=$filter('UserFilter')(($filter('UserFilter')(stud,'unids',$scope.currentUser.cur_students)),'student');
+                }
+                else{
+                    $scope.unlinkStudents.students=$filter('UserFilter')(stud,'student');
+                }
+                
                 //по аналогии
-                $scope.unlinkTeachers.teachers=$filter('UserFilter')(($filter('UserFilter')($scope.users,'unids',$scope.currentUser.cur_teachers)),'teacher');
+                var teach=new Array();
+                var curators=$filter('UserFilter')($scope.users,'curator');
+                /*
+                 * Надо выбрать только тех учителей, которые не принадлежат другим кураторам
+                 */
+                var used_teachers_ids=new Array();
+                for(var i=0;i<curators.length;i++){
+                    used_teachers_ids=used_teachers_ids.concat(curators[i].cur_teachers);
+                }
+                teach=$filter('UserFilter')($scope.users,'unids',used_teachers_ids);
+                
+                if($scope.currentUser.cur_teachers!==undefined){
+                    $scope.unlinkTeachers.teachers=$filter('UserFilter')(($filter('UserFilter')(teach,'unids',$scope.currentUser.cur_teachers)),'teacher');
+                }
+                else{
+                    $scope.unlinkteachers.teachers=$filter('UserFilter')(teach,'teacher');
+                }
             }
             else
                 $scope.currentUser.is_curator=false;
