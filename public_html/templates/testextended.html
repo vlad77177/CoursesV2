@@ -4,12 +4,12 @@
             
     <table>
         <tr>
-            <td><div id="test-name-block" ng-bind="currentTest.data.name"></div></td>
+            <td><div ng-show="editTestName===false" id="test-name-block" ng-bind="currentTest.data.name"></div></td>
             <td>
-                <input ng-model="currentTest.data.name">
-                <button class="button1">Изменить название</button>
-                <button class="button1">Сохранить</button>
-                <button class="button1">Удалить тест</button>
+                <input ng-show="editTestName===true" ng-model="currentTest.data.name">
+                <button ng-show="editTestName===false" class="button" ng-click="editTestName=!editTestName;">Изменить название</button>
+                <button ng-show="editTestName===true" class="button" ng-click="changeTestName();editTestName=!editTestName;">Сохранить</button>
+                <button class="button" ng-click="deleteTest();">Удалить тест</button>
             </td>
         </tr>
     </table>
@@ -32,17 +32,25 @@
         <tr><td>Порог прохождения </td><td><input type="text" ng-model="currentTest.data.threshold"></td><td> вопросов</td></tr>
         <tr><td>Время на прохождение </td><td><input type="text" ng-model="currentTest.data.minute_on_pass"></td><td> минут</td></tr>
     </table>
-    <button class="button1 button-fixed-width" ng-click="changeTestSettings()">Сохранить настройки</button>
+    <button class="button button-fixed-width" ng-click="changeTestSettings()">Сохранить настройки</button>
     
-    <div class="flex column">
+    <div ng-show="currentQuestion.data!==undefined" class="flex column">
         <div class="question-text" ng-bind-html="currentQuestion.data.text"></div>
-        <button>Удалить вопрос</button>
-        <button>Редактировать</button>
+        <div class="flex row right">
+            <button class="button" ng-show="editableTextAreaQ.value===false" ng-click="setEditableArea(currentQuestion.data.text,'question',editableTextAreaQ)">Редактировать</button>
+            <button class="button" ng-click="deleteQuestion(currentQuestion.data);">Удалить вопрос</button>
+        </div>
+        <textarea ng-show="editableTextAreaQ.value===true" id="input-question" name="input-question"></textarea>
+        <button class="button" ng-show="editableTextAreaQ.value===true" ng-click="saveChanges(currentQuestion.data.id_text,currentQuestion.data.text,'question',editableTextAreaQ);reloadTest();">Сохранить</button>        
         <div ng-repeat="variant in currentQuestion.data.variants">
             <div class="variant-text" ng-class="{true:'variant-text-right',false:''}[variant.isright==='1']" ng-bind-html="variant.text" ng-click="changeIsRight(variant.id)"></div>
-            <button>Удалить вариант</button>
-            <button>Редактировать</button>
+            <div class="flex row right">
+                <button class="button" ng-show="editableTextAreaV.value===false" ng-click="saveVariantTmpData(variant.id_text,variant.text);setEditableArea(savedVariant.text,'variant',editableTextAreaV)">Редактировать</button>            
+                <button class="button" ng-click="deleteVariant(variant.id);reloadTest();">Удалить вариант</button>
+            </div>
         </div>
-        <button>Добавить вариант</button>
+        <textarea ng-show="editableTextAreaV.value===true" id="input-variant" name="input-variant"></textarea>
+        <button class="button" ng-show="editableTextAreaV.value===true" ng-click="saveChanges(savedVariant.id_text,savedVariant.text,'variant',editableTextAreaV);reloadTest();">Сохранить</button>
+        <button class="button" ng-click="addVariant();reloadTest();">Добавить вариант</button>
     </div>
 </div>

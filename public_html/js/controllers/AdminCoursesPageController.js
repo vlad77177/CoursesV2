@@ -19,7 +19,6 @@ App.controller('AdminCoursesPageController',['$scope','$http','$filter','LoggedU
             };
             $http({method:'POST',data:data,url:'php/getcoursedescription.php'})
                 .then(function(data){
-                    console.log(data.data);
                     $scope.currentCourse.data=data.data;
                     $scope.currentCourse.curator=data.data.curator;
                     
@@ -49,8 +48,6 @@ App.controller('AdminCoursesPageController',['$scope','$http','$filter','LoggedU
                 course_id:$scope.currentCourse.data.description.id_course,
                 mode:3
             };
-            console.log(data);
-            console.log($scope.currentCourse);
             $http({method:'POST',data:data,url:'php/linkuser.php'})
                 .then(function(){
                     $scope.getCourseInfo($scope.currentCourse.data.description.id_course);
@@ -69,7 +66,6 @@ App.controller('AdminCoursesPageController',['$scope','$http','$filter','LoggedU
                 course_id:$scope.currentCourse.data.description.id_course,
                 mode:4
             };
-            console.log(data);
             $http({method:'POST',data:data,url:'php/linkuser.php'})
                 .then(function(){
                     $scope.getCourseInfo($scope.currentCourse.data.description.id_course);
@@ -106,7 +102,6 @@ App.controller('AdminCoursesPageController',['$scope','$http','$filter','LoggedU
                 course_id:cid,
                 mode:4
             };
-            console.log(data);
             $http({method:'POST',data:data,url:'php/unlinkuser.php'})
                 .then(function(){
                     $scope.getCourseInfo($scope.currentCourse.data.description.id_course);

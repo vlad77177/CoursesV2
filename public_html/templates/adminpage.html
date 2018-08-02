@@ -212,9 +212,9 @@
             <div class="test-left-sidebar" ng-repeat="test in tests">
                 <div class="tests-left-sidebar-name hover" ng-bind="test.name" ng-click="getTestInfo(test.id)"></div>
                 <div class="questions-left-sidebar hover" ng-repeat="question in test.questions" ng-bind="question.name" ng-click="getQuestionInfo(question,test.id)"></div>
-                <div><button ng-click="addQuestion(test.id)">Добавить вопрос</button></div>
+                <div><button class="button" ng-click="addQuestion(test.id)">Добавить вопрос</button></div>
             </div>
-             <div><button ng-click="addTest()">Добавить тест</button></div>
+             <div><button class="button" ng-click="addTest()">Добавить тест</button></div>
         </div>
         
         <test-extended></test-extended>

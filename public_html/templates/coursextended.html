@@ -31,12 +31,12 @@
                 <td ng-bind="$index+1"></td>
                 <td ng-bind="teacher.id"></td>
                 <td ng-bind="teacher.login"></td>
-                <td><button ng-click="unlinkTeacher(teacher.id,currentCourse.data.description.id_course)">Отписать</button></td>
+                <td><button class="button" ng-click="unlinkTeacher(teacher.id,currentCourse.data.description.id_course)">Отписать</button></td>
             </tr>
         </table>
         
         <select ng-show="unlinkTeachersCourse.teachers.length>0" ng-model="unlinkTeachersCourse.value" ng-options="teacher.id as teacher.login for teacher in unlinkTeachersCourse.teachers"></select>
-        <button ng-show="unlinkTeachersCourse.value!==undefined && unlinkTeachersCourse.teachers.length>0" ng-click="linkTeacher()">Добавить</button>
+        <button class="button" ng-show="unlinkTeachersCourse.value!==undefined && unlinkTeachersCourse.teachers.length>0" ng-click="linkTeacher()">Добавить</button>
 
         <div>Проходят обучение:</div>
 
@@ -51,12 +51,12 @@
                 <td ng-bind="$index+1"></td>
                 <td ng-bind="student.id"></td>
                 <td ng-bind="student.login"></td>
-                <td><button ng-click="unlinkStudent(student.id,currentCourse.data.description.id_course)">Отписать</button></td>
+                <td><button class="button" ng-click="unlinkStudent(student.id,currentCourse.data.description.id_course)">Отписать</button></td>
             </tr>
         </table>
         
         <select ng-show="unlinkStudentsCourse.students.length>0" ng-model="unlinkStudentsCourse.value" ng-options="student.id as student.login for student in unlinkStudentsCourse.students"></select>
-        <button ng-show="unlinkStudentsCourse.value!==undefined && unlinkStudentsCourse.students.length>0" ng-click="linkStudent()">Добавить</button>
+        <button class="button" ng-show="unlinkStudentsCourse.value!==undefined && unlinkStudentsCourse.students.length>0" ng-click="linkStudent()">Добавить</button>
     
     </div>
     

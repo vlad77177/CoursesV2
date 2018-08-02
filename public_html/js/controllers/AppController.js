@@ -34,7 +34,6 @@ App.controller('AppController',['$scope','$http','LoggedUserService','UsersServi
         $scope.loginUser=function(){
             $http({method: 'POST', data:$scope.loginFormModel, url:'php/login.php'})
                     .then(function(data){
-                        console.log(data);
                         LoggedUser.reset().then(function(u){
                             $scope.loggedUser=u.data;
                             $scope.loggedUser.ulog=u.ulog;
@@ -76,7 +75,6 @@ App.controller('AppController',['$scope','$http','LoggedUserService','UsersServi
                 id:id_text,
                 text:text
             };
-
             $http({method:'POST',data:data,url:'php/updatetext.php'})
                     .then(function(){
                         CKEDITOR.instances['input-'+areaname+''].destroy();
