@@ -1,0 +1,76 @@
+<div id="course-extended-block" ng-show="currentCourse.data!==undefined">
+    <div ng-bind-html="currentCourse.data.description.text"></div>
+    <hr>
+    
+    <div class="menu-block flex row space-between">
+        <div class="flex column center cross-center hover" ng-click="openCourseExPage('Users')">
+            <div class="hover">Пользователи</div>
+        </div>
+        <div class="flex column center cross-center hover" ng-click="openCourseExPage('Lessons')">
+            <div class="hover">Уроки</div>
+        </div>
+    </div>
+    
+    <div ng-show="openedCourseExPage==='Users'">
+        
+        <div>
+            <div>Куратор:</div>
+            <select ng-model="currentCourse.curator" ng-options="curator.id as curator.login for curator in users | UserFilter:'curator'"></select>
+        </div>
+
+        <div>Преподаватели:</div>
+
+        <table class="list-table">
+            <tr>
+                <td>№</td>
+                <td>ID</td>
+                <td>Логин</td>
+                <td></td>
+            </tr>
+            <tr ng-repeat="teacher in users | UserFilter:'ids':currentCourse.data.teachers" ng-click="selectUser(teacher.id)" class="hover">
+                <td ng-bind="$index+1"></td>
+                <td ng-bind="teacher.id"></td>
+                <td ng-bind="teacher.login"></td>
+                <td><button ng-click="unlinkTeacher(teacher.id,currentCourse.data.description.id_course)">Отписать</button></td>
+            </tr>
+        </table>
+        
+        <select ng-show="unlinkTeachersCourse.teachers.length>0" ng-model="unlinkTeachersCourse.value" ng-options="teacher.id as teacher.login for teacher in unlinkTeachersCourse.teachers"></select>
+        <button ng-show="unlinkTeachersCourse.value!==undefined && unlinkTeachersCourse.teachers.length>0" ng-click="linkTeacher()">Добавить</button>
+
+        <div>Проходят обучение:</div>
+
+        <table class="list-table">
+            <tr>
+                <td>№</td>
+                <td>ID</td>
+                <td>Логин</td>
+                <td></td>
+            </tr>
+            <tr ng-repeat="student in users | UserFilter:'ids':currentCourse.data.users" ng-click="selectUser(student.id)" class="hover">
+                <td ng-bind="$index+1"></td>
+                <td ng-bind="student.id"></td>
+                <td ng-bind="student.login"></td>
+                <td><button ng-click="unlinkStudent(student.id,currentCourse.data.description.id_course)">Отписать</button></td>
+            </tr>
+        </table>
+        
+        <select ng-show="unlinkStudentsCourse.students.length>0" ng-model="unlinkStudentsCourse.value" ng-options="student.id as student.login for student in unlinkStudentsCourse.students"></select>
+        <button ng-show="unlinkStudentsCourse.value!==undefined && unlinkStudentsCourse.students.length>0" ng-click="linkStudent()">Добавить</button>
+    
+    </div>
+    
+    <div ng-show="openedCourseExPage==='Lessons'">
+        <table class="list-table">
+            <tr>
+                <td>№</td>
+                <td>Название</td>
+            </tr>
+            <tr ng-repeat="lesson in currentCourse.data.lessons">
+                <td ng-bind="$index+1"></td>
+                <td ng-bind="lesson.name"></td>
+            </tr>
+        </table>
+    </div>
+
+</div>

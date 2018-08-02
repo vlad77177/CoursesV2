@@ -1,0 +1,48 @@
+<div id="test-extended-block" class="flex column" ng-show="currentTest.data!==undefined">
+    
+    <!--<div>{{currentTest}}<div>-->
+            
+    <table>
+        <tr>
+            <td><div id="test-name-block" ng-bind="currentTest.data.name"></div></td>
+            <td>
+                <input ng-model="currentTest.data.name">
+                <button class="button1">Изменить название</button>
+                <button class="button1">Сохранить</button>
+                <button class="button1">Удалить тест</button>
+            </td>
+        </tr>
+    </table>
+    
+    <hr>
+    
+    <table>
+        <tr><td>Выбор курсов:</td>
+            <td>
+                <select ng-model="currentTest.data.for_course_id" ng-options="course.id as course.name for course in courses"></select>
+            </td>
+        </tr>
+        <tr><td>Тест активен:</td><td><input intbooleanvalidation type="checkbox" ng-model="currentTest.data.active"/></td></tr>
+        <tr><td>Перемешивать вопросы:</td><td><input intbooleanvalidation type="checkbox" ng-model="currentTest.data.mix_q"/></td></tr>
+        <tr><td>Перемешивать варианты ответов:</td><td><input intbooleanvalidation type="checkbox" ng-model="currentTest.data.mix_var"/></td></tr>
+        <tr><td>Разрешить перезапуск теста:</td><td><input intbooleanvalidation type="checkbox" ng-model="currentTest.data.reload"/></td></tr>
+        <tr><td>Разрешить пропуск вопросов:</td><td><input intbooleanvalidation type="checkbox" ng-model="currentTest.data.can_pass"/></td></tr>
+        <tr><td>Лимит попыток(0-разрешить перезапуск всегда)</td><td><input type="text" ng-model="currentTest.data.reload_try"></td></tr>
+        <tr><td>Выводить </td><td><input type="text" ng-model="currentTest.data.display_q"></td><td> вопросов</td></tr>
+        <tr><td>Порог прохождения </td><td><input type="text" ng-model="currentTest.data.threshold"></td><td> вопросов</td></tr>
+        <tr><td>Время на прохождение </td><td><input type="text" ng-model="currentTest.data.minute_on_pass"></td><td> минут</td></tr>
+    </table>
+    <button class="button1 button-fixed-width" ng-click="changeTestSettings()">Сохранить настройки</button>
+    
+    <div class="flex column">
+        <div class="question-text" ng-bind-html="currentQuestion.data.text"></div>
+        <button>Удалить вопрос</button>
+        <button>Редактировать</button>
+        <div ng-repeat="variant in currentQuestion.data.variants">
+            <div class="variant-text" ng-class="{true:'variant-text-right',false:''}[variant.isright==='1']" ng-bind-html="variant.text" ng-click="changeIsRight(variant.id)"></div>
+            <button>Удалить вариант</button>
+            <button>Редактировать</button>
+        </div>
+        <button>Добавить вариант</button>
+    </div>
+</div>

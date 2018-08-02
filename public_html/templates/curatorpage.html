@@ -1,0 +1,151 @@
+<div>
+    <div id="admin-panel-top" class="page-top-block flex row center cross-center">
+        <div>Панель куратора</div>
+    </div>
+    
+    <div class="menu-block flex row space-between">
+        <div class="flex column center cross-center">
+            <div>Пользователи</div>
+        </div>
+        <div class="flex column center cross-center">
+            <div>Курсы</div>
+        </div>
+        <div class="flex column center cross-center">
+            <div>Тесты</div>
+        </div>
+    </div>
+    
+    <div class="flex row" ng-controller="CuratorUserPageController">
+        <div id="list-of-users" class="flex column">
+            
+            <div id="create-user-form" class="grey-border-radius">
+                <table>
+                    <tr>
+                        <td>Логин:</td>
+                        <td><input ng-model="newUser.login" type="text"></td>
+                    </tr>
+                    <tr>
+                        <td>Email:</td>
+                        <td><input ng-model="newUser.email" type="text"></td>
+                    </tr>
+                    <tr>
+                        <td>Пароль:</td>
+                        <td><input ng-model="newUser.password" type="password"></td>
+                    </tr>
+                    <tr>
+                        <td>Повторите пароль:</td>
+                        <td><input ng-model="newUser.repeat" type="password"></td>
+                    </tr>
+                    <tr>
+                        <td>Тип пользователя:</td>
+                        <td>
+                            <select ng-model="newUser.user_type" ng-options="item.id as item.name for item in newUser.type_variants"></select>
+                        </td>
+                    </tr>
+                </table>
+                <button ng-click="createNewUser()">Добавить пользователя</button>
+            </div>
+
+            <div ng-show="(users | UserFilter:'administrator').length>0">
+                <div>Администраторы</div>
+                <div>
+                    <table class="list-users-table">
+                        <tr>
+                            <td>№</td>
+                            <td>ID</td>
+                            <td>Логин</td>
+                        </tr>
+                        <tr ng-repeat="admin in users | UserFilter:'administrator'" ng-click="selectUser(admin.id)" class="hover">
+                            <td ng-bind="$index+1"></td>
+                            <td ng-bind="admin.id"></td>
+                            <td ng-bind="admin.login"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div ng-show="(users | UserFilter:'curator').length>0">
+                <div>Кураторы</div>
+                <div>
+                    <table class="list-users-table">
+                        <tr>
+                            <td>№</td>
+                            <td>ID</td>
+                            <td>Логин</td>
+                        </tr>
+                        <tr ng-repeat="curator in users | UserFilter:'curator'" ng-click="selectUser(curator.id)" class="hover">
+                            <td ng-bind="$index+1"></td>
+                            <td ng-bind="curator.id"></td>
+                            <td ng-bind="curator.login"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div ng-show="(users | UserFilter:'teacher').length>0">
+                <div>Преподаватели</div>
+                <div>
+                    <table class="list-users-table">
+                        <tr>
+                            <td>№</td>
+                            <td>ID</td>
+                            <td>Логин</td>
+                        </tr>
+                        <tr ng-repeat="teacher in users | UserFilter:'teacher'" ng-click="selectUser(teacher.id)" class="hover">
+                            <td ng-bind="$index+1"></td>
+                            <td ng-bind="teacher.id"></td>
+                            <td ng-bind="teacher.login"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div ng-show="(users | UserFilter:'student').length>0">
+                <div>Студенты</div>
+                <div>
+                    <table class="list-users-table">
+                        <tr>
+                            <td>№</td>
+                            <td>ID</td>
+                            <td>Логин</td>
+                        </tr>
+                        <tr ng-repeat="student in users | UserFilter:'student'" ng-click="selectUser(student.id)" class="hover">
+                            <td ng-bind="$index+1"></td>
+                            <td ng-bind="student.id"></td>
+                            <td ng-bind="student.login"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="user-info-block" ng-show="(users | UserFilter:'id':selectedUserID).length>0">
+            <div id="user-info">
+                <table>
+                    <tr>
+                        <td>ID:</td>
+                        <td ng-bind="currentUser.id"></td>
+                    </tr>
+                    <tr>
+                        <td>Логин:</td>
+                        <td ng-bind="currentUser.login"></td>
+                    </tr>
+                    <tr>
+                        <td>Email:</td>
+                        <td ng-bind="currentUser.email"></td>
+                    </tr>
+                    <tr>
+                        <td>Новый пароль:</td>
+                        <td><input ng-model="currentUser.newpass" type="password"></td>
+                    </tr>
+                    <tr>
+                        <td>Повторите пароль:</td>
+                        <td><input ng-model="currentUser.repeat" type="password"></td>
+                    </tr>
+                </table>
+                <button ng-click="saveUserData()">Сохранить</button>
+            </div>
+        </div>
+    </div>
+    
+</div>

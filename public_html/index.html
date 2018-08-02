@@ -1,0 +1,41 @@
+<html ng-app="App">
+    <head>
+        <title>Courses</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" href="css/style.css" />
+        
+        <script src="js/lib/angular.min.js"></script>
+        <script src="js/lib/angular-sanitize.js"></script>
+        
+        <script src="ckeditor/ckeditor.js"></script>
+        <script src="ckeditor/config.js"></script>
+        <!--<script src="ckeditor/ckeplugins.js"></script>-->
+        <script src="ckeditor/build-config.js"></script>
+        <script src="ckeditor/styles.js"></script>
+        
+        <script src="js/app.js"></script>
+        <script src="js/directives.js"></script>
+        <script src="js/services.js"></script>
+        <script src="js/filters.js"></script>
+        <script src="js/controllers/AppController.js"></script>
+        <script src="js/controllers/AdminPageController.js"></script>
+        <script src="js/controllers/AdminUserPageController.js"></script>
+        <script src="js/controllers/AdminCoursesPageController.js"></script>
+        <script src="js/controllers/AdminTextPageController.js"></script>
+        <script src="js/controllers/AdminTestPageController.js"></script>
+        <script src="js/controllers/CuratorUserPageController.js"></script>
+    
+    </head>
+    <body ng-controller="AppController" ng-cloak>
+        
+        <login-form ng-show="!loggedUser.ulog"></login-form>
+        
+        <admin-page ng-show="loggedUser.ulog && loggedUser.uadmin"></admin-page>
+        <curator-page ng-show="loggedUser.ulog && loggedUser.ucurator"></curator-page>
+        
+        <button ng-show="loggedUser.ulog" ng-click="logOut()">Выход</button>
+
+    </body>
+</html>

@@ -1,0 +1,15 @@
+<div id="loginform-background" class="flex center">
+    <div id="loginform" class="flex column center">
+        <table>
+            <tr>
+                <td>Логин:</td>
+                <td><input id="login" type="text" ng-model="loginFormModel.login"></td>
+            </tr>
+            <tr>
+                <td>Пароль:</td>
+                <td><input id="password" type="password" ng-model="loginFormModel.password"></td>
+            </tr>
+        </table>
+        <button ng-click="loginUser()">Войти</button>
+    </div>
+</div>

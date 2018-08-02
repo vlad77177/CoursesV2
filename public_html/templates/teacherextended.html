@@ -1,0 +1,49 @@
+<div id="teacher-extended-block">
+    
+    <div>       
+        <div>Закрепленные курсы:</div>
+        <div ng-show="currentUser.teach_courses.length>0">
+            <table class="list-table">
+                <tr>
+                    <td>№</td>
+                    <td>ID</td>
+                    <td>Название</td>
+                    <td></td>
+                </tr>
+                <tr ng-repeat="course in (courses | CourseFilter:'ids':currentUser.teach_courses)" class="hover">
+                    <td ng-bind="$index+1"></td>
+                    <td ng-bind="course.id"></td>
+                    <td ng-bind="course.name"></td>
+                    <td><button ng-click="unlinkCourse(course.id,currentUser.id)">Отписать</button></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+    <select ng-show="unlinkCourses.courses.length>0" ng-model="unlinkCourses.value" ng-options="course.id as course.name for course in unlinkCourses.courses"></select>
+    <button ng-show="unlinkCourses.value!==undefined && unlinkCourses.courses.length>0" ng-click="linkCourse()">Добавить курс</button>
+
+    <div>
+        <div>Закрепленные cтуденты:</div>
+        <div ng-show="(users | UserFilter:'ids':currentUser.teach_students).length>0">
+            <table class="list-users-table">
+                <tr>
+                    <td>№</td>
+                    <td>ID</td>
+                    <td>Логин</td>
+                    <td></td>
+                </tr>
+                <tr ng-repeat="student in (users | UserFilter:'ids':currentUser.cur_students)" class="hover">
+                    <td ng-bind="$index+1" ng-click="selectUser(student.id)"></td>
+                    <td ng-bind="student.id" ng-click="selectUser(student.id)"></td>
+                    <td ng-bind="student.login" ng-click="selectUser(student.id)"></td>
+                    <td><button ng-click="unlinkStudentCourse(student.id,currentUser.id)">Отписать</button></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <!--
+    <select ng-show="unlinkStudents.students.length>0" ng-model="unlinkStudents.value" ng-options="student.id as student.login for student in unlinkStudents.students"></select>
+    <button ng-show="unlinkStudents.value!==undefined && unlinkStudents.students.length>0" ng-click="linkStudent()">Добавить</button>
+    -->
+</div>

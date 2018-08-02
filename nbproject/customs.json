@@ -1,0 +1,13 @@
+{
+    "elements": {
+        "test-extended": {},
+        "curator-extended": {},
+        "login-form": {},
+        "question-extended": {},
+        "admin-page": {},
+        "course-extended": {}
+    },
+    "attributes": {
+        "ng-show": {}
+    }
+}
