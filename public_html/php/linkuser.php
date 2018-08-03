@@ -26,6 +26,11 @@
             $res=mysqli_query($db,'INSERT INTO user_result(user_id,id_course) VALUES('.$data['student_id'].','.$data['course_id'].')');
             break;
         }
+        case 5:{
+            $res1=mysqli_query($db,'DELETE FROM curator_course WHERE id_course='.$data['course_id'].'');
+            $res2=mysqli_query($db,'INSERT INTO curator_course(id_curator,id_course) VALUES('.$data['curator_id'].','.$data['course_id'].')');
+            break;
+        }
     }
     
     exit();

@@ -3,6 +3,11 @@ App.controller('AdminCoursesPageController',['$scope','$http','$filter','LoggedU
 
         $scope.openedCourseExPage='Users';
         
+        $scope.unlinkCuratorCourse={
+            value:undefined,
+            curators:[]
+        };
+        
         $scope.unlinkTeachersCourse={
             value:undefined,
             teachers:[]
@@ -21,10 +26,14 @@ App.controller('AdminCoursesPageController',['$scope','$http','$filter','LoggedU
                 .then(function(data){
                     $scope.currentCourse.data=data.data;
                     $scope.currentCourse.curator=data.data.curator;
-                    console.log($scope.currentCourse);
+                    
+                    $scope.unlinkCuratorCourse.curators=$filter('UserFilter')($scope.users,'curator');
+                    $scope.unlinkCuratorCourse.value=$scope.currentCourse.curator;
+                    console.log("unlink");
+                    console.log($scope.unlinkCuratorCourse);
                     
                     var cur=$filter('UserFilter')($scope.users,'id',$scope.currentCourse.curator);//куратор, который привязан к курсу
-                    
+
                     var u=$filter('UserInIDArrayFilter')($scope.users,cur[0].cur_teachers);    //список пользователей, прин куратору                
                     if($scope.currentCourse.data.teachers!==undefined){                        
                         $scope.unlinkTeachersCourse.teachers=$filter('UserFilter')(($filter('UserFilter')(u,'unids',$scope.currentCourse.data.teachers)),'teacher');
@@ -45,6 +54,23 @@ App.controller('AdminCoursesPageController',['$scope','$http','$filter','LoggedU
         
         $scope.openCourseExPage=function(flag){
             $scope.openedCourseExPage=flag;
+        };
+        
+        $scope.setCurator=function(){
+            var data={
+                user:$scope.loggedUser,
+                curator_id:$scope.unlinkCuratorCourse.value,
+                course_id:$scope.currentCourse.data.description.id_course,
+                mode:5
+            };
+            console.log(data);
+            $http({method:'POST',data:data,url:'php/linkuser.php'})
+                .then(function(){
+                    Courses.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(c){
+                        $scope.courses=c;
+                    });
+                    $scope.getCourseInfo($scope.currentCourse.data.description.id_course);
+            });
         };
         
         $scope.linkTeacher=function(){

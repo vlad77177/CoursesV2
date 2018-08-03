@@ -1,0 +1,38 @@
+<div ng-controller="PageController">
+    
+        <div id="admin-panel-top" class="page-top-block flex row center cross-center">
+            <div>Панель студента</div>
+            <button class="button button-exit" ng-show="loggedUser.ulog" ng-click="logOut()">Выход</button>
+        </div>
+        
+    <div class="flex row" ng-controller="StudentPageController">
+        
+        <div id="list-of-courses-student" ng-show="courses.length>0">
+            <div>Курсы</div>
+            <div>
+                <div ng-repeat="course in courses">
+                    <div ng-bind="course.name" class="course-name-stud hover" ng-click="getCourseInfo(course.id,true);"></div>
+                    <div ng-class="{true:'',false:'unlearned'}[$index<currentStudent.data.lessons_learned+1]" ng-repeat="lesson in course.lessons" ng-bind="lesson.name" class="lesson-name-stud hover" ng-click="getLessonInfo(course.id,lesson.id,$index);"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="courses-text-block" class="flex row">
+
+            <div ng-show="textOpen==='Course'">
+                <div ng-bind-html="currentCourse.data.description.text"></div>
+            </div>
+
+            <div ng-show="textOpen==='Lesson'">
+                <div ng-bind-html="currentLesson.data.text"></div>
+            </div>
+
+        </div>
+        
+        <div class="fixed-buttons-stud" ng-show="textOpen!==undefined">
+            <button class="button">Предыдущий урок</button>
+            <button class="button">Следующий урок</button>
+        </div>
+        
+    </div>
+</div>

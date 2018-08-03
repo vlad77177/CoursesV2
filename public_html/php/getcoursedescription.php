@@ -5,9 +5,10 @@
     
     $data=json_decode(file_get_contents('php://input'),true);
     $user= mysqli_fetch_assoc(mysqli_query($db, 'SELECT id,login,email,administrator,curator,teacher,student FROM users WHERE login=\''.$data['user']['login'].'\' AND password=\''.$data['user']['password'].'\''));
+    /*
     if($user['administrator']==0){
         exit();
-    }
+    }*/
     
     $res=mysqli_fetch_assoc(mysqli_query($db,'SELECT id_course, text.id_text, text FROM course_description INNER JOIN text ON course_description.id_text=text.id_text WHERE course_description.id_course='.$data['id'].''));
     
@@ -31,6 +32,7 @@
     }
     
     $res=mysqli_query($db,'SELECT * FROM lessons WHERE id_course='.$course_d['description']['id_course'].'');
+    
     while($row= mysqli_fetch_assoc($res)){
         $course_d['lessons'][count($course_d['lessons'])]=$row;
     }

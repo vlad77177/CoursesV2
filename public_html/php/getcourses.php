@@ -5,15 +5,27 @@
     
     $data=json_decode(file_get_contents('php://input'),true);
     $user= mysqli_fetch_assoc(mysqli_query($db, 'SELECT id,login,email,administrator,curator,teacher,student FROM users WHERE login=\''.$data['user']['login'].'\' AND password=\''.$data['user']['password'].'\''));
-    if($user['administrator']==0 and $user['curator']==0){
+    /*    
+    if($user['administrator']==0 and $user['curator']==0 and ){
         exit();
-    }
+    }*/
     
     $coursesf= mysqli_fetch_all(mysqli_query($db,'SELECT courses.id,name,src FROM courses LEFT OUTER JOIN images ON courses.logo=images.id'),MYSQLI_ASSOC);
     $courses=array();
     
     if($user['curator']==1){
         $res_courses=mysqli_query($db,'SELECT * FROM curator_course WHERE id_curator='.$user['id'].'');
+        while($row=mysqli_fetch_assoc($res_courses)){
+            for($i=0;$i<count(coursesf);$i++){
+                if($coursesf[$i]['id']==$row['id_course']){
+                    $courses[count($courses)]=$coursesf[$i];
+                    break;
+                }
+            }
+        }
+    }
+    else if($user['student']==1){
+        $res_courses=mysqli_query($db,'SELECT * FROM user_result WHERE user_id='.$user['id'].'');
         while($row=mysqli_fetch_assoc($res_courses)){
             for($i=0;$i<count(coursesf);$i++){
                 if($coursesf[$i]['id']==$row['id_course']){

@@ -26,16 +26,20 @@
         <script src="js/controllers/AdminTextPageController.js"></script>
         <script src="js/controllers/AdminTestPageController.js"></script>
         <script src="js/controllers/CuratorUserPageController.js"></script>
+        <script src="js/controllers/StudentPageController.js"></script>
     
     </head>
     <body ng-controller="AppController" ng-cloak>
+        
+        <!--
+        <div id="stub" ng-show="!all_download">
+        </div>-->
         
         <login-form ng-show="!loggedUser.ulog"></login-form>
         
         <admin-page ng-show="loggedUser.ulog && loggedUser.uadmin"></admin-page>
         <curator-page ng-show="loggedUser.ulog && loggedUser.ucurator"></curator-page>
-        
-        <button class="button" ng-show="loggedUser.ulog" ng-click="logOut()">Выход</button>
+        <student-page ng-show="loggedUser.ulog && loggedUser.ustudent"></student-page>
 
     </body>
 </html>

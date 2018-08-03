@@ -15,7 +15,8 @@
         
         <div>
             <div>Куратор:</div>
-            <select ng-model="currentCourse.curator" ng-options="curator.id as curator.login for curator in users | UserFilter:'curator'"></select>
+            <select ng-model="unlinkCuratorCourse.value" ng-options="curator.id as curator.login for curator in unlinkCuratorCourse.curators"></select>
+            <button class="button" ng-show="currentCourse.curator!==unlinkCuratorCourse.value" ng-click="setCurator()">Назначить</button>
         </div>
 
         <div>Преподаватели:</div>

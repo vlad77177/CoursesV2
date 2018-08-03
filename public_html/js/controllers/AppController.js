@@ -1,10 +1,18 @@
 App.controller('AppController',['$scope','$http','LoggedUserService','UsersService','CoursesService','TestsService',
     function AppController($scope, $http,LoggedUser,Users,Courses,Tests){
         
+        $scope.contentDownload={
+            courses:false
+        };
+        
         $scope.loggedUser=undefined;
         $scope.users=undefined;
         $scope.courses=undefined;
         $scope.tests=undefined;
+        
+        $scope.currentStudent={
+            data:undefined
+        };
         
         LoggedUser.get().then(function(u){
             $scope.loggedUser=u.data;
@@ -19,10 +27,20 @@ App.controller('AppController',['$scope','$http','LoggedUserService','UsersServi
             });
             Courses.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(c){
                 $scope.courses=c;
+                $scope.contentDownload.courses=true;
             });
             Tests.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(t){
                 $scope.tests=t;
             });
+            if($scope.loggedUser.ustudent==true){
+                var data={
+                    user:$scope.loggedUser
+                };
+                $http({method:'POST',data:data,url:'php/getstudentdata.php'})
+                .then(function(data){
+                    $scope.currentStudent.data=data.data;
+                });
+            }            
         });
         
         
@@ -42,12 +60,25 @@ App.controller('AppController',['$scope','$http','LoggedUserService','UsersServi
                             $scope.loggedUser.uteaher=u.uteacher;
                             $scope.loggedUser.ustudent=u.ustudent;
                             $scope.loggedUser.signed=u.usersigned;
-                            Users.get($scope.loggedUser.login,$scope.loggedUser.password).then(function(us){
+                            Users.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(us){
                                 $scope.users=us;
                             });
-                            Courses.get($scope.loggedUser.login,$scope.loggedUser.password).then(function(c){
+                            Courses.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(c){
                                 $scope.courses=c;
+                                $scope.contentDownload.courses=true;
                             });
+                            Tests.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(t){
+                                $scope.tests=t;
+                            });
+                            if($scope.loggedUser.ustudent==true){
+                                var data={
+                                    user:$scope.loggedUser
+                                };
+                                $http({method:'POST',data:data,url:'php/getstudentdata.php'})
+                                .then(function(data){
+                                    $scope.currentStudent.data=data.data;
+                                });
+                            }
                         });
             });
         };

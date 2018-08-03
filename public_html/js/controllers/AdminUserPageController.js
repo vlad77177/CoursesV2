@@ -119,6 +119,7 @@ App.controller('AdminUserPageController',['$scope','$http','$filter','LoggedUser
             }
             else
                 $scope.currentUser.is_student=false;
+            console.log($scope.currentUser);
         };
         
         $scope.saveUserData=function(){

@@ -1,6 +1,7 @@
 <div ng-controller="PageController">
     <div id="admin-panel-top" class="page-top-block flex row center cross-center">
         <div>Панель куратора</div>
+        <button class="button button-exit" ng-show="loggedUser.ulog" ng-click="logOut()">Выход</button>
     </div>
     
     <div class="menu-block flex row space-between">

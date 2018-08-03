@@ -20,6 +20,14 @@ App.directive('curatorPage',function(){
     };
 });
 
+App.directive('studentPage',function(){
+    return{
+        restrict:'E',
+        templateUrl:'templates/studentpage.html',
+        replace:true
+    };
+});
+
 App.directive('curatorExtended',function(){
     return{
         restrict:'E',

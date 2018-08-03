@@ -1,7 +1,7 @@
 App.controller('PageController',['$scope','$http','LoggedUserService','UsersService',
     function AdminPageController($scope, $http,LoggedUser,Users){
         $scope.openedPage='Users';
-        
+               
         $scope.currentCourse={
             data:undefined,
             curator:undefined

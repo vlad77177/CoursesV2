@@ -1,6 +1,7 @@
 <div ng-controller="PageController">
     <div id="admin-panel-top" class="page-top-block flex row center cross-center">
         <div>Панель администратора</div>
+        <button class="button button-exit" ng-show="loggedUser.ulog" ng-click="logOut()">Выход</button>
     </div>
     
     <div class="menu-block flex row space-between">
@@ -19,6 +20,7 @@
     </div>
     
     <div class="flex row" ng-controller="AdminUserPageController" ng-show="openedPage==='Users'">
+             
         <div id="list-of-users" class="flex column">
             
             <div id="create-user-form" class="grey-border-radius">
@@ -46,8 +48,10 @@
                         </td>
                     </tr>
                 </table>
-                <button ng-click="createNewUser()">Добавить пользователя</button>
+                <button class="button" ng-click="createNewUser()">Добавить пользователя</button>
             </div>
+            
+            <div class="download-block" ng-show="contentDownload.courses==false"></div>
 
             <div ng-show="(users | UserFilter:'administrator').length>0">
                 <div>Администраторы</div>
@@ -146,7 +150,7 @@
                         <td><input ng-model="currentUser.repeat" type="password"></td>
                     </tr>
                 </table>
-                <button ng-click="saveUserData()">Сохранить</button>
+                <button class="button" ng-click="saveUserData()">Сохранить</button>
             </div>
             
             <curator-extended ng-show="currentUser.is_curator==true"></curator-extended>
