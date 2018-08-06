@@ -4,7 +4,9 @@ App.controller('PageController',['$scope','$http','LoggedUserService','UsersServ
                
         $scope.currentCourse={
             data:undefined,
-            curator:undefined
+            curator:undefined,
+            name:undefined,
+            id:undefined
         };
         
         $scope.currentTest={
