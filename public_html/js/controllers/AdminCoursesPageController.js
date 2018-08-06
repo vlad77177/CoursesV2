@@ -103,8 +103,6 @@ App.controller('AdminCoursesPageController',['$scope','$http','$filter','LoggedU
                     $scope.getCourseInfo($scope.currentCourse.data.description.id_course);
                     Users.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(us){
                         $scope.users=us;
-                        $scope.unlinkStudentsCourse.students=$filter('UserFilter')(($filter('UserFilter')($scope.users,'unids',$scope.currentCourse.data.users)),'student');
-                        //$scope.selectUser($scope.currentUser.id);
                     });
             });
         };
@@ -122,7 +120,6 @@ App.controller('AdminCoursesPageController',['$scope','$http','$filter','LoggedU
                     Users.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(us){
                         $scope.users=us;
                         $scope.unlinkTeachersCourse.teachers=$filter('UserFilter')(($filter('UserFilter')($scope.users,'unids',$scope.currentCourse.data.teachers)),'teacher');
-                        //$scope.selectUser($scope.currentUser.id);
                     });
             });
         };
@@ -139,8 +136,6 @@ App.controller('AdminCoursesPageController',['$scope','$http','$filter','LoggedU
                     $scope.getCourseInfo($scope.currentCourse.data.description.id_course);
                     Users.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(us){
                         $scope.users=us;
-                        $scope.unlinkStudentsCourse.students=$filter('UserFilter')(($filter('UserFilter')($scope.users,'unids',$scope.currentCourse.data.users)),'student');
-                        //$scope.selectUser($scope.currentUser.id);
                     });
             });
         };

@@ -7,17 +7,19 @@
         
     <div class="flex row" ng-controller="StudentPageController">
         
-        <div id="list-of-courses-student" ng-show="courses.length>0">
+        <div id="list-of-courses-student" ng-show="courses.length>0" ng-cloak>
             <div>Курсы</div>
             <div>
                 <div ng-repeat="course in courses">
                     <div ng-bind="course.name" class="course-name-stud hover" ng-click="getCourseInfo(course.id,true);"></div>
-                    <div ng-class="{true:'',false:'unlearned'}[$index<currentStudent.data.lessons_learned+1]" ng-repeat="lesson in course.lessons" ng-bind="lesson.name" class="lesson-name-stud hover" ng-click="getLessonInfo(course.id,lesson.id,$index);"></div>
+                    <div ng-class="{true:'unlearned',false:''}[$index>currentStudent.data.lessons_learned]" ng-repeat="lesson in course.lessons" ng-bind="lesson.name" class="lesson-name-stud hover" ng-click="getLessonInfo(course.id,lesson.id,$index);"></div>
+                    <hr>
+                    <button class="button" ng-click="initTest(course)">Пройти тест</button>
                 </div>
-            </div>
+            </div>            
         </div>
 
-        <div id="courses-text-block" class="flex row">
+        <div id="courses-text-block" class="flex row" ng-show="!testactive">
 
             <div ng-show="textOpen==='Course'">
                 <div ng-bind-html="currentCourse.data.description.text"></div>
@@ -29,10 +31,16 @@
 
         </div>
         
+        <!--
         <div class="fixed-buttons-stud" ng-show="textOpen!==undefined">
-            <button class="button">Предыдущий урок</button>
-            <button class="button">Следующий урок</button>
-        </div>
+            <button class="button" ng-click="lastLesson();">Предыдущий урок</button>
+            <button class="button" ng-click="nextLesson();">Следующий урок</button>
+        </div>-->
+        
+        <testing-page ng-show="testactive"></testing-page>
+        
+        <div id="result" ng-show="showresult">Ваш результат: {{result.score}} из {{result.all}} при пороге прохождения {{result.threshold}}</div>
+    
         
     </div>
 </div>

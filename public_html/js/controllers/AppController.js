@@ -1,5 +1,5 @@
-App.controller('AppController',['$scope','$http','LoggedUserService','UsersService','CoursesService','TestsService',
-    function AppController($scope, $http,LoggedUser,Users,Courses,Tests){
+App.controller('AppController',['$scope','$http','$interval','LoggedUserService','UsersService','CoursesService','TestsService',
+    function AppController($scope, $http,$interval,LoggedUser,Users,Courses,Tests){
         
         $scope.contentDownload={
             courses:false
@@ -10,8 +10,34 @@ App.controller('AppController',['$scope','$http','LoggedUserService','UsersServi
         $scope.courses=undefined;
         $scope.tests=undefined;
         
+        $scope.test=null;
+        $scope.clockmodel=null;
+        $scope.testactive=false;
+        $scope.alreadyinit=false;
+        $scope.testpage=0;
+        
         $scope.currentStudent={
             data:undefined
+        };
+        
+        $scope.tick=function(){
+            if($scope.test!=undefined){
+                $scope.test.seconds=$scope.test.seconds-1;
+                var hour=Math.floor($scope.test.seconds/(60*60));
+                var minute=Math.floor($scope.test.seconds/60)-hour*60;
+                var second=$scope.test.seconds-(hour*(60*60))-minute*60;
+                $scope.clockmodel=""+hour+":"+minute+":"+second;
+            }
+        };
+        
+        $scope.continueTest=function(){
+            for(var i=0;i<$scope.test.questions.length;i++){
+                if($scope.test.questions[i].ansver==0){
+                    $scope.testpage=i;
+                    break;
+                }
+            }
+            $scope.testactive=true;
         };
         
         LoggedUser.get().then(function(u){
@@ -39,6 +65,23 @@ App.controller('AppController',['$scope','$http','LoggedUserService','UsersServi
                 $http({method:'POST',data:data,url:'php/getstudentdata.php'})
                 .then(function(data){
                     $scope.currentStudent.data=data.data;
+                    if($scope.currentStudent.data.test_active==1){
+                        var data1={
+                            user:$scope.loggedUser,
+                            uid:$scope.loggedUser.id,
+                            cid:$scope.currentStudent.data.id_course
+                        };
+                        $http({method:'POST',data:data1,url:'php/getactivetest.php'})
+                                .then(function(data){
+                                    if(data.data!=false){
+                                        $scope.alreadyinit=true;
+                                        $scope.testactive=true;
+                                        $scope.test=data.data;
+                                        $interval(function(){$scope.tick();},1000);
+                                        $scope.continueTest();
+                                    }
+                        });
+                    }
                 });
             }            
         });

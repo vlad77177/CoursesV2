@@ -68,6 +68,14 @@ App.directive('questionExtended',function(){
     };
 });
 
+App.directive('testingPage',function(){
+    return{
+        restrict:'E',
+        templateUrl:'templates/testingpage.html',
+        replace:true
+    };
+});
+
 //обработка модели чекбоксов, корректная связь boolean и int 
 App.directive('intbooleanvalidation',function(){
     return{

@@ -1,0 +1,13 @@
+<div id="test-active" class="flex column">
+    <div id="question-block">
+        <div id="test-settings">
+            <div id="question-number">Вопрос: {{testpage+1}}</div>
+            <div id="timeout" ng-bind="clockmodel"></div>
+        </div>
+        <div id="test-question" ng-bind-html="test.questions[testpage].text"></div>
+    </div>
+    <div>
+        <div class="variant-block" ng-class="{true:'activepage'}[test.questions[testpage].ansvers.indexOf($index+1)]" ng-click="ansver($index)" ng-repeat="variant in test.questions[testpage].variants" ng-bind-html="variant.text"></div>
+    </div>
+</div>
+
