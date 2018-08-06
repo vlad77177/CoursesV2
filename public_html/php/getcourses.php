@@ -5,10 +5,9 @@
     
     $data=json_decode(file_get_contents('php://input'),true);
     $user= mysqli_fetch_assoc(mysqli_query($db, 'SELECT id,login,email,administrator,curator,teacher,student FROM users WHERE login=\''.$data['user']['login'].'\' AND password=\''.$data['user']['password'].'\''));
-    /*    
-    if($user['administrator']==0 and $user['curator']==0 and ){
-        exit();
-    }*/
+    if($user['administrator']==0 and $user['curator']==0 and $user['teacher']==0 and $user['student']==0){
+        exit(FALSE);
+    }
     
     $coursesf= mysqli_fetch_all(mysqli_query($db,'SELECT courses.id,name,src FROM courses LEFT OUTER JOIN images ON courses.logo=images.id'),MYSQLI_ASSOC);
     $courses=array();
