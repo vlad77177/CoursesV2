@@ -21,7 +21,13 @@ App.controller('UserPageController',['$scope','$http','$filter','LoggedUserServi
             is_admin:false,
             is_curator:false,
             is_teacher:false,
-            is_student:false
+            is_student:false,
+            results:[],
+            learneds:[],
+            need_learns:[],
+            curator:undefined,
+            teachers:[],
+            courses:[]
         };
         
         $scope.unlinkStudents={
@@ -65,6 +71,12 @@ App.controller('UserPageController',['$scope','$http','$filter','LoggedUserServi
             $scope.currentUser.cur_teachers=user[0]['cur_teachers'];
             $scope.currentUser.teach_courses=user[0]['teach_courses'];
             $scope.currentUser.teach_students=user[0]['teach_students'];
+            $scope.currentUser.courses=user[0]['courses'];
+            $scope.currentUser.curator=user[0]['curator'];
+            $scope.currentUser.learneds=user[0]['learneds'];
+            $scope.currentUser.need_learns=user[0]['need_learns'];
+            $scope.currentUser.results=user[0]['results'];
+            $scope.currentUser.teachers=user[0]['teachers'];
             if(user[0].administrator==true)
                 $scope.currentUser.is_admin=true;
             else
@@ -119,7 +131,7 @@ App.controller('UserPageController',['$scope','$http','$filter','LoggedUserServi
             else
                 $scope.currentUser.is_teacher=false;
             if(user[0].student==true){
-                $scope.currentUser.is_student=true;
+                $scope.currentUser.is_student=true;                
             }
             else
                 $scope.currentUser.is_student=false;

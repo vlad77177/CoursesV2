@@ -161,6 +161,9 @@ footer{
 .list-table{
     width: 100%;
 }
+.table-student-result td{
+    width:33%;
+}
 .list-table tr td:last-child{
     width: 100%;
 }

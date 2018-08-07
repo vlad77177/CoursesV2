@@ -52,6 +52,14 @@ App.directive('teacherExtended',function(){
     };
 });
 
+App.directive('studentExtended',function(){
+    return{
+        restrict:'E',
+        templateUrl:'templates/studentextended.html',
+        replace:true
+    };
+});
+
 App.directive('testExtended',function(){
     return{
         restrict:'E',

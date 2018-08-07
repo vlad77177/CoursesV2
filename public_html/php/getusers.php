@@ -35,7 +35,7 @@
                 }
             }
             
-            $user_json='{"id":null,"login":null,"email":null,"administrator":false,"curator":false,"teacher":false,"student":false,"cur_students":[],"cur_teachers":[],"teach_courses":[],"teach_students":[]}';
+            $user_json='{"id":null,"login":null,"email":null,"administrator":false,"curator":false,"teacher":false,"student":false,"cur_students":[],"cur_teachers":[],"teach_courses":[],"teach_students":[],"results":[],"learneds":[],"need_learns":[],"curator":null,"teachers":[],"courses":[]}';
             $user= json_decode($user_json);
             
             $user->id=$row['id'];
@@ -64,9 +64,21 @@
                     while($stud=mysqli_fetch_assoc($res4)){
                         $user->teach_students[count($user->teach_students)]=$stud['user_id'];
                     }
+                }               
+            }
+            if($row['student']==1){
+                $u_res=mysqli_query($db,'SELECT * FROM user_result WHERE user_id='.$row['id'].'');
+                while($r=mysqli_fetch_assoc($u_res)){
+                    $user->courses[count($user->courses)]=$r['id_course'];
+                    $user->results[count($user->results)]=$r['test_result'];
+                    $user->learneds[count($user->learneds)]=$r['learned'];
+                    $course=mysqli_fetch_assoc(mysqli_query($db,'SELECT COUNT(*) AS count FROM lessons WHERE id_course='.$r['id_course'].''));
+                    $user->need_learns[count($user->need_learns)]=$course['count'];
+                    $teacher=mysqli_fetch_assoc(mysqli_query($db,'SELECT * FROM teacher_course WHERE id_course='.$r['id_course'].''));
+                    $user->teachers[count($user->teachers)]=$teacher['id_teacher'];
                 }
-                
-                
+                $cur=mysqli_fetch_assoc(mysqli_query($db,'SELECT * FROM curator_student WHERE id_student='.$row['id'].''));
+                $user->curator=$cur['id_curator'];
             }
 
             $users[count($users)]=$user;
