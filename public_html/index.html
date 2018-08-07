@@ -21,11 +21,10 @@
         <script src="js/filters.js"></script>
         <script src="js/controllers/AppController.js"></script>
         <script src="js/controllers/PageController.js"></script>
-        <script src="js/controllers/AdminUserPageController.js"></script>
-        <script src="js/controllers/AdminCoursesPageController.js"></script>
-        <script src="js/controllers/AdminTextPageController.js"></script>
-        <script src="js/controllers/AdminTestPageController.js"></script>
-        <script src="js/controllers/CuratorUserPageController.js"></script>
+        <script src="js/controllers/UserPageController.js"></script>
+        <script src="js/controllers/CoursesPageController.js"></script>
+        <script src="js/controllers/TextPageController.js"></script>
+        <script src="js/controllers/TestPageController.js"></script>
         <script src="js/controllers/StudentPageController.js"></script>
     
     </head>
@@ -34,12 +33,16 @@
         <!--
         <div id="stub" ng-show="!all_download">
         </div>-->
-        
-        <login-form ng-show="!loggedUser.ulog"></login-form>
-        
-        <admin-page ng-show="loggedUser.ulog && loggedUser.uadmin"></admin-page>
-        <curator-page ng-show="loggedUser.ulog && loggedUser.ucurator"></curator-page>
-        <student-page ng-show="loggedUser.ulog && loggedUser.ustudent"></student-page>
+        <div id="wrap">
+            <div id="main">
+            <login-form ng-show="!loggedUser.ulog"></login-form>
 
+            <admin-page ng-show="loggedUser.ulog && loggedUser.uadmin"></admin-page>
+            <curator-page ng-show="loggedUser.ulog && loggedUser.ucurator"></curator-page>
+            <student-page ng-show="loggedUser.ulog && loggedUser.ustudent"></student-page>
+            </div>
+        </div>
+        <div id="footer"></div>
     </body>
+    
 </html>

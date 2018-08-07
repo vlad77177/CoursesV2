@@ -7,6 +7,30 @@ and open the template in the editor.
     Created on : 09.06.2018, 12:56:57
     Author     : Worker
 */
+
+html, body, #wrap { height: 100%; }
+body > #wrap {height: auto; min-height: 100%;}
+#main { padding-bottom: 150px; }  /* must be same height as the footer */
+#footer { 
+        position: relative;
+	margin-top: -150px; /* negative value of footer height */
+        background-color: #cccccc;
+        height: 150px;                                  
+	clear:both;} 
+/* CLEAR FIX*/
+.clearfix:after {content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;}
+.clearfix {display: inline-block;}
+/* Hides from IE-mac \*/
+* html .clearfix { height: 1%;}
+.clearfix {display: block;}
+/* End hide from IE-mac */
+
+
+
 html{
     font-size: 16pt;
     font-family:sans-serif;
@@ -57,6 +81,12 @@ html{
 body{
     margin: 0px 0px 0px 0px;
 }
+footer{
+    position: absolute;
+    bottom: 0px;
+    height: 200px;
+    background-color: #cccccc;
+}
 
 #loginform-background{
     width:100%;
@@ -82,6 +112,15 @@ body{
 }
 #admin-panel-top{
     background-color:#ff0000;
+}
+#curator-panel-top{
+    background-color: #cc00cc;
+}
+#teacher-panel-top{
+    background-color:#0287D0;
+}
+#student-panel-top{
+    background-color: #cccccc;
 }
 .menu-block{
     margin-top:10px;

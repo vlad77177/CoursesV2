@@ -1,5 +1,5 @@
 <div ng-controller="PageController">
-    <div id="admin-panel-top" class="page-top-block flex row center cross-center">
+    <div id="curator-panel-top" class="page-top-block flex row center cross-center">
         <div>Панель куратора</div>
         <button class="button button-exit" ng-show="loggedUser.ulog" ng-click="logOut()">Выход</button>
     </div>
@@ -19,7 +19,7 @@
         </div>
     </div>
     
-    <div class="flex row" ng-controller="CuratorUserPageController" ng-show="openedPage==='Users'">
+    <div class="flex row" ng-controller="UserPageController" ng-show="openedPage==='Users'">
         <div id="list-of-users" class="flex column">
             
             <div id="create-user-form" class="grey-border-radius">
@@ -43,7 +43,7 @@
                     <tr>
                         <td>Тип пользователя:</td>
                         <td>
-                            <select ng-model="newUser.user_type" ng-options="item.id as item.name for item in newUser.type_variants"></select>
+                            <select ng-model="newUser.user_type" ng-options="item.id as item.name for item in newUser.type_variants_curator"></select>
                         </td>
                     </tr>
                 </table>
@@ -156,7 +156,7 @@
         </div>
     </div>
     
-    <div ng-show="openedPage==='Courses'" ng-controller="AdminCoursesPageController" class="flex row">
+    <div ng-show="openedPage==='Courses'" ng-controller="CoursesPageController" class="flex row">
         
         <div id="list-of-courses" ng-show="courses.length>0">
             <div>Курсы</div>
@@ -180,34 +180,51 @@
         
     </div>
     
-    <div ng-show="openedPage==='Texts'" ng-controller="AdminTextPageController" class="flex row">
+    <div ng-show="openedPage==='Texts'" ng-controller="TextPageController" class="flex row">
         <div class="left-sidebar">
             <div class="courses-left-sidebar" ng-repeat="course in courses">
-                <div class="courses-left-sidebar-name hover" ng-bind="course.name" ng-click="getCourseInfo(course.id,true)"></div>
-                <div class="lessons-left-sidebar hover" ng-repeat="lesson in course.lessons" ng-bind="lesson.name" ng-click="getLessonInfo(course.id,lesson.id)"></div>
+                <div class="courses-left-sidebar-name hover" ng-bind="course.name" ng-click="getCourseInfo(course.id,true);currentCourse.name=course.name;currentCourse.id=course.id;"></div>
+                <div class="lessons-left-sidebar hover" ng-repeat="lesson in course.lessons" ng-bind="lesson.name" ng-click="getLessonInfo(course.id,lesson.id);currentLesson.name=lesson.name;"></div>
+                <button class="button" ng-click="createNewLesson(course.id);">Добавить урок</button>
             </div>
+            <button class="button" ng-click="createNewCourse();">Добавить курс</button>
         </div>
         
         <div id="courses-text-block" class="flex row">
-            
             <div ng-show="textOpen==='Course'">
+                <div ng-init="editname=false;">
+                    <div ng-bind="currentCourse.name" ng-show="!editname"></div>
+                    <input ng-model="currentCourse.name" ng-show="editname">
+                    <button class="button" ng-show="!editname" ng-click="editname=!editname;">Изменить</button>
+                    <button class="button" ng-show="editname" ng-click="saveCourseName(currentCourse.id,currentCourse.name);editname=!editname;">Сохранить</button>
+                    <button class="button" ng-click="deleteCourse(currentCourse.id);">Удалить курс</button>
+                </div>
+                <hr>
                 <div ng-bind-html="currentCourse.data.description.text"></div>
-                <button ng-show="editableTextArea.value===false" ng-click="setEditableArea(currentCourse.data.description.text,'course',editableTextArea)">Редактировать</button>
-                <textarea ng-show="editableTextArea.value===true" id="input-course" name="input-course"></textarea>
-                <button ng-show="editableTextArea.value===true" ng-click="saveChanges(currentCourse.data.description.id_text,currentCourse.data.description.text,'course',editableTextArea);getCourseInfo(currentCourse.data.description.id_course,true)">Сохранить</button>
+                <button ng-show="editableTextArea.value===false" ng-click="setEditableArea(currentCourse.data.description.text,'course-cur',editableTextArea)">Редактировать</button>
+                <textarea ng-show="editableTextArea.value===true" id="input-course-cur" name="input-course-cur"></textarea>
+                <button ng-show="editableTextArea.value===true" ng-click="saveChanges(currentCourse.data.description.id_text,currentCourse.data.description.text,'course-cur',editableTextArea);getCourseInfo(currentCourse.data.description.id_course,true)">Сохранить</button>
             </div>
             
             <div ng-show="textOpen==='Lesson'">
+                <div ng-init="editname=false;">
+                    <div ng-bind="currentLesson.name" ng-show="!editname"></div>
+                    <input ng-model="currentLesson.name" ng-show="editname">
+                    <button class="button" ng-show="!editname" ng-click="editname=!editname;">Изменить</button>
+                    <button class="button" ng-show="editname" ng-click="saveLessonName(currentLesson.id,currentLesson.name);editname=!editname;">Сохранить</button>
+                    <button class="button" ng-click="deleteLesson(currentLesson.id);">Удалить урок</button>
+                </div> 
+                <hr>
                 <div ng-bind-html="currentLesson.data.text"></div>
-                <button ng-show="editableTextArea.value===false" ng-click="setEditableArea(currentLesson.data.text,'lesson',editableTextArea)">Редактировать</button>
-                <textarea ng-show="editableTextArea.value===true" id="input-lesson" name="input-lesson"></textarea>
-                <button ng-show="editableTextArea.value===true" ng-click="saveChanges(currentLesson.data.id_text,currentLesson.data.text,'lesson',editableTextArea);getLessonInfo(currentCourse.data.description.id_course,currentLesson.id)">Сохранить</button>
+                <button ng-show="editableTextArea.value===false" ng-click="setEditableArea(currentLesson.data.text,'lesson-cur',editableTextArea)">Редактировать</button>
+                <textarea ng-show="editableTextArea.value===true" id="input-lesson-cur" name="input-lesson-cur"></textarea>
+                <button ng-show="editableTextArea.value===true" ng-click="saveChanges(currentLesson.data.id_text,currentLesson.data.text,'lesson-cur',editableTextArea);getLessonInfo(currentCourse.data.description.id_course,currentLesson.id)">Сохранить</button>
             </div>
 
         </div>
     </div>
     
-    <div ng-show="openedPage==='Tests'" ng-controller="AdminTestPageController" class="flex row">
+    <div ng-show="openedPage==='Tests'" ng-controller="TestPageController" class="flex row">
         
          <div class="left-sidebar">
             <div class="test-left-sidebar" ng-repeat="test in tests">

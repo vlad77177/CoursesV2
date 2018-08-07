@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-App.controller('AdminUserPageController',['$scope','$http','$filter','LoggedUserService','UsersService','CoursesService',
+App.controller('UserPageController',['$scope','$http','$filter','LoggedUserService','UsersService','CoursesService',
     function AdminUserPageController($scope, $http,$filter,LoggedUser,Users,Courses){
         
         $scope.selectedUserID=undefined;
@@ -44,8 +44,12 @@ App.controller('AdminUserPageController',['$scope','$http','$filter','LoggedUser
             password:undefined,
             repeat:undefined,
             user_type:1,
-            type_variants:[
+            type_variants_admin:[
                 {id:1,name:'Куратор'},
+                {id:2,name:'Преподаватель'},
+                {id:3,name:'Студент'}
+            ],
+            type_variants_curator:[
                 {id:2,name:'Преподаватель'},
                 {id:3,name:'Студент'}
             ]

@@ -1,4 +1,4 @@
-App.controller('AdminTextPageController',['$scope','$http','$filter','$q','LoggedUserService','UsersService','CoursesService',
+App.controller('TextPageController',['$scope','$http','$filter','$q','LoggedUserService','UsersService','CoursesService',
     function AdminTextPageController($scope, $http,$filter,$q,LoggedUser,Users,Courses){
         
         $scope.textOpen='Course';
@@ -6,7 +6,7 @@ App.controller('AdminTextPageController',['$scope','$http','$filter','$q','Logge
         $scope.currentLesson={
             data:undefined,
             id:undefined,
-            name:undefined,
+            name:undefined
         };
         
         $scope.editableTextArea={

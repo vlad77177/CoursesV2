@@ -5,7 +5,7 @@
     
     $data=json_decode(file_get_contents('php://input'),true);
     $user= mysqli_fetch_assoc(mysqli_query($db, 'SELECT id,login,email,administrator,curator,teacher,student FROM users WHERE login=\''.$data['user']['login'].'\' AND password=\''.$data['user']['password'].'\''));
-    if($user['administrator']==0 and $user['curator']==0 and $user['teacher']==0 and $user['student']==0){
+    if($user['administrator']==0 and $user['curator']==0){
         exit(FALSE);
     }
 
@@ -27,9 +27,23 @@
             break;
         }
     }
-    $query=$query.') VALUES(\''.$data['newUser']['login'].'\',\''.$pass.'\',\''.$data['newUser']['email'].'\',1)';
+    $query=$query.') VALUES(\''.$data['newUser']['login'].'\',\''.$pass.'\',\''.$data['newUser']['email'].'\',1);';
     
-    $res= mysqli_query($db,$query);
+    $query= mysqli_query($db,$query);
+    $last_id=mysqli_insert_id($db);
+    
+    if($user['curator']==1){
+        switch($data['newUser']['user_type']){
+            case 2:{
+                $res=mysqli_query($db,'INSERT INTO curator_teacher(id_curator,id_teacher) VALUES('.$user['id'].','.$last_id.')');
+                break;
+            }
+            case 3:{
+                $res=mysqli_query($db,'INSERT INTO curator_student(id_curator,id_student) VALUES('.$user['id'].','.$last_id.')');
+                break;
+            }
+        }
+    }
     
     exit($query);
 ?>

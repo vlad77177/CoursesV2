@@ -1,4 +1,4 @@
-App.controller('AdminCoursesPageController',['$scope','$http','$filter','LoggedUserService','UsersService','CoursesService',
+App.controller('CoursesPageController',['$scope','$http','$filter','LoggedUserService','UsersService','CoursesService',
     function AdminCoursesPageController($scope, $http,$filter,LoggedUser,Users,Courses){
 
         $scope.openedCourseExPage='Users';

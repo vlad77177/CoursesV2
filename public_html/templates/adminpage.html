@@ -19,7 +19,7 @@
         </div>
     </div>
     
-    <div class="flex row" ng-controller="AdminUserPageController" ng-show="openedPage==='Users'">
+    <div class="flex row" ng-controller="UserPageController" ng-show="openedPage==='Users'">
              
         <div id="list-of-users" class="flex column">
             
@@ -44,7 +44,7 @@
                     <tr>
                         <td>Тип пользователя:</td>
                         <td>
-                            <select ng-model="newUser.user_type" ng-options="item.id as item.name for item in newUser.type_variants"></select>
+                            <select ng-model="newUser.user_type" ng-options="item.id as item.name for item in newUser.type_variants_admin"></select>
                         </td>
                     </tr>
                 </table>
@@ -159,7 +159,7 @@
         </div>
     </div>
     
-    <div ng-show="openedPage==='Courses'" ng-controller="AdminCoursesPageController" class="flex row">        
+    <div ng-show="openedPage==='Courses'" ng-controller="CoursesPageController" class="flex row">        
         
         <div id="list-of-courses" ng-show="courses.length>0">
             <div>Курсы</div>
@@ -183,7 +183,7 @@
         
     </div>
     
-    <div ng-show="openedPage==='Texts'" ng-controller="AdminTextPageController" class="flex row">
+    <div ng-show="openedPage==='Texts'" ng-controller="TextPageController" class="flex row">
         <div class="left-sidebar">
             <div class="courses-left-sidebar" ng-repeat="course in courses">
                 <div class="courses-left-sidebar-name hover" ng-bind="course.name" ng-click="getCourseInfo(course.id,true);currentCourse.name=course.name;currentCourse.id=course.id;"></div>
@@ -229,7 +229,7 @@
         </div>
     </div>
     
-    <div ng-show="openedPage==='Tests'" ng-controller="AdminTestPageController" class="flex row">
+    <div ng-show="openedPage==='Tests'" ng-controller="TestPageController" class="flex row">
         
          <div class="left-sidebar">
             <div class="test-left-sidebar" ng-repeat="test in tests">

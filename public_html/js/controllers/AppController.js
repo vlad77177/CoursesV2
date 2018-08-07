@@ -50,6 +50,7 @@ App.controller('AppController',['$scope','$http','$interval','LoggedUserService'
             $scope.loggedUser.signed=u.usersigned;
             Users.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(us){
                 $scope.users=us;
+                console.log($scope.users);
             });
             Courses.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(c){
                 $scope.courses=c;

@@ -1,4 +1,4 @@
-App.controller('AdminTestPageController',['$scope','$http','$filter','$q','LoggedUserService','UsersService','CoursesService','TestsService',
+App.controller('TestPageController',['$scope','$http','$filter','$q','LoggedUserService','UsersService','CoursesService','TestsService',
     function AdminTestPageController($scope, $http,$filter,$q,LoggedUser,Users,Courses,Tests){
         
         $scope.editTestName=false;
