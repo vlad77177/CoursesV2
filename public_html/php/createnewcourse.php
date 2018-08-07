@@ -6,7 +6,7 @@ require 'db.php';
 
 $data=json_decode(file_get_contents('php://input'),true);
 $user= mysqli_fetch_assoc(mysqli_query($db, 'SELECT id,login,email,administrator,curator,teacher,student FROM users WHERE login=\''.$data['user']['login'].'\' AND password=\''.$data['user']['password'].'\'')); 
-if($user['administrator']==0 and $user['curator']==0 and $user['teacher']==0 and $user['student']==0){
+if($user['administrator']==0 and $user['curator']==0){
     exit();
 }
 
@@ -18,6 +18,9 @@ $lessoncontent="Введите содержимое урока";
 
 $res=mysqli_query($db,'INSERT INTO courses(name,logo) VALUES(\''.$name.'\','.$logo.')');
 $lastid=mysqli_insert_id($db);
+if($user['curator']==1){
+    mysqli_query($db,'INSERT INTO curator_course(id_curator,id_course) VALUES('.$user['id'].','.$lastid.')');
+}
 
 $res=$res=mysqli_query($db,'INSERT INTO text(text) VALUES(\''.$description.'\')');
 $lastiddesc=mysqli_insert_id($db);

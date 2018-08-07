@@ -1,0 +1,260 @@
+<div ng-controller="PageController">
+    
+    <div id="admin-panel-top" class="page-top-block flex row center cross-center" ng-show="loggedUser.uadmin">
+        <div>Панель администратора</div>
+        <button class="button button-exit" ng-show="loggedUser.ulog" ng-click="logOut()">Выход</button>
+    </div>
+    
+    <div id="curator-panel-top" class="page-top-block flex row center cross-center" ng-show="loggedUser.ucurator">
+        <div>Панель куратора</div>
+        <button class="button button-exit" ng-show="loggedUser.ulog" ng-click="logOut()">Выход</button>
+    </div>
+    
+    <div id="teacher-panel-top" class="page-top-block flex row center cross-center" ng-show="loggedUser.uteacher">
+        <div>Панель преподавателя</div>
+        <button class="button button-exit" ng-show="loggedUser.ulog" ng-click="logOut()">Выход</button>
+    </div>
+    
+    <div class="menu-block flex row space-between">
+        <div class="flex column center cross-center hover" ng-click="openPage('Users')">
+            <div class="hover">Пользователи</div>
+        </div>
+        <div class="flex column center cross-center hover" ng-click="openPage('Courses')">
+            <div class="hover">Курсы</div>
+        </div>
+        <div class="flex column center cross-center hover" ng-click="openPage('Texts')">
+            <div class="hover">Тексты</div>
+        </div>
+        <div class="flex column center cross-center hover"  ng-click="openPage('Tests')">
+            <div class="hover">Тесты</div>
+        </div>
+    </div>
+    
+    <div class="flex row" ng-controller="UserPageController" ng-show="openedPage==='Users'">
+             
+        <div id="list-of-users" class="flex column">
+            
+            <div id="create-user-form" class="grey-border-radius" ng-show="!loggedUser.uteacher">
+                <table>
+                    <tr>
+                        <td>Логин:</td>
+                        <td><input ng-model="newUser.login" type="text"></td>
+                    </tr>
+                    <tr>
+                        <td>Email:</td>
+                        <td><input ng-model="newUser.email" type="text"></td>
+                    </tr>
+                    <tr>
+                        <td>Пароль:</td>
+                        <td><input ng-model="newUser.password" type="password"></td>
+                    </tr>
+                    <tr>
+                        <td>Повторите пароль:</td>
+                        <td><input ng-model="newUser.repeat" type="password"></td>
+                    </tr>
+                    <tr>
+                        <td>Тип пользователя:</td>
+                        <td>
+                            <select ng-model="newUser.user_type" ng-options="item.id as item.name for item in newUser.type_variants_admin" ng-show="loggedUser.uadmin"></select>
+                            <select ng-model="newUser.user_type" ng-options="item.id as item.name for item in newUser.type_variants_curator" ng-show="loggedUser.ucurator"></select>
+                        </td>
+                    </tr>
+                </table>
+                <button class="button" ng-click="createNewUser()">Добавить пользователя</button>
+            </div>
+            
+            <div class="download-block" ng-show="contentDownload.courses==false"></div>
+
+            <div ng-show="(users | UserFilter:'administrator').length>0">
+                <div>Администраторы</div>
+                <div>
+                    <table class="list-table">
+                        <tr>
+                            <td>№</td>
+                            <td>ID</td>
+                            <td>Логин</td>
+                        </tr>
+                        <tr ng-repeat="admin in users | UserFilter:'administrator'" ng-click="selectUser(admin.id)" class="hover">
+                            <td ng-bind="$index+1"></td>
+                            <td ng-bind="admin.id"></td>
+                            <td ng-bind="admin.login"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div ng-show="(users | UserFilter:'curator').length>0">
+                <div>Кураторы</div>
+                <div>
+                    <table class="list-table">
+                        <tr>
+                            <td>№</td>
+                            <td>ID</td>
+                            <td>Логин</td>
+                        </tr>
+                        <tr ng-repeat="curator in users | UserFilter:'curator'" ng-click="selectUser(curator.id)" class="hover">
+                            <td ng-bind="$index+1"></td>
+                            <td ng-bind="curator.id"></td>
+                            <td ng-bind="curator.login"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div ng-show="(users | UserFilter:'teacher').length>0">
+                <div>Преподаватели</div>
+                <div>
+                    <table class="list-table">
+                        <tr>
+                            <td>№</td>
+                            <td>ID</td>
+                            <td>Логин</td>
+                        </tr>
+                        <tr ng-repeat="teacher in users | UserFilter:'teacher'" ng-click="selectUser(teacher.id)" class="hover">
+                            <td ng-bind="$index+1"></td>
+                            <td ng-bind="teacher.id"></td>
+                            <td ng-bind="teacher.login"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div ng-show="(users | UserFilter:'student').length>0">
+                <div>Студенты</div>
+                <div>
+                    <table class="list-table">
+                        <tr>
+                            <td>№</td>
+                            <td>ID</td>
+                            <td>Логин</td>
+                        </tr>
+                        <tr ng-repeat="student in users | UserFilter:'student'" ng-click="selectUser(student.id)" class="hover">
+                            <td ng-bind="$index+1"></td>
+                            <td ng-bind="student.id"></td>
+                            <td ng-bind="student.login"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="user-info-block" ng-show="(users | UserFilter:'id':selectedUserID).length>0">
+            <div id="user-info">
+                <table>
+                    <tr>
+                        <td>ID:</td>
+                        <td ng-bind="currentUser.id"></td>
+                    </tr>
+                    <tr>
+                        <td>Логин:</td>
+                        <td ng-bind="currentUser.login"></td>
+                    </tr>
+                    <tr>
+                        <td>Email:</td>
+                        <td ng-bind="currentUser.email"></td>
+                    </tr>
+                    <tr ng-show="loggedUser.uadmin || loggedUser.ucurator">
+                        <td>Новый пароль:</td>
+                        <td><input ng-model="currentUser.newpass" type="password"></td>
+                    </tr>
+                    <tr ng-show="loggedUser.uadmin || loggedUser.ucurator">
+                        <td>Повторите пароль:</td>
+                        <td><input ng-model="currentUser.repeat" type="password"></td>
+                    </tr>
+                </table>
+                <button class="button" ng-click="saveUserData()" ng-show="loggedUser.uadmin || loggedUser.ucurator">Сохранить</button>
+            </div>
+            
+            <curator-extended ng-show="currentUser.is_curator==true"></curator-extended>
+            <teacher-extended ng-show="currentUser.is_teacher==true"></teacher-extended>
+            <student-extended ng-show="currentUser.is_student==true"></student-extended>
+
+        </div>
+    </div>
+    
+    <div ng-show="openedPage==='Courses'" ng-controller="CoursesPageController" class="flex row">        
+        
+        <div id="list-of-courses" ng-show="courses.length>0">
+            <div>Курсы</div>
+            <div>
+                <table class="list-table">
+                    <tr>
+                        <td>№</td>
+                        <td>ID</td>
+                        <td>Название</td>
+                    </tr>
+                    <tr ng-repeat="course in courses" class="hover" ng-click="getCourseInfo(course.id,true)">
+                        <td ng-bind="$index+1"></td>
+                        <td ng-bind="course.id"></td>
+                        <td ng-bind="course.name"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        <course-extended></course-extended>
+        
+    </div>
+    
+    <div ng-show="openedPage==='Texts'" ng-controller="TextPageController" class="flex row">
+        <div class="left-sidebar">
+            <div class="courses-left-sidebar" ng-repeat="course in courses">
+                <div class="courses-left-sidebar-name hover" ng-bind="course.name" ng-click="getCourseInfo(course.id,true);currentCourse.name=course.name;currentCourse.id=course.id;"></div>
+                <div class="lessons-left-sidebar hover" ng-repeat="lesson in course.lessons" ng-bind="lesson.name" ng-click="getLessonInfo(course.id,lesson.id);currentLesson.name=lesson.name;"></div>
+                <button class="button" ng-click="createNewLesson(course.id);">Добавить урок</button>
+            </div>
+            <hr>
+            <button class="button" ng-click="createNewCourse();" ng-show="loggedUser.uadmin || loggedUser.ucurator">Добавить курс</button>
+        </div>
+        
+        <div id="courses-text-block" class="flex row">
+            
+            <div ng-show="textOpen==='Course'">
+                <div ng-init="editname=false;">
+                    <div ng-bind="currentCourse.name" ng-show="!editname"></div>
+                    <input ng-model="currentCourse.name" ng-show="editname">
+                    <button class="button" ng-show="!editname" ng-click="editname=!editname;">Изменить</button>
+                    <button class="button" ng-show="editname" ng-click="saveCourseName(currentCourse.id,currentCourse.name);editname=!editname;">Сохранить</button>
+                    <button class="button" ng-click="deleteCourse(currentCourse.id);">Удалить курс</button>
+                </div>
+                <hr>
+                <div ng-bind-html="currentCourse.data.description.text"></div>
+                <button ng-show="editableTextArea.value===false" ng-click="setEditableArea(currentCourse.data.description.text,'course',editableTextArea)">Редактировать</button>
+                <textarea ng-show="editableTextArea.value===true" id="input-course" name="input-course"></textarea>
+                <button ng-show="editableTextArea.value===true" ng-click="saveChanges(currentCourse.data.description.id_text,currentCourse.data.description.text,'course',editableTextArea);getCourseInfo(currentCourse.data.description.id_course,true)">Сохранить</button>
+            </div>
+            
+            <div ng-show="textOpen==='Lesson'">
+                <div ng-init="editname=false;">
+                    <div ng-bind="currentLesson.name" ng-show="!editname"></div>
+                    <input ng-model="currentLesson.name" ng-show="editname">
+                    <button class="button" ng-show="!editname" ng-click="editname=!editname;">Изменить</button>
+                    <button class="button" ng-show="editname" ng-click="saveLessonName(currentLesson.id,currentLesson.name);editname=!editname;">Сохранить</button>
+                    <button class="button" ng-click="deleteLesson(currentLesson.id);">Удалить урок</button>
+                </div> 
+                <hr>
+                <div ng-bind-html="currentLesson.data.text"></div>
+                <button ng-show="editableTextArea.value===false" ng-click="setEditableArea(currentLesson.data.text,'lesson',editableTextArea)">Редактировать</button>
+                <textarea ng-show="editableTextArea.value===true" id="input-lesson" name="input-lesson"></textarea>
+                <button ng-show="editableTextArea.value===true" ng-click="saveChanges(currentLesson.data.id_text,currentLesson.data.text,'lesson',editableTextArea);getLessonInfo(currentCourse.data.description.id_course,currentLesson.id)">Сохранить</button>
+            </div>
+
+        </div>
+    </div>
+    
+    <div ng-show="openedPage==='Tests'" ng-controller="TestPageController" class="flex row">
+        
+        <div class="left-sidebar">
+            <div class="test-left-sidebar" ng-repeat="test in tests">
+                <div class="tests-left-sidebar-name hover" ng-bind="test.name" ng-click="getTestInfo(test.id)"></div>
+                <div class="questions-left-sidebar hover" ng-repeat="question in test.questions" ng-bind="question.name" ng-click="getQuestionInfo(question,test.id)"></div>
+                <div><button class="button" ng-click="addQuestion(test.id)">Добавить вопрос</button></div>
+            </div>
+            <div><button class="button" ng-click="addTest()">Добавить тест</button></div>
+        </div>
+        
+        <test-extended></test-extended>
+        
+    </div>
+    
+</div>

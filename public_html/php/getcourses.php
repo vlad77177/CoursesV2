@@ -9,13 +9,13 @@
         exit(FALSE);
     }
     
-    $coursesf= mysqli_fetch_all(mysqli_query($db,'SELECT courses.id,name,src FROM courses LEFT OUTER JOIN images ON courses.logo=images.id'),MYSQLI_ASSOC);
+    $coursesf= mysqli_fetch_all(mysqli_query($db,'SELECT * FROM courses'),MYSQLI_ASSOC);
     $courses=array();
     
     if($user['curator']==1){
         $res_courses=mysqli_query($db,'SELECT * FROM curator_course WHERE id_curator='.$user['id'].'');
         while($row=mysqli_fetch_assoc($res_courses)){
-            for($i=0;$i<count(coursesf);$i++){
+            for($i=0;$i<count($coursesf);$i++){
                 if($coursesf[$i]['id']==$row['id_course']){
                     $courses[count($courses)]=$coursesf[$i];
                     break;
@@ -25,6 +25,17 @@
     }
     else if($user['student']==1){
         $res_courses=mysqli_query($db,'SELECT * FROM user_result WHERE user_id='.$user['id'].'');
+        while($row=mysqli_fetch_assoc($res_courses)){
+            for($i=0;$i<count(coursesf);$i++){
+                if($coursesf[$i]['id']==$row['id_course']){
+                    $courses[count($courses)]=$coursesf[$i];
+                    break;
+                }
+            }
+        }
+    }
+    else if($user['teacher']==1){
+        $res_courses=mysqli_query($db,'SELECT * FROM teacher_course WHERE id_teacher='.$user['id'].'');
         while($row=mysqli_fetch_assoc($res_courses)){
             for($i=0;$i<count(coursesf);$i++){
                 if($coursesf[$i]['id']==$row['id_course']){

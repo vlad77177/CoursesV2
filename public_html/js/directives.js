@@ -5,17 +5,10 @@ App.directive('loginForm',function(){
         replace:true
     };
 });
-App.directive('adminPage',function(){
+App.directive('mainPage',function(){
     return{
         restrict:'E',
-        templateUrl:'templates/adminpage.html',
-        replace:true
-    };
-});
-App.directive('curatorPage',function(){
-    return{
-        restrict:'E',
-        templateUrl:'templates/curatorpage.html',
+        templateUrl:'templates/mainpage.html',
         replace:true
     };
 });
@@ -106,6 +99,3 @@ App.directive('intbooleanvalidation',function(){
         }
     };
 });
-
-
-

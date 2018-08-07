@@ -14,8 +14,27 @@
     $users=array();
     
     while($row=mysqli_fetch_assoc($res)){
-        if($user_log['administrator']==1 or ($user_log['curator']==1 and ($row['administrator']==0 and ($row['curator']==0 or $row['id']==$user_log['id'])))){
+        if($user_log['administrator']==1 or ($user_log['curator']==1 and ($row['administrator']==0 and ($row['curator']==0 or $row['id']==$user_log['id']))) or $user_log['teacher']==1){
             
+            if($user_log['teacher']==1 and $user_log['id']!==$row['id']){
+                $find=false;
+                $techer_courses=mysqli_query($db,'SELECT * FROM teacher_course WHERE id_teacher='.$user_log['id'].'');
+                while($tc=mysqli_fetch_assoc($techer_courses)){
+                    $course_users=mysqli_query($db,'SELECT * FROM user_result WHERE id_course='.$tc['id_course'].'');
+                    while($u=mysqli_fetch_assoc($course_users)){
+                        if($u['user_id']==$row['id']){
+                            $find=true;
+                            break;
+                        }
+                        if($find===true){
+                            break;
+                        }
+                    }
+                }
+                if($find===false){
+                    continue;
+                }
+            }
             if($user_log['curator']==1 and $row['id']!==$user_log['id'] and $user_log['administrator']==0){
                 $continue=true;
                 $res_teachers=mysqli_query($db,'SELECT * FROM curator_teacher WHERE id_curator='.$user_log['id'].'');

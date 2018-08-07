@@ -37,9 +37,9 @@
             <div id="main">
             <login-form ng-show="!loggedUser.ulog"></login-form>
 
-            <admin-page ng-show="loggedUser.ulog && loggedUser.uadmin"></admin-page>
-            <curator-page ng-show="loggedUser.ulog && loggedUser.ucurator"></curator-page>
+            <main-page ng-show="loggedUser.ulog"></main-page>
             <student-page ng-show="loggedUser.ulog && loggedUser.ustudent"></student-page>
+            
             </div>
         </div>
         <div id="footer"></div>

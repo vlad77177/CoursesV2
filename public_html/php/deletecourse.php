@@ -30,6 +30,9 @@ $res= mysqli_query($db, 'DELETE FROM lessons WHERE id_course='.$data['id'].'');
 //удален сам курс
 $res= mysqli_query($db, 'DELETE FROM courses WHERE id='.$data['id']);
 
+//удаляю связаного куратора
+mysqli_query($db,'DELETE FROM curator_course WHERE id_course='.$data['id'].'');
+
 $res=mysql_query($db,'DELETE FROM user_result WHERE id_course='.$data['id'].'');
 
 exit();

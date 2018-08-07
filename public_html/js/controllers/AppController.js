@@ -45,9 +45,18 @@ App.controller('AppController',['$scope','$http','$interval','LoggedUserService'
             $scope.loggedUser.ulog=u.ulog;
             $scope.loggedUser.uadmin=u.uadmin;
             $scope.loggedUser.ucurator=u.ucurator;
-            $scope.loggedUser.uteaher=u.uteacher;
+            $scope.loggedUser.uteacher=u.uteacher;
             $scope.loggedUser.ustudent=u.ustudent;
             $scope.loggedUser.signed=u.usersigned;
+            if($scope.loggedUser.uadmin==true){
+                $scope.loggedUser.mark='admin';
+            }
+            else if($scope.loggedUser.ucurator==true){
+                $scope.loggedUser.mark='curator';
+            }
+            else if($scope.loggedUser.uadmin==true){
+                $scope.loggedUser.mark='teacher';
+            }
             Users.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(us){
                 $scope.users=us;
                 console.log($scope.users);
@@ -104,6 +113,15 @@ App.controller('AppController',['$scope','$http','$interval','LoggedUserService'
                             $scope.loggedUser.uteaher=u.uteacher;
                             $scope.loggedUser.ustudent=u.ustudent;
                             $scope.loggedUser.signed=u.usersigned;
+                            if($scope.loggedUser.uadmin==true){
+                                $scope.loggedUser.mark='admin';
+                            }
+                            else if($scope.loggedUser.ucurator==true){
+                                $scope.loggedUser.mark='curator';
+                            }
+                            else if($scope.loggedUser.uadmin==true){
+                                $scope.loggedUser.mark='teacher';
+                            }
                             Users.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(us){
                                 $scope.users=us;
                             });

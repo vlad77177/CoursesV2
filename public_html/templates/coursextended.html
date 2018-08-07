@@ -13,7 +13,7 @@
     
     <div ng-show="openedCourseExPage==='Users'">
         
-        <div>
+        <div ng-show="loggedUser.uteacher===false">
             <div>Куратор:</div>
             <select ng-model="unlinkCuratorCourse.value" ng-options="curator.id as curator.login for curator in unlinkCuratorCourse.curators"></select>
             <button class="button" ng-show="currentCourse.curator!==unlinkCuratorCourse.value" ng-click="setCurator()">Назначить</button>

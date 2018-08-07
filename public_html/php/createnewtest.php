@@ -12,7 +12,7 @@ if($user['administrator']==0 and $user['curator']==0 and $user['teacher']==0 and
 
 $name='Новый тест';
 $question="Текст первого вопроса";
-$question_name="Первый вопрос";
+$question_name="Вопрос 1";
 $var1="Вариант 1";
 $var2="Вариант 2";
 
