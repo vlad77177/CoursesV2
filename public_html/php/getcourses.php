@@ -9,7 +9,14 @@
         exit(FALSE);
     }
     
-    $coursesf= mysqli_fetch_all(mysqli_query($db,'SELECT * FROM courses'),MYSQLI_ASSOC);
+    //$coursesf= mysqli_fetch_all(mysqli_query($db,'SELECT * FROM courses'),MYSQLI_ASSOC);
+    $coursesf=[];
+    $r=mysqli_query($db,'SELECT * FROM courses');
+    $i=0;
+    while($row=mysqli_fetch_assoc($r)){
+            $coursesf[$i]=$row;
+            $i++;
+    }
     $courses=array();
     
     if($user['curator']==1){

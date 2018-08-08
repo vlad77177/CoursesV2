@@ -39,6 +39,7 @@
                 $continue=true;
                 $res_teachers=mysqli_query($db,'SELECT * FROM curator_teacher WHERE id_curator='.$user_log['id'].'');
                 $res_students=mysqli_query($db,'SELECT * FROM curator_student WHERE id_curator='.$user_log['id'].'');
+                //$res_courses=mysqli_query($db,'SELECT * FROM curator_course WHERE id_curator='.$user_log['id'].'');
                 while($r=mysqli_fetch_assoc($res_teachers)){
                     if($r['id_teacher']==$row['id']){
                         $continue=false;
@@ -54,7 +55,7 @@
                 }
             }
             
-            $user_json='{"id":null,"login":null,"email":null,"administrator":false,"curator":false,"teacher":false,"student":false,"cur_students":[],"cur_teachers":[],"teach_courses":[],"teach_students":[],"results":[],"learneds":[],"need_learns":[],"curator":null,"teachers":[],"courses":[]}';
+            $user_json='{"id":null,"login":null,"email":null,"administrator":false,"curator":false,"teacher":false,"student":false,"cur_students":[],"cur_teachers":[],"cur_courses":[],"teach_courses":[],"teach_students":[],"results":[],"learneds":[],"need_learns":[],"curator":null,"teachers":[],"courses":[]}';
             $user= json_decode($user_json);
             
             $user->id=$row['id'];
@@ -73,6 +74,10 @@
                 $res2= mysqli_query($db,'SELECT id_teacher FROM curator_teacher WHERE id_curator='.$row['id'].'');
                 while($teach= mysqli_fetch_assoc($res2)){
                     $user->cur_teachers[count($user->cur_teachers)]=$teach['id_teacher'];
+                }
+                $res2= mysqli_query($db,'SELECT id_course FROM curator_course WHERE id_curator='.$row['id'].'');
+                while($course= mysqli_fetch_assoc($res2)){
+                    $user->cur_courses[count($user->cur_courses)]=$course['id_course'];
                 }
             }
             if($row['teacher']==1){

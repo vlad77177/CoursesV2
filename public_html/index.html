@@ -37,7 +37,7 @@
             <div id="main">
             <login-form ng-show="!loggedUser.ulog"></login-form>
 
-            <main-page ng-show="loggedUser.ulog"></main-page>
+            <main-page ng-show="loggedUser.ulog && !loggedUser.ustudent"></main-page>
             <student-page ng-show="loggedUser.ulog && loggedUser.ustudent"></student-page>
             
             </div>

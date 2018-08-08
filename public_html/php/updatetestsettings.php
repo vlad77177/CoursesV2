@@ -24,6 +24,9 @@ $query='UPDATE tests SET active='.$data['data']['active'].
 
 $res=mysqli_query($db,$query);
 
+mysqli_query($db,'DELETE FROM curator_test WHERE id_test='.$data['data']['id'].'');
+mysqli_query($db,'INSERT INTO curator_test(id_curator,id_test) VALUES('.$data['data']['curator_id'].','.$data['data']['id'].')');
+
 exit();
 
 ?>

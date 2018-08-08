@@ -11,21 +11,38 @@ if($user['administrator']==0 and $user['curator']==0 and $user['teacher']==0 and
     exit(FALSE);
 }
 
-$testsf= mysqli_fetch_all(mysqli_query($db,'SELECT * FROM tests'),MYSQLI_ASSOC);
+//$testsf= mysqli_fetch_all(mysqli_query($db,'SELECT * FROM tests'),MYSQLI_ASSOC);
+$testsf=[];
+$rt=mysqli_query($db,'SELECT * FROM tests');
+$i=0;
+while($row=mysqli_fetch_assoc($rt)){
+        $testsf[$i]=$row;
+        $i++;
+}
+
 $tests;
 $course_ids;
+$tests_ids;
 if($user['administrator']==0){
     if($user['curator']==1){
-        $course_ids=mysqli_query($db,'SELECT id_course FROM curator_course WHERE id_curator='.$user['id'].'');
+        $tests_ids=mysqli_query($db,'SELECT id_test FROM curator_test WHERE id_curator='.$user['id'].'');
+        while($r=mysqli_fetch_assoc($test_ids)){
+            $id_test=mysqli_fetch_assoc(mysqli_query($db,'SELECT * FROM tests WHERE for_course_id='.$r['id_course'].''));
+            for($i=0;$i<count($testsf);$i++){
+                if($testsf[$i]['id']===$id_test['id']){
+                    $tests[count($tests)]=$testsf[$i];
+                }
+            }
+        }
     }
     else if($user['teacher']==1){
         $course_ids=mysqli_query($db,'SELECT id_course FROM teacher_course WHERE id_teacher='.$user['id'].'');
-    }
-    while($r=mysqli_fetch_assoc($course_ids)){
-        $id_test=mysqli_fetch_assoc(mysqli_query($db,'SELECT * FROM tests WHERE for_course_id='.$r['id_course'].''));
-        for($i=0;$i<count($testsf);$i++){
-            if($testsf[$i]['id']===$id_test['id']){
-                $tests[count($tests)]=$testsf[$i];
+        while($r=mysqli_fetch_assoc($course_ids)){
+            $id_test=mysqli_fetch_assoc(mysqli_query($db,'SELECT * FROM tests WHERE for_course_id='.$r['id_course'].''));
+            for($i=0;$i<count($testsf);$i++){
+                if($testsf[$i]['id']===$id_test['id']){
+                    $tests[count($tests)]=$testsf[$i];
+                }
             }
         }
     }
@@ -35,6 +52,8 @@ else{
 }
 
 for($i=0;$i<count($tests);$i++){
+    $curator=mysqli_fetch_assoc(mysqli_query($db,'SELECT * FROM curator_test WHERE id_test='.$tests[$i]['id'].''));
+    $tests[$i]['curator_id']=$curator['id_curator'];
     $questions=mysqli_query($db,'SELECT id,text.text,number,text.id_text,name FROM questions INNER JOIN text ON questions.id_text=text.id_text WHERE questions.id_test='.$tests[$i]['id'].'');
     if(mysqli_num_rows($questions)!=0){
         $max= mysqli_num_rows($questions);
