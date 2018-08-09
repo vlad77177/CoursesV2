@@ -10,11 +10,19 @@ class SQLExec{
     
     private $connection;
     
-    function Connect($host,$user,$password,$database){
+    function __construct($host,$user,$password,$database){
+        $this->Connect($host,$user,$password,$database);
+    }
+    
+    public function Connect($host,$user,$password,$database){
         $this->connection=mysqli_connect($host,$user,$password,$database);
     }
     
-    function ExecuteQuery($sql){
+    public function IsConnect(){
+        return $this->connection;
+    }
+    
+    public function ExecuteQuery($sql){
         $result=array();
         $res=mysqli_query($this->connection,$sql);
         if($res!==null){
