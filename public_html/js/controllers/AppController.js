@@ -98,12 +98,13 @@ App.controller('AppController',['$scope','$http','$interval','LoggedUserService'
         
         
         $scope.loginFormModel={
+            action:'Login',
             login:undefined,
             password:undefined
         };
         
         $scope.loginUser=function(){
-            $http({method: 'POST', data:$scope.loginFormModel, url:'php/login.php'})
+            $http({method: 'POST', data:$scope.loginFormModel, url:'php/api.php'})
                     .then(function(data){
                         LoggedUser.reset().then(function(u){
                             $scope.loggedUser=u.data;

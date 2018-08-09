@@ -15,7 +15,7 @@ class SessionAccess{
             'id',
             'login',
             'password',
-            'admin',
+            'administrator',
             'curator',
             'teacher',
             'student'
@@ -31,8 +31,9 @@ class SessionAccess{
     public function GetSession(){
         $user=array();
         for($i=0;$i<count($this->keys);$i++){
-            $user[count($user)]=$_SESSION[$this->keys[$i]];
+            $user[$this->keys[$i]]=$_SESSION[$this->keys[$i]];
         }
+        error_log(json_encode($user));
         return $user;
     }
     

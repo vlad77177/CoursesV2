@@ -13,14 +13,18 @@ App.factory('LoggedUserService',function($http){
                             ustudent:false,
                             usersigned:[]
                         };
-                promice=$http({method: 'GET', url: 'php/sessioncheck.php'}).
+                var data={
+                    action:'getSession'
+                };
+                promice=$http({method: 'POST',data:data, url: 'php/api.php'}).
                     then(function(data) {
+                        console.log('returned session data:');
                         console.log(data);
                         userlogged.data=data.data;
                         if(data.data.login!==null){
                             userlogged.ulog=true;
                         }
-                        if(data.data.admin==true){
+                        if(data.data.administrator==true){
                            userlogged.uadmin=true;
                         }
                         if(data.data.curator==true){
@@ -43,6 +47,7 @@ App.factory('LoggedUserService',function($http){
                                    userlogged.usersigned[i]=data.data[i];
                                }
                         });
+                           console.log('loggedUser:');
                            console.log(userlogged);
                            return userlogged;
                         });

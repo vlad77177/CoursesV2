@@ -11,10 +11,16 @@ class Condition{
     private $cond;
     private $value;
     
-    public function __construct($col,$cond,$val){
+    public function __construct($col,$cond,$val){       
         $this->SetColumn($col);
         $this->cond=$cond;
         $this->value=$val;
+    }
+    
+    public function SetData(Condition $c){
+        $this->SetColumn($c->GetColumn());
+        $this->SetCond($c->GetCondition());
+        $this->SetValue($c->GetValue());
     }
     
     public function SetColumn($col){

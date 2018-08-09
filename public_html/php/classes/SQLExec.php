@@ -30,10 +30,13 @@ class SQLExec{
     public function ExecuteQuery($sql){
         $result=array();
         $res=mysqli_query($this->connection,$sql);
-        if($res!==null){
+        if($res!==FALSE){
             while($r=mysqli_fetch_assoc($res)){
                 $result[count($result)]=$r;
             }
+        }
+        else{
+            return FALSE;
         }
         if(count($result)===1)
             return $result[0];
