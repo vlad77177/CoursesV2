@@ -218,7 +218,7 @@
                     <button class="button" ng-click="deleteCourse(currentCourse.id);">Удалить курс</button>
                 </div>
                 <hr>
-                <div ng-bind-html="currentCourse.data.description.text"></div>
+                <div ng-bind-html="currentCourse.data.description.text | trusted"></div>
                 <button ng-show="editableTextArea.value===false" ng-click="setEditableArea(currentCourse.data.description.text,'course',editableTextArea)">Редактировать</button>
                 <textarea ng-show="editableTextArea.value===true" id="input-course" name="input-course"></textarea>
                 <button ng-show="editableTextArea.value===true" ng-click="saveChanges(currentCourse.data.description.id_text,currentCourse.data.description.text,'course',editableTextArea);getCourseInfo(currentCourse.data.description.id_course,true)">Сохранить</button>
@@ -233,7 +233,7 @@
                     <button class="button" ng-click="deleteLesson(currentLesson.id);">Удалить урок</button>
                 </div> 
                 <hr>
-                <div ng-bind-html="currentLesson.data.text"></div>
+                <div ng-bind-html="currentLesson.data.text | trusted"></div>
                 <button ng-show="editableTextArea.value===false" ng-click="setEditableArea(currentLesson.data.text,'lesson',editableTextArea)">Редактировать</button>
                 <textarea ng-show="editableTextArea.value===true" id="input-lesson" name="input-lesson"></textarea>
                 <button ng-show="editableTextArea.value===true" ng-click="saveChanges(currentLesson.data.id_text,currentLesson.data.text,'lesson',editableTextArea);getLessonInfo(currentCourse.data.description.id_course,currentLesson.id)">Сохранить</button>

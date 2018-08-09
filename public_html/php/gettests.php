@@ -25,9 +25,9 @@ $course_ids;
 $tests_ids;
 if($user['administrator']==0){
     if($user['curator']==1){
-        $tests_ids=mysqli_query($db,'SELECT id_test FROM curator_test WHERE id_curator='.$user['id'].'');
-        while($r=mysqli_fetch_assoc($test_ids)){
-            $id_test=mysqli_fetch_assoc(mysqli_query($db,'SELECT * FROM tests WHERE for_course_id='.$r['id_course'].''));
+        $tests_ids=mysqli_query($db,'SELECT * FROM curator_test WHERE id_curator='.$user['id'].'');
+        while($r=mysqli_fetch_assoc($tests_ids)){
+            $id_test=mysqli_fetch_assoc(mysqli_query($db,'SELECT * FROM tests WHERE id='.$r['id_test'].''));
             for($i=0;$i<count($testsf);$i++){
                 if($testsf[$i]['id']===$id_test['id']){
                     $tests[count($tests)]=$testsf[$i];

@@ -20,7 +20,7 @@ $res=mysqli_query($db,'INSERT INTO tests(name) VALUES(\''.$name.'\')');
 $lastid=mysqli_insert_id($db);
 
 if($user['curator']==1){
-    mysqli_query($db,'INSERT INTO curator_test(id_curator,id_tess) VALUES('.$user['id'].','.$lastid.')');
+    mysqli_query($db,'INSERT INTO curator_test(id_curator,id_test) VALUES('.$user['id'].','.$lastid.')');
 }
 
 $res=$res=mysqli_query($db,'INSERT INTO text(text) VALUES(\''.$question.'\')');
