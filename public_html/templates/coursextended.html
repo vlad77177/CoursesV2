@@ -1,5 +1,5 @@
 <div id="course-extended-block" ng-show="currentCourse.data!==undefined">
-    <div ng-bind-html="currentCourse.data.description.text"></div>
+    <div ng-bind-html="currentCourse.data.description.text | trusted"></div>
     <hr>
     
     <div class="menu-block flex row space-between">

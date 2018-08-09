@@ -105,7 +105,6 @@ footer{
     margin-bottom: 10px;
     margin-left: 5vw;
     margin-right: 5vw;
-    width:90vw;
     height: 10vh;
     color:#ffffff;
     font-size: 21pt;
@@ -129,7 +128,7 @@ footer{
     margin-right: 5vw;
 }
 .menu-block > div{
-    padding: 5px 20px 5px 2px;
+    padding: 5px 2px 5px 2px;
     background-color: #0055ff;
     color:#ffffff;
     border: 1px solid #0055ff;

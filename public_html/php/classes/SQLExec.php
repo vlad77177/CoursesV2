@@ -22,6 +22,11 @@ class SQLExec{
         return $this->connection;
     }
     
+    /**
+     * 
+     * @param string $sql
+     * @return array
+     */
     public function ExecuteQuery($sql){
         $result=array();
         $res=mysqli_query($this->connection,$sql);
@@ -30,6 +35,8 @@ class SQLExec{
                 $result[count($result)]=$r;
             }
         }
+        if(count($result)===1)
+            return $result[0];
         return $result;
     }
 }
