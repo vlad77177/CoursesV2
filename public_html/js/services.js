@@ -20,7 +20,7 @@ App.factory('LoggedUserService',function($http){
                         if(data.data.login!==null){
                             userlogged.ulog=true;
                         }
-                        if(data.data.admin==true){
+                        if(data.data.administrator==true){
                            userlogged.uadmin=true;
                         }
                         if(data.data.curator==true){

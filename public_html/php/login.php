@@ -10,7 +10,7 @@
         if(isset($res['login']) and isset($res['password'])){  
             $_SESSION['login']=$res['login'];
             $_SESSION['password']= $res['password'];
-            $_SESSION['admin']=$res['administrator'];
+            $_SESSION['administrator']=$res['administrator'];
             $_SESSION['id']=$res['id'];
             $_SESSION['curator']=$res['curator'];
             $_SESSION['teacher']=$res['teacher'];

@@ -10,19 +10,12 @@ if($user['administrator']==0 and $user['curator']==0 and $user['teacher']==0 and
     exit(FALSE);
 }
 
-//удаляю варианты
-$res= mysqli_query($db, 'SELECT * FROM variants WHERE id_question='.$data['id'].'');
-while($row= mysqli_fetch_assoc($res)){
-    $r=mysqli_query($db,'DELETE FROM text WHERE id_text='.$row['id_text'].'');
-}
-$res=mysqli_query($db,'DELETE FROM variants WHERE id_question='.$data['id'].'');
 
 //удаляю вопрос
-$res= mysqli_fetch_assoc(mysqli_query($db,'SELECT * FROM questions WHERE id='.$data['id'].''));
-$res= mysqli_query($db, 'DELETE FROM text WHERE id_text='.$res['id_text'].'');
-$res=mysqli_query($db,'DELETE FROM questions WHERE id='.$data['id']);
+$test_id= mysqli_fetch_assoc(mysqli_query($db,'SELECT * FROM questions WHERE id='.$data['id'].''));
+$res=mysqli_query($db,'DELETE FROM questions WHERE id='.$data['id'].'');
 
-$res=mysqli_query($db,'SELECT * FROM questions WHERE id_test='.$data['test_id'].' ORDER BY number');
+$res=mysqli_query($db,'SELECT * FROM questions WHERE id_test='.$test_id['id_test'].' ORDER BY number ASC');
 $i=1;
 while($row= mysqli_fetch_assoc($res)){
     $r=mysqli_query($db,'UPDATE questions SET number='.$i.' WHERE id='.$row['id'].'');
