@@ -10,8 +10,7 @@ App.factory('LoggedUserService',function($http){
                             uadmin:false,
                             ucurator:false,
                             uteacher:false,
-                            ustudent:false,
-                            usersigned:[]
+                            ustudent:false
                         };
                 var data={
                     action:'getSession'
@@ -36,19 +35,6 @@ App.factory('LoggedUserService',function($http){
                         if(data.data.student==true){
                            userlogged.ustudent=true;
                         }
-                        var data1={
-                           login:userlogged.data.login,
-                           pass:userlogged.data.password,
-                           uid:userlogged.data.id
-                        };
-                        $http({method:'POST',data:data1,url:'php/getusersigned.php'})
-                           .then(function(data){
-                               for(var i=0;i<data.data.length;i++){
-                                   userlogged.usersigned[i]=data.data[i];
-                               }
-                        });
-                           console.log('loggedUser:');
-                           console.log(userlogged);
                            return userlogged;
                         });
             }
@@ -72,11 +58,12 @@ App.factory('UsersService',function($http){
                     user:{
                         login:login,
                         password:password
-                    }
+                    },
+                    action:'getUsers'
                 };
-                promice=$http({method:'POST',data:data,url:'php/getusers.php'})
+                promice=$http({method:'POST',data:data,url:'php/api.php'})
                     .then(function(data){
-                        console.log(data.data);
+                        console.log(data);
                         return data.data;
                 });
             }

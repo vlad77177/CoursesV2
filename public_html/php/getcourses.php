@@ -13,17 +13,17 @@
     $coursesf=[];
     $r=mysqli_query($db,'SELECT * FROM courses');
     $i=0;
-    while($row=mysqli_fetch_assoc($r)){
-            $coursesf[$i]=$row;
+    while($raw_result=mysqli_fetch_assoc($r)){
+            $coursesf[$i]=$raw_result;
             $i++;
     }
     $courses=array();
     
     if($user['curator']==1){
         $res_courses=mysqli_query($db,'SELECT * FROM curator_course WHERE id_curator='.$user['id'].'');
-        while($row=mysqli_fetch_assoc($res_courses)){
+        while($raw_result=mysqli_fetch_assoc($res_courses)){
             for($i=0;$i<count($coursesf);$i++){
-                if($coursesf[$i]['id']==$row['id_course']){
+                if($coursesf[$i]['id']==$raw_result['id_course']){
                     $courses[count($courses)]=$coursesf[$i];
                     break;
                 }
@@ -32,9 +32,9 @@
     }
     else if($user['student']==1){
         $res_courses=mysqli_query($db,'SELECT * FROM user_result WHERE user_id='.$user['id'].'');
-        while($row=mysqli_fetch_assoc($res_courses)){
+        while($raw_result=mysqli_fetch_assoc($res_courses)){
             for($i=0;$i<count(coursesf);$i++){
-                if($coursesf[$i]['id']==$row['id_course']){
+                if($coursesf[$i]['id']==$raw_result['id_course']){
                     $courses[count($courses)]=$coursesf[$i];
                     break;
                 }
@@ -43,9 +43,9 @@
     }
     else if($user['teacher']==1){
         $res_courses=mysqli_query($db,'SELECT * FROM teacher_course WHERE id_teacher='.$user['id'].'');
-        while($row=mysqli_fetch_assoc($res_courses)){
+        while($raw_result=mysqli_fetch_assoc($res_courses)){
             for($i=0;$i<count(coursesf);$i++){
-                if($coursesf[$i]['id']==$row['id_course']){
+                if($coursesf[$i]['id']==$raw_result['id_course']){
                     $courses[count($courses)]=$coursesf[$i];
                     break;
                 }

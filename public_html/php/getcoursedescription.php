@@ -21,19 +21,19 @@
     $course_d['curator']=$res['id_curator'];
     
     $res=mysqli_query($db,'SELECT * FROM teacher_course WHERE id_course='.$course_d['description']['id_course'].'');
-    while($row= mysqli_fetch_assoc($res)){
-        $course_d['teachers'][count($course_d['teachers'])]=$row['id_teacher'];
+    while($raw_result= mysqli_fetch_assoc($res)){
+        $course_d['teachers'][count($course_d['teachers'])]=$raw_result['id_teacher'];
     }
     
     $res=mysqli_query($db,'SELECT * FROM user_result WHERE id_course='.$course_d['description']['id_course'].'');
-    while($row= mysqli_fetch_assoc($res)){
-        $course_d['users'][count($course_d['users'])]=$row['user_id'];
+    while($raw_result= mysqli_fetch_assoc($res)){
+        $course_d['users'][count($course_d['users'])]=$raw_result['user_id'];
     }
     
     $res=mysqli_query($db,'SELECT * FROM lessons WHERE id_course='.$course_d['description']['id_course'].'');
     
-    while($row= mysqli_fetch_assoc($res)){
-        $course_d['lessons'][count($course_d['lessons'])]=$row;
+    while($raw_result= mysqli_fetch_assoc($res)){
+        $course_d['lessons'][count($course_d['lessons'])]=$raw_result;
     }
     
     exit(json_encode($course_d));

@@ -47,7 +47,6 @@ App.controller('AppController',['$scope','$http','$interval','LoggedUserService'
             $scope.loggedUser.ucurator=u.ucurator;
             $scope.loggedUser.uteacher=u.uteacher;
             $scope.loggedUser.ustudent=u.ustudent;
-            $scope.loggedUser.signed=u.usersigned;
             if($scope.loggedUser.uadmin==true){
                 $scope.loggedUser.mark='admin';
             }
@@ -104,8 +103,9 @@ App.controller('AppController',['$scope','$http','$interval','LoggedUserService'
         };
         
         $scope.loginUser=function(){
+            console.log($scope.loginFormModel);
             $http({method: 'POST', data:$scope.loginFormModel, url:'php/api.php'})
-                    .then(function(data){
+                    .then(function(){
                         LoggedUser.reset().then(function(u){
                             $scope.loggedUser=u.data;
                             $scope.loggedUser.ulog=u.ulog;
@@ -113,7 +113,6 @@ App.controller('AppController',['$scope','$http','$interval','LoggedUserService'
                             $scope.loggedUser.ucurator=u.ucurator;
                             $scope.loggedUser.uteaher=u.uteacher;
                             $scope.loggedUser.ustudent=u.ustudent;
-                            $scope.loggedUser.signed=u.usersigned;
                             if($scope.loggedUser.uadmin==true){
                                 $scope.loggedUser.mark='admin';
                             }

@@ -38,8 +38,6 @@ class SQLExec{
         else{
             return FALSE;
         }
-        if(count($result)===1)
-            return $result[0];
         return $result;
     }
 }

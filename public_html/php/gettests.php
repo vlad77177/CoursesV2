@@ -15,8 +15,8 @@ if($user['administrator']==0 and $user['curator']==0 and $user['teacher']==0 and
 $testsf=[];
 $rt=mysqli_query($db,'SELECT * FROM tests');
 $i=0;
-while($row=mysqli_fetch_assoc($rt)){
-        $testsf[$i]=$row;
+while($raw_result=mysqli_fetch_assoc($rt)){
+        $testsf[$i]=$raw_result;
         $i++;
 }
 

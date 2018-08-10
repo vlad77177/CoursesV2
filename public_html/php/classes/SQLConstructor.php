@@ -14,7 +14,7 @@ class SQLConstructor{
         
     }
     
-    public function GetSelectSQLString($table,$columns,$conditions=array()){   
+    public function GetSelectSQLString($table,$columns,$conditions=array()){
         $sql='SELECT ';       
         if(count($columns)>0){
             $first=true;
@@ -31,23 +31,26 @@ class SQLConstructor{
         }        
         $sql=$sql.' FROM '.$table;
         if(is_array($conditions)){
-            $sql=$sql.' WHERE ';
-            $first=true;
-            for($i=0;$i<count($conditions);$i++){
-                if(!$first){
-                    $sql=$sql.',';
-                }
-                $c=new Condition(null,null,null);
-                $c->SetData($conditions[$i]);
-                $sql=$sql.$c->GetColumn().$c->GetCondition();
-                if(is_string($c->GetValue())){
-                    $sql=$sql.'\''.$c->GetValue().'\'';
-                }
-                else{
-                    $sql=$sql.$c->GetValue();
+            if(count($conditions)>0){
+                $sql=$sql.' WHERE ';
+                $first=true;
+                for($i=0;$i<count($conditions);$i++){
+                    if(!$first){
+                        $sql=$sql.',';
+                    }
+                    $c=new Condition(null,null,null);
+                    $c->SetData($conditions[$i]);
+                    $sql=$sql.$c->GetColumn().$c->GetCondition();
+                    if(is_string($c->GetValue())){
+                        $sql=$sql.'\''.$c->GetValue().'\'';
+                    }
+                    else{
+                        $sql=$sql.$c->GetValue();
+                    }
                 }
             }
         }
+        error_log($sql);
         return $sql=$sql.';';
     }
 }

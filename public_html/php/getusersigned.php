@@ -10,8 +10,8 @@ $res= mysqli_query($db,'SELECT * FROM user_result WHERE user_id='.$data['uid'].'
 $result=null;
 $i=0;
 
-while($row = mysqli_fetch_assoc($res)){
-    $result[$i]=$row;
+while($raw_result = mysqli_fetch_assoc($res)){
+    $result[$i]=$raw_result;
     $i++;
 }
 

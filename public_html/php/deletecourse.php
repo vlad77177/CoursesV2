@@ -22,8 +22,8 @@ $res=mysqli_query($db, 'DELETE FROM images WHERE id='.$logo['logo'].'');
 
 //уроки удалены
 $res= mysqli_query($db, 'SELECT id_text FROM lessons WHERE id_course='.$data['id'].'');
-while($row= mysqli_fetch_assoc($res)){
-    $r= mysqli_query($db, 'DELETE FROM text WHERE id_text='.$row['id_text'].'');
+while($raw_result= mysqli_fetch_assoc($res)){
+    $r= mysqli_query($db, 'DELETE FROM text WHERE id_text='.$raw_result['id_text'].'');
 }
 $res= mysqli_query($db, 'DELETE FROM lessons WHERE id_course='.$data['id'].'');
 
