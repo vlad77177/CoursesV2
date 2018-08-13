@@ -84,12 +84,13 @@ App.factory('CoursesService',function($http){
             if(!promice || promice===null){
                 console.log('загружаю Courses');
                 var data={
+                    action:'getCourses',
                     user:{
                         login:login,
                         password:password
                     }
                 };
-                promice=$http({method:'POST',data:data,url:'php/getcourses.php'})
+                promice=$http({method:'POST',data:data,url:'php/api.php'})
                     .then(function(data){
                         console.log(data.data);
                         return data.data;
@@ -112,6 +113,7 @@ App.factory('TestsService',function($http){
             if(!promice || promice===null){
                 console.log('загружаю Tests');
                 var data={
+                    action:'getTests',
                     user:{
                         login:login,
                         password:password

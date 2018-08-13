@@ -38,6 +38,7 @@ class SQLExec{
         else{
             return FALSE;
         }
+        error_log(json_encode($result));
         return $result;
     }
 }

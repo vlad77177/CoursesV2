@@ -69,13 +69,15 @@ App.controller('AppController',['$scope','$http','$interval','LoggedUserService'
             });
             if($scope.loggedUser.ustudent==true){
                 var data={
+                    action:'getStudentData',
                     user:$scope.loggedUser
                 };
-                $http({method:'POST',data:data,url:'php/getstudentdata.php'})
+                $http({method:'POST',data:data,url:'php/api.php'})
                 .then(function(data){
                     $scope.currentStudent.data=data.data;
                     if($scope.currentStudent.data.test_active==1){
                         var data1={
+                            action:'getActiveTest',
                             user:$scope.loggedUser,
                             uid:$scope.loggedUser.id,
                             cid:$scope.currentStudent.data.id_course

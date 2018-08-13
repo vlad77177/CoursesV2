@@ -41,7 +41,7 @@ class SQLConstructor{
                     $c=new Condition(null,null,null);
                     $c->SetData($conditions[$i]);
                     $sql=$sql.$c->GetColumn().$c->GetCondition();
-                    if(is_string($c->GetValue())){
+                    if(!is_numeric($c->GetValue())){
                         $sql=$sql.'\''.$c->GetValue().'\'';
                     }
                     else{
