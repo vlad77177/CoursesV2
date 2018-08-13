@@ -14,6 +14,9 @@ $name='Новый курс';
 $logo=0;
 
 $res=mysqli_query($db,'INSERT INTO courses(name,logo) VALUES(\''.$name.'\','.$logo.')');
+if($user['curator']==1){
+    $res= mysqli_query($db,'INSERT INTO curator_course(id_curator,id_course) VALUES('.$user['id'].',(SELECT LAST_INSERT_ID()));');
+}
 
 exit();
 

@@ -10,7 +10,7 @@ if($user['student']==0){
     exit(FALSE);
 }
 
-$res=mysqli_query($db,'UPDATE gen_questions_temp SET ansver=1 WHERE id='.$data['qsid'].' AND number='.$data['number'].'');
+$res=mysqli_query($db,'UPDATE gen_questions_temp SET ansver=1 WHERE id='.$data['qsid'].' AND number='.$data['number'].' AND id_gen_session IN (SELECT id FROM test_session_tmp WHERE id=(SELECT session_id FROM user_result WHERE user_id='.$user['id'].'))');
 $res=mysqli_query($db,'INSERT INTO gen_questions_ansver_temp(id_gen_question,ansver) VALUES('.$data['qsid'].','.$data['ansver'].')');
 
 exit(json_encode($data));

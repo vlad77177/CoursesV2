@@ -6,13 +6,21 @@ require 'db.php';
 
 $data = json_decode(file_get_contents('php://input'),true);
 $user= mysqli_fetch_assoc(mysqli_query($db, 'SELECT id,login,email,administrator,curator,teacher,student FROM users WHERE login=\''.$data['user']['login'].'\' AND password=\''.$data['user']['password'].'\'')); 
-if($user['administrator']==0 and $user['curator']==0 and $user['teacher']==0 and $user['student']==0){
+if($user['administrator']==0 and $user['curator']==0 and $user['teacher']==0){
     exit();
 }
 
 $name='Новый урок';
 
-$res=mysqli_query($db,'INSERT INTO lessons(id_course,name) VALUES('.$data['id'].',\''.$name.'\')');
+if($user['administrator']==1){
+    $res=mysqli_query($db,'INSERT INTO lessons(id_course,name) VALUES('.$data['id'].',\''.$name.'\')');
+}
+if($user['curator']==1){
+    $res=mysqli_query($db,'INSERT INTO lessons(id_course,name) VALUES('.$data['id'].',\''.$name.'\') WHERE id_course IN (SELECT id_course FROM curator_course WHERE id_curator='.$user['id'].')');
+}
+if($user['teacher']==1){
+    $res=mysqli_query($db,'INSERT INTO lessons(id_course,name) VALUES('.$data['id'].',\''.$name.'\') WHERE id_course IN (SELECT id_course FROM teacher_course WHERE id_teacher='.$user['id'].')');
+}
 
 exit();
 

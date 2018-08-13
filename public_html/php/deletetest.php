@@ -10,7 +10,15 @@ if($user['administrator']==0 and $user['curator']==0){
     exit(FALSE);
 }
 
-$res= mysqli_query($db, 'DELETE FROM tests WHERE id='.$data['id'].'');
+if($user['administrator']==1){
+    $res= mysqli_query($db, 'DELETE FROM tests WHERE id='.$data['id'].'');
+}
+if($user['curator']==1){
+    $res= mysqli_query($db, 'DELETE FROM tests WHERE id='.$data['id'].' AND id IN (SELECT id_test FROM curator_test WHERE id_curator='.$user['id'].')');
+}
+if($user['teacher']==1){
+    $res= mysqli_query($db, 'DELETE FROM tests WHERE id='.$data['id'].' AND id IN (SELECT id FROM tests WHERE for_course_id IN (SELECT id_course FROM teacher_course WHERE id_teacher='.$user['id'].'))');
+}
 
 exit();
 
