@@ -10,7 +10,17 @@ if($user['administrator']==0 and $user['curator']==0 and $user['teacher']==0 and
     exit();
 }
 
-$res=mysqli_fetch_assoc(mysqli_query($db,'SELECT id_text FROM lessons WHERE id='.$data['lid'].' AND id_course='.$data['cid'].''));
+$filter='';
+if($user['curator']==1){
+    $filter=' AND id_course IN (SELECT id_course FROM curator_course WHERE id_curator='.$user['id'].')';
+}
+if($user['teacher']==1){
+    $filter=' AND id_course IN (SELECT id_course FROM teacher_course WHERE id_teacher='.$user['id'].')';
+}
+if($user['student']==1){
+    $filter=' AND id_course IN (SELECT id_course FROM user_result WHERE user_id='.$user['id'].')';
+}
+$res=mysqli_fetch_assoc(mysqli_query($db,'SELECT id_text FROM lessons WHERE id='.$data['lid'].' AND id_course='.$data['cid'].''.$filter.''));
 
 if($res['id_text']==0){
     $val='Вы еще не создали текст урока!';

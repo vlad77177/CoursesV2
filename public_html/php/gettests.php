@@ -11,9 +11,20 @@ if($user['administrator']==0 and $user['curator']==0 and $user['teacher']==0 and
     exit(FALSE);
 }
 
-//$testsf= mysqli_fetch_all(mysqli_query($db,'SELECT * FROM tests'),MYSQLI_ASSOC);
 $testsf=[];
-$rt=mysqli_query($db,'SELECT * FROM tests');
+$rt=undefined;
+if($user['administrator']==1){
+    $rt=mysqli_query($db,'SELECT * FROM tests');
+}
+if($user['curator']==1){
+    $rt=mysqli_query($db,'SELECT * FROM tests WHERE for_course_id IN (SELECT id_course FROM curator_course WHERE id_curator='.$user['id'].')');
+}
+if($user['teacher']==1){
+    $rt=mysqli_query($db,'SELECT * FROM tests WHERE for_course_id IN (SELECT id_course FROM teacher_course WHERE id_teacher='.$user['id'].')');
+}
+if($user['student']==1){
+    $rt=mysqli_query($db,'SELECT * FROM tests WHERE for_course_id IN (SELECT id_course FROM user_result WHERE user_id='.$user['id'].')');
+}
 $i=0;
 while($row=mysqli_fetch_assoc($rt)){
         $testsf[$i]=$row;

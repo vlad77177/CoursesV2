@@ -11,7 +11,19 @@
     
     //$coursesf= mysqli_fetch_all(mysqli_query($db,'SELECT * FROM courses'),MYSQLI_ASSOC);
     $coursesf=[];
-    $r=mysqli_query($db,'SELECT * FROM courses');
+    $r=undefined;
+    if($user['administrator']==1){
+        $r=mysqli_query($db,'SELECT * FROM courses');
+    }
+    if($user['curator']==1){
+        $r=mysqli_query($db,'SELECT * FROM courses WHERE id IN (SELECT id_course FROM curator_course WHERE id_curator='.$user['id'].')');
+    }
+    if($user['teacher']==1){
+        $r=mysqli_query($db,'SELECT * FROM courses WHERE id IN (SELECT id_course FROM teacher_course WHERE id_teacher='.$user['id'].')');
+    }
+    if($user['student']==1){
+        $r=mysqli_query($db,'SELECT * FROM courses WHERE id IN (SELECT id_course FROM user_result WHERE user_id='.$user['id'].')');
+    }
     $i=0;
     while($row=mysqli_fetch_assoc($r)){
             $coursesf[$i]=$row;

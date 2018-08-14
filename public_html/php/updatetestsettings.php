@@ -7,8 +7,16 @@ require 'db.php';
 $data=json_decode(file_get_contents('php://input'),true);
 
 $user= mysqli_fetch_assoc(mysqli_query($db, 'SELECT id,login,email,administrator,curator,teacher,student FROM users WHERE login=\''.$data['user']['login'].'\' AND password=\''.$data['user']['password'].'\''));
-if($user['administrator']==0 and $user['curator']==0 and $user['teacher']==0 and $user['student']==0){
+if($user['administrator']==0 and $user['curator']==0 and $user['teacher']==0){
     exit(FALSE);
+}
+
+$filter='';
+if($user['curator']==1){
+    $filter=' AND id IN (SELECT id_test FROM curator_test id_curator='.$user['id'].'';
+}
+if($user['teacher']==1){
+    $filter=' AND id IN (SELECT id FROM tests WHERE for_course_id IN (SELECT id_course FROM teacher_course WHERE id_teacher='.$user['id'].'))';
 }
 
 $query='UPDATE tests SET active='.$data['data']['active'].
@@ -20,7 +28,7 @@ $query='UPDATE tests SET active='.$data['data']['active'].
         ', can_pass='.$data['data']['can_pass'].
         ', display_q='.$data['data']['display_q'].
         ', threshold='.$data['data']['threshold'].
-        ', minute_on_pass='.$data['data']['minute_on_pass'].' WHERE id='.$data['data']['id'].'';
+        ', minute_on_pass='.$data['data']['minute_on_pass'].' WHERE id='.$data['data']['id'].''.$filter.'';
 
 $res=mysqli_query($db,$query);
 

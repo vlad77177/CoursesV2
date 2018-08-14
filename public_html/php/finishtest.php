@@ -6,7 +6,7 @@ require 'db.php';
 
 $data=json_decode(file_get_contents('php://input'),true);
 $user= mysqli_fetch_assoc(mysqli_query($db, 'SELECT id,login,email,administrator,curator,teacher,student FROM users WHERE login=\''.$data['user']['login'].'\' AND password=\''.$data['user']['password'].'\''));
-if($user['administrator']==0 and $user['curator']==0 and $user['teacher']==0 and $user['student']==0){
+if($user['student']==0){
     exit(FALSE);
 }
 
@@ -16,7 +16,7 @@ $result['threshold']=null;
 
 $result_counter=0;
 
-$session= mysqli_fetch_assoc(mysqli_query($db,'SELECT * FROM test_session_temp WHERE id='.$data['sid'].''));
+$session= mysqli_fetch_assoc(mysqli_query($db,'SELECT * FROM test_session_temp WHERE id='.$data['sid'].' AND id IN (SELECT id_session FROM user_result WHERE user_id='.$user['id'].')'));
 $user_result=mysqli_fetch_assoc(mysqli_query($db,'SELECT * FROM user_result WHERE session_id='.$data['sid'].''));
 $questions=mysqli_query($db,'SELECT * FROM gen_questions_temp WHERE id_gen_session='.$data['sid'].' ORDER BY number');
 $res= mysqli_query($db, 'DELETE FROM gen_questions_temp WHERE id_gen_session='.$data['sid'].'');

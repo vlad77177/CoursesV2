@@ -9,9 +9,6 @@ session_start();
     if($user['administrator']==0 and $user['curator']==0 and $user['teacher']==0 and $user['student']==0){
         exit(FALSE);
     }
-    if($user['student']==0){
-        exit(FALSE);
-    }
     
     $res=mysqli_fetch_assoc(mysqli_query($db,'SELECT * FROM user_result WHERE user_id='.$user['id'].''));
     
