@@ -66,7 +66,7 @@
             <div class="download-block" ng-show="contentDownload.courses==false"></div>
 
             <div ng-show="(users | UserFilter:'administrator').length>0">
-                <div>Администраторы</div>
+                <div title="Администратор обладает максимальными правами в системе" style="cursor: pointer;">Администраторы</div>
                 <div>
                     <table class="list-table">
                         <tr>
@@ -84,7 +84,7 @@
             </div>
 
             <div ng-show="(users | UserFilter:'curator').length>0">
-                <div>Кураторы</div>
+                <div title="Куратор создает свои курсы, преподавателей, студентов и управляет ими" style="cursor: pointer;">Кураторы</div>
                 <div>
                     <table class="list-table">
                         <tr>
@@ -102,7 +102,7 @@
             </div>
 
             <div ng-show="(users | UserFilter:'teacher').length>0">
-                <div>Преподаватели</div>
+                <div title="Преподаватель наполняет курсы контентом и следит за успеваемостью студентов" style="cursor: pointer;">Преподаватели</div>
                 <div>
                     <table class="list-table">
                         <tr>
@@ -120,7 +120,7 @@
             </div>
 
             <div ng-show="(users | UserFilter:'student').length>0">
-                <div>Студенты</div>
+                <div title="Студенты читают курсы и проходят тестирование" style="cursor: pointer;">Студенты</div>
                 <div>
                     <table class="list-table">
                         <tr>
@@ -175,7 +175,7 @@
     <div ng-show="openedPage==='Courses'" ng-controller="CoursesPageController" class="flex row">        
         
         <div id="list-of-courses" ng-show="courses.length>0">
-            <div>Курсы</div>
+            <div title="Доступные вам для просмотра курсы" style="cursor: pointer;">Курсы</div>
             <div>
                 <table class="list-table">
                     <tr>

@@ -1,7 +1,7 @@
 <div id="teacher-extended-block">
     
     <div>       
-        <div>Закрепленные курсы:</div>
+        <div title="Курсы, которые преподаватель может редактировать" style="cursor: pointer;">Закрепленные курсы:</div>
         <div ng-show="currentUser.teach_courses.length>0">
             <table class="list-table">
                 <tr>
@@ -20,7 +20,7 @@
     </div>
 
     <div>
-        <div>Закрепленные cтуденты:</div>
+        <div title="Студенты, подписанные на курс, который закреплен за преподавателем" style="cursor: pointer;">Закрепленные cтуденты:</div>
         <div ng-show="(users | UserFilter:'ids':currentUser.teach_students).length>0">
             <table class="list-users-table">
                 <tr>

@@ -1,7 +1,7 @@
 <div id="curator-extended-block">
     
     <div>       
-        <div>Закрепленные преподаватели:</div>
+        <div title="Преподаватели, созданные или принадлежащие куратору" style="cursor: pointer;">Закрепленные преподаватели:</div>
         <div ng-show="(users | UserFilter:'ids':currentUser.cur_teachers).length>0">
             <table class="list-users-table">
                 <tr>
@@ -24,7 +24,7 @@
     <button ng-show="unlinkTeachers.value!==undefined && unlinkTeachers.teachers.length>0" ng-click="linkTeacher()">Добавить</button>
     
     <div>
-        <div>Закрепленные cтуденты:</div>
+        <div title="Студенты, созданные или закрепленные за куратором" style="cursor: pointer;">Закрепленные cтуденты:</div>
         <div ng-show="(users | UserFilter:'ids':currentUser.cur_students).length>0">
             <table class="list-users-table">
                 <tr>

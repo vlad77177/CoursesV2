@@ -14,12 +14,12 @@
     <div ng-show="openedCourseExPage==='Users'">
         
         <div ng-show="loggedUser.uteacher===false">
-            <div>Куратор:</div>
+            <div title="Куратор, который владеет правами на курс. Вы можете сменить куратора, если обладаете правами администратора" style="cursor: pointer;">Куратор:</div>
             <select ng-model="unlinkCuratorCourse.value" ng-options="curator.id as curator.login for curator in unlinkCuratorCourse.curators"></select>
             <button class="button" ng-show="currentCourse.curator!==unlinkCuratorCourse.value" ng-click="setCurator()">Назначить</button>
         </div>
 
-        <div>Преподаватели:</div>
+        <div title="Преподаватели, которые могут редактировать курс. принадлежат выбранному куратору" style="cursor: pointer;">Преподаватели:</div>
 
         <table class="list-table">
             <tr>
@@ -39,7 +39,7 @@
         <select ng-show="unlinkTeachersCourse.teachers.length>0" ng-model="unlinkTeachersCourse.value" ng-options="teacher.id as teacher.login for teacher in unlinkTeachersCourse.teachers"></select>
         <button class="button" ng-show="unlinkTeachersCourse.value!==undefined && unlinkTeachersCourse.teachers.length>0" ng-click="linkTeacher()">Добавить</button>
 
-        <div>Проходят обучение:</div>
+        <div title="Закрепленнные студенты, имеющие доступ к курсу" style="cursor: pointer;">Проходят обучение:</div>
 
         <table class="list-table">
             <tr>
