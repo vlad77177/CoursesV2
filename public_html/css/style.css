@@ -77,6 +77,11 @@ html{
     cursor: pointer;
 }
 
+.top-panel{
+    height: 200px;
+    background-color: #2a9acc;
+}
+
 
 body{
     margin: 0px 0px 0px 0px;
