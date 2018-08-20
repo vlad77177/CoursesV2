@@ -1,20 +1,22 @@
 <div ng-controller="PageController">
     
-    <!--<div class="top-panel"></div>-->
+    <div class="top-panel flex center">
+        <div class="logo"></div>
+    </div>
     
     <div id="admin-panel-top" class="page-top-block flex row center cross-center" ng-show="loggedUser.uadmin">
         <div>Панель администратора</div>
-        <button class="button button-exit" ng-show="loggedUser.ulog" ng-click="logOut()">Выход</button>
+        <button class="button-exit" ng-show="loggedUser.ulog" ng-click="logOut()">Выход</button>
     </div>
     
     <div id="curator-panel-top" class="page-top-block flex row center cross-center" ng-show="loggedUser.ucurator">
         <div>Панель куратора</div>
-        <button class="button button-exit" ng-show="loggedUser.ulog" ng-click="logOut()">Выход</button>
+        <button class="button-exit" ng-show="loggedUser.ulog" ng-click="logOut()">Выход</button>
     </div>
     
     <div id="teacher-panel-top" class="page-top-block flex row center cross-center" ng-show="loggedUser.uteacher">
         <div>Панель преподавателя</div>
-        <button class="button button-exit" ng-show="loggedUser.ulog" ng-click="logOut()">Выход</button>
+        <button class="button-exit" ng-show="loggedUser.ulog" ng-click="logOut()">Выход</button>
     </div>
     
     <div class="menu-block flex row space-between">
@@ -41,6 +43,14 @@
                     <tr>
                         <td>Логин:</td>
                         <td><input ng-model="newUser.login" type="text"></td>
+                    </tr>
+                    <tr>
+                        <td>Имя:</td>
+                        <td><input ng-model="newUser.login" type="name"></td>
+                    </tr>
+                    <tr>
+                        <td>Фамилия:</td>
+                        <td><input ng-model="newUser.login" type="surname"></td>
                     </tr>
                     <tr>
                         <td>Email:</td>
@@ -75,11 +85,15 @@
                             <td>№</td>
                             <td>ID</td>
                             <td>Логин</td>
+                            <td>Имя</td>
+                            <td>Фамилия</td>
                         </tr>
                         <tr ng-repeat="admin in users | UserFilter:'administrator'" ng-click="selectUser(admin.id)" class="hover">
                             <td ng-bind="$index+1"></td>
                             <td ng-bind="admin.id"></td>
                             <td ng-bind="admin.login"></td>
+                            <td ng-bind="admin.name"></td>
+                            <td ng-bind="admin.surname"></td>
                         </tr>
                     </table>
                 </div>
@@ -93,11 +107,15 @@
                             <td>№</td>
                             <td>ID</td>
                             <td>Логин</td>
+                            <td>Имя</td>
+                            <td>Фамилия</td>
                         </tr>
                         <tr ng-repeat="curator in users | UserFilter:'curator'" ng-click="selectUser(curator.id)" class="hover">
                             <td ng-bind="$index+1"></td>
                             <td ng-bind="curator.id"></td>
                             <td ng-bind="curator.login"></td>
+                            <td ng-bind="curator.name"></td>
+                            <td ng-bind="curator.surname"></td>
                         </tr>
                     </table>
                 </div>
@@ -111,11 +129,15 @@
                             <td>№</td>
                             <td>ID</td>
                             <td>Логин</td>
+                            <td>Имя</td>
+                            <td>Фамилия</td>
                         </tr>
                         <tr ng-repeat="teacher in users | UserFilter:'teacher'" ng-click="selectUser(teacher.id)" class="hover">
                             <td ng-bind="$index+1"></td>
                             <td ng-bind="teacher.id"></td>
                             <td ng-bind="teacher.login"></td>
+                            <td ng-bind="teacher.name"></td>
+                            <td ng-bind="teacher.surname"></td>
                         </tr>
                     </table>
                 </div>
@@ -129,11 +151,15 @@
                             <td>№</td>
                             <td>ID</td>
                             <td>Логин</td>
+                            <td>Имя</td>
+                            <td>Фамилия</td>
                         </tr>
                         <tr ng-repeat="student in users | UserFilter:'student'" ng-click="selectUser(student.id)" class="hover">
                             <td ng-bind="$index+1"></td>
                             <td ng-bind="student.id"></td>
                             <td ng-bind="student.login"></td>
+                            <td ng-bind="student.name"></td>
+                            <td ng-bind="student.surname"></td>
                         </tr>
                     </table>
                 </div>
@@ -150,6 +176,14 @@
                     <tr>
                         <td>Логин:</td>
                         <td ng-bind="currentUser.login"></td>
+                    </tr>
+                    <tr>
+                        <td>Имя:</td>
+                        <td ng-bind="currentUser.name"></td>
+                    </tr>
+                    <tr>
+                        <td>Фамилия:</td>
+                        <td ng-bind="currentUser.surname"></td>
                     </tr>
                     <tr>
                         <td>Email:</td>

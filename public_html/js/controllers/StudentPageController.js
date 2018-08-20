@@ -92,7 +92,7 @@ App.controller('StudentPageController',['$scope','$http','$filter','$interval','
         };
         
         $scope.getLessonInfo=function(cid,lid,index){
-            if(index<$scope.currentStudent.data.lessons_learned+1){                
+            //if(index<$scope.currentStudent.data.lessons_learned+1){                
                 var data={
                     user:$scope.loggedUser,
                     cid:cid,
@@ -109,14 +109,14 @@ App.controller('StudentPageController',['$scope','$http','$filter','$interval','
                         $scope.currentLessonIndex=index;
                         $scope.currentCourseId=cid;
                 });
-            }
+            //}
         };
         
         $scope.nextLesson=function(){
             if($scope.currentLessonIndex>=0){
                 var course=$filter('CourseFilter')($scope.courses,'ids',$scope.currentCourseId);
                 if(course.length>0){
-                    $scope.getLessonInfo($scope.currentCourseId,course[0].lessons[$scope.currentLessonIndex+1].id,0);
+                    $scope.getLessonInfo($scope.currentCourseId,course[0].lessons[$scope.currentLessonIndex+1].id,$scope.currentLessonIndex+1);
                     $scope.currentStudent.data.lessons_learned++;
                 }
             }
@@ -126,7 +126,7 @@ App.controller('StudentPageController',['$scope','$http','$filter','$interval','
             if($scope.currentLessonIndex>=0){
                 var course=$filter('CourseFilter')($scope.courses,'ids',$scope.currentCourseId);
                 if(course.length>0){
-                    $scope.getLessonInfo($scope.currentCourseId,course[0].lessons[$scope.currentLessonIndex-1].id,0);
+                    $scope.getLessonInfo($scope.currentCourseId,course[0].lessons[$scope.currentLessonIndex-1].id,$scope.currentLessonIndex-1);
                 }
             }
         };

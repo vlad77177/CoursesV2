@@ -1,20 +1,24 @@
 <div ng-controller="PageController">
     
+        <div class="top-panel flex center">
+            <div class="logo"></div>
+        </div>
+    
         <div id="student-panel-top" class="page-top-block flex row center cross-center">
             <div>Панель студента</div>
-            <button class="button button-exit" ng-show="loggedUser.ulog" ng-click="logOut()">Выход</button>
+            <button class="button-exit" ng-show="loggedUser.ulog" ng-click="logOut()">Выход</button>
         </div>
         
     <div class="flex row" ng-controller="StudentPageController">
         
-        <div id="list-of-courses-student" ng-show="courses.length>0" ng-cloak>
-            <div>Курсы</div>
+        <div id="list-of-courses-student" ng-show="courses.length>0" ng-cloak ng-class="{true:'unlearned',false:''}[]">
+            <div style="color: #2a9acc;margin-bottom: 15px;font-size: 20pt;">Назначенные курсы:</div>
             <div>
                 <div ng-repeat="course in courses">
                     <div ng-bind="course.name" class="course-name-stud hover" ng-click="getCourseInfo(course.id,true);"></div>
                     <div ng-class="{true:'unlearned',false:''}[$index>currentStudent.data.lessons_learned]" ng-repeat="lesson in course.lessons" ng-bind="lesson.name" class="lesson-name-stud hover" ng-click="getLessonInfo(course.id,lesson.id,$index);"></div>
                     <hr>
-                    <button class="button" ng-click="initTest(course)">Пройти тест</button>
+                    <button class="button" ng-click="initTest(course)" ng-show="course.lessons.length<=currentStudent.data.lessons_learned+1">Пройти тест</button>
                 </div>
             </div>            
         </div>
@@ -31,12 +35,12 @@
 
         </div>
         
-        <!--
+        
         <div class="fixed-buttons-stud" ng-show="textOpen!==undefined">
             <button class="button" ng-click="lastLesson();">Предыдущий урок</button>
             <button class="button" ng-click="nextLesson();">Следующий урок</button>
-        </div>-->
-        
+        </div>
+
         <testing-page ng-show="testactive"></testing-page>
         
         <div id="result" ng-show="showresult">Ваш результат: {{result.score}} из {{result.all}} при пороге прохождения {{result.threshold}}</div>

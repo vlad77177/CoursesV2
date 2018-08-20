@@ -52,11 +52,14 @@
                 }
             }
             
-            $user_json='{"id":null,"login":null,"email":null,"administrator":false,"curator":false,"teacher":false,"student":false,"cur_students":[],"cur_teachers":[],"cur_courses":[],"teach_courses":[],"teach_students":[],"results":[],"learneds":[],"need_learns":[],"curator":null,"teachers":[],"courses":[]}';
+            $user_json='{"id":null,"login":null,"name":null,"surname":null,email":null,"administrator":false,"curator":false,"teacher":false,"student":false,"cur_students":[],"cur_teachers":[],"cur_courses":[],"teach_courses":[],"teach_students":[],"results":[],"learneds":[],"need_learns":[],"curator":null,"teachers":[],"courses":[]}';
             $user= json_decode($user_json);
+            $user=new stdClass();
             
             $user->id=$row['id'];
             $user->login=$row['login'];
+            $user->name=$row['name'];
+            $user->surname=$row['surname'];
             $user->email=$row['email'];
             $user->administrator=$row['administrator'];
             $user->curator=$row['curator'];

@@ -12,7 +12,7 @@
     
     $pass= password_hash($data['newUser']['password'], PASSWORD_BCRYPT);
     
-    $query='INSERT INTO users(login,password,email,';
+    $query='INSERT INTO users(login,name,surname,password,email,';
     switch($data['newUser']['user_type']){
         case 1:{
             $query=$query.'curator';
@@ -27,7 +27,7 @@
             break;
         }
     }
-    $query=$query.') VALUES(\''.$data['newUser']['login'].'\',\''.$pass.'\',\''.$data['newUser']['email'].'\',1);';
+    $query=$query.') VALUES(\''.$data['newUser']['login'].'\',\''.$data['newUser']['name'].'\',\''.$data['newUser']['surname'].'\',\''.$pass.'\',\''.$data['newUser']['email'].'\',1);';
     
     $query= mysqli_query($db,$query);
     $last_id=mysqli_insert_id($db);

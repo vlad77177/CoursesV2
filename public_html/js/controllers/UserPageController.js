@@ -11,6 +11,8 @@ App.controller('UserPageController',['$scope','$http','$filter','LoggedUserServi
         $scope.currentUser={
             id:undefined,
             login:undefined,
+            name:undefined,
+            surname:undefined,
             email:undefined,
             newpass:undefined,
             repeat:undefined,
@@ -46,6 +48,8 @@ App.controller('UserPageController',['$scope','$http','$filter','LoggedUserServi
         
         $scope.newUser={
             login:undefined,
+            name:undefined,
+            surname:undefined,
             email:undefined,
             password:undefined,
             repeat:undefined,
@@ -66,6 +70,8 @@ App.controller('UserPageController',['$scope','$http','$filter','LoggedUserServi
             $scope.currentUser.id=id;
             var user=$filter('UserFilter')($scope.users,'id',id);
             $scope.currentUser.login=user[0].login;
+            $scope.currentUser.name=user[0].name;
+            $scope.currentUser.surname=user[0].surname;
             $scope.currentUser.email=user[0].email;
             $scope.currentUser.cur_students=user[0]['cur_students'];
             $scope.currentUser.cur_teachers=user[0]['cur_teachers'];

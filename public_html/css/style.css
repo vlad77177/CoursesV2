@@ -14,7 +14,7 @@ body > #wrap {height: auto; min-height: 100%;}
 #footer { 
         position: relative;
 	margin-top: -150px; /* negative value of footer height */
-        background-color: #cccccc;
+        background-color: #c6c6c6;
         height: 150px;                                  
 	clear:both;} 
 /* CLEAR FIX*/
@@ -36,7 +36,7 @@ html{
     font-family:sans-serif;
 }
 .background{
-    background-color: #cccccc;
+    background-color: #c6c6c6;
 }
 
 .flex{
@@ -68,9 +68,10 @@ html{
 }
 
 .grey-border-radius{
-    border:2px solid #999999;
-    border-radius: 10px;
+    border-bottom:1px solid #999999;
     box-shadow:#999999;
+    margin: 20px 0px 20px 0px;
+    padding: 20px 0px 20px 0px;
 }
 
 .hover{
@@ -78,8 +79,16 @@ html{
 }
 
 .top-panel{
-    height: 200px;
-    background-color: #2a9acc;
+    height: auto;
+    background-color: #ffffff;
+}
+.logo{
+    background-image: url(logo_kibernetika.png);
+    background-repeat: no-repeat;
+    width: 50vw;
+    height: 30vh;
+    background-size: cover;
+    margin-bottom: 30px;
 }
 
 
@@ -90,7 +99,7 @@ footer{
     position: absolute;
     bottom: 0px;
     height: 200px;
-    background-color: #cccccc;
+    background-color: #c6c6c6;
 }
 
 input,select{
@@ -116,7 +125,7 @@ input[type=checkbox]:checked + label:before {
     height: 100%;
 }
 #loginform{
-    width: 20vw;
+    width: auto;
     height: 20vh;
     background-color: #999999;
     padding: 10px;
@@ -126,13 +135,12 @@ input[type=checkbox]:checked + label:before {
 .page-top-block{
     margin-top:10px;
     margin-bottom: 10px;
-    margin-left: 5vw;
-    margin-right: 5vw;
-    width:90vw;
     height: 10vh;
     color:#ffffff;
     font-size: 21pt;
+    background-color: #2a9acc;
 }
+/*
 #admin-panel-top{
     background-color:#ff0000;
 }
@@ -144,7 +152,7 @@ input[type=checkbox]:checked + label:before {
 }
 #student-panel-top{
     background-color: #cccccc;
-}
+}*/
 .menu-block{
     margin-top:10px;
     margin-bottom: 10px;
@@ -153,9 +161,9 @@ input[type=checkbox]:checked + label:before {
 }
 .menu-block > div{
     padding: 5px 20px 5px 2px;
-    background-color: #0055ff;
+    background-color: #2a9acc;
     color:#ffffff;
-    border: 1px solid #0055ff;
+    border: 1px solid #2a9acc;
     height: 5vh;
     width: 100%;
     margin: 0px 2px 0px 2px;
@@ -163,7 +171,7 @@ input[type=checkbox]:checked + label:before {
 }
 .menu-block > div:hover{
     background-color: #ffffff;
-    color:#0055ff;             
+    color:#2a9acc;             
 }
 
 .menu-block > div:first-child{
@@ -173,9 +181,17 @@ input[type=checkbox]:checked + label:before {
     margin-right: 0px;
 }
 
+#user-info-block{
+    margin-left: 3vw;
+    margin-top:40px;
+}
+
 #list-of-users,#list-of-courses,.download-block{
-    width: 45vw;
+    width: 42vw;
     margin-left: 5vw;
+    padding-right: 2vw;
+    border-right: 1px solid #c6c6c6;
+    margin-bottom: 5vh;
 }
 #list-of-courses-student{
     width:20vw;
@@ -188,24 +204,28 @@ input[type=checkbox]:checked + label:before {
     width:33%;
     padding: 5px;
 }
+.list-table tr td:nth-child(1),.list-table tr td:nth-child(2){
+    width:5%;
+}
+.list-table tr td:nth-child(3),.list-table tr td:nth-child(4),.list-table tr td:nth-child(5){
+    width: 15%;
+}
 .list-table tr td:last-child{
     width: 100%;
 }
 .list-table tr:first-child{
-    background-color: #cccccc;
+    background-color: #c6c6c6;
 }
 
 .list-table tr:hover{
-    background-color: #cccccc;
-    color: #ffffff;
+    border-bottom: 1px solid #2a9acc;
 }
 .list-table tr:first-child:hover{
-    background-color: #cccccc;
-    color: #000000;
+    border-bottom: 3px solid #2a9acc;
 }
 
 #curator-extended-block,#course-extended-block,#test-extended-block{
-    width:45vw;
+    margin-left: 3vw;
 }
 
 #create-user-form{
@@ -219,9 +239,10 @@ input[type=checkbox]:checked + label:before {
 #courses-text-block{
     width:70vw;
     padding: 30px;
+    min-height: 70vh;
 }
 .courses-left-sidebar-name,.tests-left-sidebar-name{
-    background-color: #cccccc;
+    background-color: #c6c6c6;
 }
 .lessons-left-sidebar,.questions-left-sidebar{
     margin-left: 2vw;
@@ -231,7 +252,6 @@ input[type=checkbox]:checked + label:before {
     margin-top: 10px;
     padding: 5px 10px 5px 10px;
     border:2px solid #999999;
-    border-radius: 5px;
 }
 .variant-text{
     margin-left: 5vw;
@@ -244,41 +264,65 @@ input[type=checkbox]:checked + label:before {
 
 button,.button{
     color:#ffffff;
-    background-color: #999999;
+    background-color: #2a9acc;
     border: 2px solid #ffffff;
+    font-size: 16pt;
+    padding: 5px 10px 5px 10px;
     max-width: 300px;
 }
 button,.button:hover{
     color:#999999;
     background-color: #ffffff;
     border:2px solid #999999;
+    cursor: pointer;
 }
 .button-exit{
-    position: absolute;
-    top:15px;
-    right:calc(5vw + 15px);
+    position: relative;
+    right: -32vw;
+    top:-1vh;
+    /*right:calc(5vw + 15px);*/
+    border: none;
+    height: 32px;
+    width: 100px;
+    font-size: 14pt;
+    cursor: pointer;
+}
+.button-login{
+    background-color: #ffffff;
+    color: #000000;
+    cursor: pointer;
+    margin-left: 2vw;
+    margin-top: 2vh;
+    border: 1px solid #cecece;
+    background: #F6F6f6;
+    border-radius: 8px;
 }
 
 .course-name-stud{
-    background-color: #cccccc;
+    background-color: #ffffff;
+    margin-bottom: 10px;
+    font-size: 18pt;
+    font-weight: 700;
 }
 .lesson-name-stud{
     font-size:14pt;
     margin-left:10px;
+    margin-bottom: 10px;
+    font-weight: 700;
 }
 .lesson-name-stud:hover{
-    background-color: #cccccc;
+
 }
 
 .unlearned{
-    color:#cccccc;
+    color:#c6c6c6;
     cursor: not-allowed;
 }
 
 .fixed-buttons-stud{
     position: fixed;
     bottom: 20px;
-    left:10vw;
+    left:4vw;
 }
 
 #stub{
@@ -298,7 +342,7 @@ button,.button:hover{
     width:50vw;
 }
 #test-question-name{
-    border: 2px solid #cccccc;
+    border: 2px solid #c6c6c6;
     border-radius: 3px;
     width:100%;
 }
