@@ -99,7 +99,6 @@ App.factory('CoursesService',function($http){
                 };
                 promice=$http({method:'POST',data:data,url:'php/getcourses.php'})
                     .then(function(data){
-                        console.log(data.data);
                         return data.data;
                 });
             }

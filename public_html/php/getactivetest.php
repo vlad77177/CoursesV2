@@ -36,10 +36,11 @@ while($qrow= mysqli_fetch_assoc($questions)){
     $test['questions'][$q_count]['ansvers']=array();
     
     if($qrow['ansver']==1){
+        error_log('ANSVER');
         $qa_count=0;
         $ansvers=mysqli_query($db,'SELECT * FROM gen_questions_ansver_temp WHERE id_gen_question='.$qrow['id'].'');
         while($qarow= mysqli_fetch_assoc($ansvers)){
-            $test['questions'][$q_count]['ansvers'][$qa_count]=$qarow;
+            $test['questions'][$q_count]['ansvers'][$qa_count]=$qarow['ansver'];
             $qa_count++;
         }
     }

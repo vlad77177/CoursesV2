@@ -156,3 +156,17 @@ App.filter('trusted', function($sce){
     };
 });
 
+App.filter('InArray',function(){
+    return function(array,seek){
+        if(seek===undefined || array===undefined){
+            return null;
+        }
+        for(var i=0;i<array.length;i++){
+            if(seek===array[i]){
+                return seek;
+            }
+        }
+        return null;
+    }
+});
+

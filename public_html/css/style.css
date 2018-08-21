@@ -85,8 +85,8 @@ html{
 .logo{
     background-image: url(logo_kibernetika.png);
     background-repeat: no-repeat;
-    width: 50vw;
-    height: 30vh;
+    width: 40vw;
+    height: 20vh;
     background-size: cover;
     margin-bottom: 30px;
 }
@@ -160,7 +160,7 @@ input[type=checkbox]:checked + label:before {
     margin-right: 5vw;
 }
 .menu-block > div{
-    padding: 5px 20px 5px 2px;
+    padding: 5px 20px 5px 20px;
     background-color: #2a9acc;
     color:#ffffff;
     border: 1px solid #2a9acc;
@@ -226,6 +226,7 @@ input[type=checkbox]:checked + label:before {
 
 #curator-extended-block,#course-extended-block,#test-extended-block{
     margin-left: 3vw;
+    width: 45%;
 }
 
 #create-user-form{
@@ -311,7 +312,7 @@ button,.button:hover{
     font-weight: 700;
 }
 .lesson-name-stud:hover{
-
+    border-bottom: 1px solid #2a9acc;
 }
 
 .unlearned{
@@ -340,6 +341,21 @@ button,.button:hover{
 #test-active,#result{
     font-size: 16pt;
     width:50vw;
+}
+#result{
+    font-size: 24pt;
+}
+.test-success,.test-fail{
+    width: 600px;
+    height: 600px;
+    background-repeat:no-repeat;
+    background-size: cover;
+}
+.test-success{
+    background-image: url(success.png);
+}
+.test-fail{
+    background-image: url(failed.jpg);
 }
 #test-question-name{
     border: 2px solid #c6c6c6;
@@ -412,5 +428,9 @@ input[type="checkbox"]:checked + label::before {
 }
 input[type="checkbox"] + label {
     margin-right: -15px;
+}
+.activepage{
+    color: #ffffff;
+    background-color: #999999;
 }
 

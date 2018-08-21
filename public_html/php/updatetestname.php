@@ -15,7 +15,7 @@ if($user['administrator']==1){
 }
 if($user['curator']==1){
     $res=mysqli_query($db,'UPDATE tests SET name=\''.$data['name'].'\' WHERE id='.$data['id'].' AND id IN '
-            . '(SELECT id_test FROM curator_test WHERE id_curator='.$user['id'].'');
+            . '(SELECT id_test FROM curator_test WHERE id_curator='.$user['id'].')');
 }
 if($user['teacher']==1){
     $res=mysqli_query($db,'UPDATE tests SET name=\''.$data['name'].'\' WHERE id='.$data['id'].' AND id IN '

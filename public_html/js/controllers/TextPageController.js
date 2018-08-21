@@ -24,7 +24,7 @@ App.controller('TextPageController',['$scope','$http','$filter','$q','LoggedUser
             $http({method:'POST',data:$scope.data,url:'php/updatecoursename.php'})
                     .then(function(){
                         Courses.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(c){
-                            $scope.courses=c;
+                            $scope.$parent.courses=c;
                             $scope.contentDownload.courses=true;
                         });
             });
@@ -41,24 +41,11 @@ App.controller('TextPageController',['$scope','$http','$filter','$q','LoggedUser
             $http({method:'POST',data:data,url:'php/updatelessonname.php'})
                     .then(function(){
                         Courses.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(c){
-                            $scope.courses=c;
+                            $scope.$parent.courses=c;
                             $scope.contentDownload.courses=true;
                         });
             });
-        };
-        
-        $scope.createNewCourse=function(){
-            var data={
-                user:$scope.loggedUser
-            };
-            $http({method:'POST',data:data,url:'php/createnewcourse.php'})
-                    .then(function(){
-                        Courses.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(c){
-                            $scope.courses=c;
-                            $scope.contentDownload.courses=true;
-                        });
-            });
-        };
+        };        
         
         $scope.createNewLesson=function(id){
             var data={
@@ -68,7 +55,7 @@ App.controller('TextPageController',['$scope','$http','$filter','$q','LoggedUser
             $http({method:'POST',data:data,url:'php/createnewlesson.php'})
                     .then(function(){
                         Courses.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(c){
-                            $scope.courses=c;
+                            $scope.$parent.courses=c;
                             $scope.contentDownload.courses=true;
                         });
             });
@@ -82,7 +69,7 @@ App.controller('TextPageController',['$scope','$http','$filter','$q','LoggedUser
             $http({method:'POST',data:data, url:'php/deletecourse.php'})
                     .then(function(){
                         Courses.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(c){
-                            $scope.courses=c;
+                            $scope.$parent.courses=c;
                             $scope.contentDownload.courses=true;
                         });
             });
@@ -96,7 +83,7 @@ App.controller('TextPageController',['$scope','$http','$filter','$q','LoggedUser
             $http({method:'POST',data:data, url:'php/deletelesson.php'})
                     .then(function(){
                         Courses.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(c){
-                            $scope.courses=c;
+                            $scope.$parent.courses=c;
                             $scope.contentDownload.courses=true;
                         });
             });

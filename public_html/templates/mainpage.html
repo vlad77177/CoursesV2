@@ -1,6 +1,6 @@
 <div ng-controller="PageController">
     
-    <div class="top-panel flex center">
+    <div class="top-panel flex center slideInUp">
         <div class="logo"></div>
     </div>
     
@@ -27,7 +27,7 @@
             <div class="hover">Курсы</div>
         </div>
         <div class="flex column center cross-center hover" ng-click="openPage('Texts')">
-            <div class="hover">Тексты</div>
+            <div class="hover">Контент</div>
         </div>
         <div class="flex column center cross-center hover"  ng-click="openPage('Tests')">
             <div class="hover">Тесты</div>
@@ -46,11 +46,11 @@
                     </tr>
                     <tr>
                         <td>Имя:</td>
-                        <td><input ng-model="newUser.login" type="name"></td>
+                        <td><input ng-model="newUser.name" type="name"></td>
                     </tr>
                     <tr>
                         <td>Фамилия:</td>
-                        <td><input ng-model="newUser.login" type="surname"></td>
+                        <td><input ng-model="newUser.surname" type="surname"></td>
                     </tr>
                     <tr>
                         <td>Email:</td>
@@ -88,7 +88,7 @@
                             <td>Имя</td>
                             <td>Фамилия</td>
                         </tr>
-                        <tr ng-repeat="admin in users | UserFilter:'administrator'" ng-click="selectUser(admin.id)" class="hover">
+                        <tr ng-repeat="admin in $parent.users | UserFilter:'administrator'" ng-click="selectUser(admin.id)" class="hover">
                             <td ng-bind="$index+1"></td>
                             <td ng-bind="admin.id"></td>
                             <td ng-bind="admin.login"></td>
@@ -99,7 +99,7 @@
                 </div>
             </div>
 
-            <div ng-show="(users | UserFilter:'curator').length>0">
+            <div ng-show="($parent.users | UserFilter:'curator').length>0">
                 <div title="Куратор создает свои курсы, преподавателей, студентов и управляет ими" style="cursor: pointer;">Кураторы</div>
                 <div>
                     <table class="list-table">
@@ -110,7 +110,7 @@
                             <td>Имя</td>
                             <td>Фамилия</td>
                         </tr>
-                        <tr ng-repeat="curator in users | UserFilter:'curator'" ng-click="selectUser(curator.id)" class="hover">
+                        <tr ng-repeat="curator in $parent.users | UserFilter:'curator'" ng-click="selectUser(curator.id)" class="hover">
                             <td ng-bind="$index+1"></td>
                             <td ng-bind="curator.id"></td>
                             <td ng-bind="curator.login"></td>
@@ -121,7 +121,7 @@
                 </div>
             </div>
 
-            <div ng-show="(users | UserFilter:'teacher').length>0">
+            <div ng-show="($parent.users | UserFilter:'teacher').length>0">
                 <div title="Преподаватель наполняет курсы контентом и следит за успеваемостью студентов" style="cursor: pointer;">Преподаватели</div>
                 <div>
                     <table class="list-table">
@@ -132,7 +132,7 @@
                             <td>Имя</td>
                             <td>Фамилия</td>
                         </tr>
-                        <tr ng-repeat="teacher in users | UserFilter:'teacher'" ng-click="selectUser(teacher.id)" class="hover">
+                        <tr ng-repeat="teacher in $parent.users | UserFilter:'teacher'" ng-click="selectUser(teacher.id)" class="hover">
                             <td ng-bind="$index+1"></td>
                             <td ng-bind="teacher.id"></td>
                             <td ng-bind="teacher.login"></td>
@@ -143,7 +143,7 @@
                 </div>
             </div>
 
-            <div ng-show="(users | UserFilter:'student').length>0">
+            <div ng-show="($parent.users | UserFilter:'student').length>0">
                 <div title="Студенты читают курсы и проходят тестирование" style="cursor: pointer;">Студенты</div>
                 <div>
                     <table class="list-table">
@@ -154,7 +154,7 @@
                             <td>Имя</td>
                             <td>Фамилия</td>
                         </tr>
-                        <tr ng-repeat="student in users | UserFilter:'student'" ng-click="selectUser(student.id)" class="hover">
+                        <tr ng-repeat="student in $parent.users | UserFilter:'student'" ng-click="selectUser(student.id)" class="hover">
                             <td ng-bind="$index+1"></td>
                             <td ng-bind="student.id"></td>
                             <td ng-bind="student.login"></td>
@@ -166,7 +166,7 @@
             </div>
         </div>
 
-        <div id="user-info-block" ng-show="(users | UserFilter:'id':selectedUserID).length>0">
+        <div id="user-info-block" ng-show="($parent.users | UserFilter:'id':selectedUserID).length>0">
             <div id="user-info">
                 <table>
                     <tr>
@@ -193,7 +193,7 @@
                         <td>Новый пароль:</td>
                         <td><input ng-model="currentUser.newpass" type="password"></td>
                     </tr>
-                    <tr ng-show="loggedUser.uadmin || loggedUser.ucurator">
+                    <tr ng-show="$parent.loggedUser.uadmin || loggedUser.ucurator">
                         <td>Повторите пароль:</td>
                         <td><input ng-model="currentUser.repeat" type="password"></td>
                     </tr>
@@ -210,7 +210,7 @@
     
     <div ng-show="openedPage==='Courses'" ng-controller="CoursesPageController" class="flex row">        
         
-        <div id="list-of-courses" ng-show="courses.length>0">
+        <div id="list-of-courses" ng-show="$parent.courses.length>0">
             <div title="Доступные вам для просмотра курсы" style="cursor: pointer;">Курсы</div>
             <div>
                 <table class="list-table">
@@ -219,12 +219,13 @@
                         <td>ID</td>
                         <td>Название</td>
                     </tr>
-                    <tr ng-repeat="course in courses" class="hover" ng-click="getCourseInfo(course.id,true)">
+                    <tr ng-repeat="course in $parent.courses" class="hover" ng-click="getCourseInfo(course.id,true)">
                         <td ng-bind="$index+1"></td>
                         <td ng-bind="course.id"></td>
                         <td ng-bind="course.name"></td>
                     </tr>
                 </table>
+                <button class="button" ng-click="createNewCourse();" ng-show="loggedUser.uadmin || loggedUser.ucurator">Добавить курс</button>
             </div>
         </div>
         
@@ -234,13 +235,13 @@
     
     <div ng-show="openedPage==='Texts'" ng-controller="TextPageController" class="flex row">
         <div class="left-sidebar">
-            <div class="courses-left-sidebar" ng-repeat="course in courses">
+            <div class="courses-left-sidebar" ng-repeat="course in $parent.courses">
                 <div class="courses-left-sidebar-name hover" ng-bind="course.name" ng-click="getCourseInfo(course.id,true);currentCourse.name=course.name;currentCourse.id=course.id;"></div>
                 <div class="lessons-left-sidebar hover" ng-repeat="lesson in course.lessons" ng-bind="lesson.name" ng-click="getLessonInfo(course.id,lesson.id);currentLesson.name=lesson.name;"></div>
                 <button class="button" ng-click="createNewLesson(course.id);">Добавить урок</button>
             </div>
             <hr>
-            <button class="button" ng-click="createNewCourse();" ng-show="loggedUser.uadmin || loggedUser.ucurator">Добавить курс</button>
+            <!--<button class="button" ng-click="createNewCourse();" ng-show="loggedUser.uadmin || loggedUser.ucurator">Добавить курс</button>-->
         </div>
         
         <div id="courses-text-block" class="flex row">
@@ -281,7 +282,7 @@
     <div ng-show="openedPage==='Tests'" ng-controller="TestPageController" class="flex row">
         
         <div class="left-sidebar">
-            <div class="test-left-sidebar" ng-repeat="test in tests">
+            <div class="test-left-sidebar" ng-repeat="test in $parent.tests">
                 <div class="tests-left-sidebar-name hover" ng-bind="test.name" ng-click="getTestInfo(test.id)"></div>
                 <div class="questions-left-sidebar hover" ng-repeat="question in test.questions" ng-bind="question.name" ng-click="getQuestionInfo(question,test.id)"></div>
                 <div><button class="button" ng-click="addQuestion(test.id)">Добавить вопрос</button></div>
@@ -292,5 +293,4 @@
         <test-extended></test-extended>
         
     </div>
-    
 </div>

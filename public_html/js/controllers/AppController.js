@@ -57,15 +57,14 @@ App.controller('AppController',['$scope','$http','$interval','LoggedUserService'
             else if($scope.loggedUser.uadmin==true){
                 $scope.loggedUser.mark='teacher';
             }
-            Users.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(us){
+            Users.get($scope.loggedUser.login,$scope.loggedUser.password).then(function(us){
                 $scope.users=us;
-                console.log($scope.users);
             });
-            Courses.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(c){
+            Courses.get($scope.loggedUser.login,$scope.loggedUser.password).then(function(c){
                 $scope.courses=c;
                 $scope.contentDownload.courses=true;
             });
-            Tests.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(t){
+            Tests.get($scope.loggedUser.login,$scope.loggedUser.password).then(function(t){
                 $scope.tests=t;
             });
             if($scope.loggedUser.ustudent==true){

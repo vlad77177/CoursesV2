@@ -9,14 +9,63 @@ App.controller('StudentPageController',['$scope','$http','$filter','$interval','
         $scope.currentLessonIndex=undefined;
         $scope.currentCourseId=undefined;
         
+        $scope.timer=undefined;
+        
         $scope.tick=function(){
-            if($scope.test!=undefined){
-                $scope.test.seconds=$scope.test.seconds-1;
-                var hour=Math.floor($scope.test.seconds/(60*60));
-                var minute=Math.floor($scope.test.seconds/60)-hour*60;
-                var second=$scope.test.seconds-(hour*(60*60))-minute*60;
-                $scope.clockmodel=""+hour+":"+minute+":"+second;
+            if($scope.$parent.test!==undefined){
+                $scope.$parent.test.seconds=$scope.$parent.test.seconds-1;
+                if($scope.$parent.test.seconds<=0){
+                    var data1={
+                        user:$scope.loggedUser,
+                        sid:$scope.$parent.test.session_id
+                    };
+                    $http({method:'POST',data:data1,url:'php/finishtest.php'})
+                        .then(function(data){
+                            $scope.result=data.data;
+                            $scope.$parent.testactive=false;
+                            $scope.showresult=true;
+                            $interval.cancel($scope.timer);
+                        });
+                }
+                var hour=Math.floor($scope.$parent.test.seconds/(60*60));
+                var minute=Math.floor($scope.$parent.test.seconds/60)-hour*60;
+                var second=$scope.$parent.test.seconds-(hour*(60*60))-minute*60;
+                $scope.$parent.clockmodel=""+hour+":"+minute+":"+second;
             }
+        };
+        
+        $scope.getActiveTest=function(id){
+            var data1={
+                user:$scope.loggedUser,
+                uid:$scope.loggedUser.id,
+                cid:id
+            };
+            
+            $http({method:'POST',data:data1,url:'php/getactivetest.php'})
+                .then(function(data){
+                    if(data.data!=false){
+                        $scope.$parent.alreadyinit=true;
+                        $scope.$parent.testactive=true;
+                        $scope.$parent.test=data.data;
+                        if($scope.$parent.test.seconds<=0){
+                            var data1={
+                                user:$scope.loggedUser,
+                                sid:$scope.$parent.test.session_id
+                            };
+                            $http({method:'POST',data:data1,url:'php/finishtest.php'})
+                                .then(function(data){
+                                    $scope.result=data.data;
+                                    $scope.$parent.testactive=false;
+                                    $scope.$parent.showresult=true;
+                                    $interval.cancel($scope.timer);
+                                });
+                        }
+                        else{
+                            $scope.timer=$interval(function(){$scope.tick();},1000);
+                            $scope.continueTest();
+                        }
+                    }
+                });
         };
         
         $scope.initTest=function(course){
@@ -35,11 +84,25 @@ App.controller('StudentPageController',['$scope','$http','$filter','$interval','
                         $http({method:'POST',data:data1,url:'php/getactivetest.php'})
                                 .then(function(data){
                                     if(data.data!=false){
-                                        $scope.alreadyinit=true;
-                                        $scope.testactive=true;
-                                        $scope.test=data.data;
-                                        $interval(function(){$scope.tick();},1000);
-                                        $scope.continueTest();
+                                        $scope.$parent.alreadyinit=true;
+                                        $scope.$parent.testactive=true;
+                                        $scope.$parent.test=data.data;
+                                        if($scope.$parent.test.seconds<=0){
+                                            var data1={
+                                                user:$scope.loggedUser,
+                                                sid:$scope.$parent.test.session_id
+                                            };
+                                            $http({method:'POST',data:data1,url:'php/finishtest.php'})
+                                                .then(function(data){
+                                                    $scope.result=data.data;
+                                                    $scope.$parent.testactive=false;
+                                                    $scope.$parent.showresult=true;
+                                                });
+                                        }
+                                        else{
+                                            $scope.timer=$interval(function(){$scope.tick();},1000);
+                                            $scope.continueTest();
+                                        }
                                     }
                                 });
                     });
@@ -48,27 +111,21 @@ App.controller('StudentPageController',['$scope','$http','$filter','$interval','
         $scope.ansver=function(index){
             var data={
                 user:$scope.loggedUser,
-                qsid:$scope.test.questions[$scope.testpage].id_session,
+                qsid:$scope.$parent.test.questions[$scope.$parent.testpage].id_session,
                 ansver:index+1,
-                number:$scope.testpage+1
+                number:$scope.$parent.testpage+1
             };
             $http({method:'POST',data:data,url:'php/ansver.php'})
-                    .then(function(data){
-                        if($scope.test.questions.length==$scope.testpage+1){
-                            var data1={
-                                user:$scope.loggedUser,
-                                sid:$scope.test.session_id
-                            };
-                            $http({method:'POST',data:data1,url:'php/finishtest.php'})
-                                .then(function(data){
-                                    $scope.result=data.data;
-                                    $scope.testactive=false;
-                                    $scope.showresult=true;
-                                });
-                        }
-                        $scope.testpage=$scope.testpage+1;
+                    .then(function(){
                     });
-            $scope.test.questions[$scope.testpage].ansvers[$scope.test.questions[$scope.testpage].ansvers.length]=index+1;
+            if($scope.$parent.test.questions[$scope.$parent.testpage].ansvers.indexOf((index+1).toString())===-1)
+                $scope.$parent.test.questions[$scope.$parent.testpage].ansvers[$scope.$parent.test.questions[$scope.$parent.testpage].ansvers.length]=(index+1).toString();
+            else{
+                $scope.$parent.test.questions[$scope.$parent.testpage].ansvers.splice(
+                    $scope.$parent.test.questions[$scope.$parent.testpage].ansvers.indexOf((index+1).toString()),
+                    1
+                );
+            }
         };
         
         $scope.currentLesson={
@@ -77,6 +134,7 @@ App.controller('StudentPageController',['$scope','$http','$filter','$interval','
         };
         
         $scope.getCourseInfo=function(id,openflag){
+            $scope.showresult=false;
             var data={
                 user:$scope.loggedUser,
                 id:id
@@ -89,10 +147,12 @@ App.controller('StudentPageController',['$scope','$http','$filter','$interval','
                     if(openflag===true)
                         $scope.textOpen='Course';
             });
+            $scope.getActiveTest(id);
         };
         
         $scope.getLessonInfo=function(cid,lid,index){
-            //if(index<$scope.currentStudent.data.lessons_learned+1){                
+            //if(index<$scope.currentStudent.data.lessons_learned+1){       
+            $scope.showresult=false;
                 var data={
                     user:$scope.loggedUser,
                     cid:cid,
@@ -112,7 +172,32 @@ App.controller('StudentPageController',['$scope','$http','$filter','$interval','
             //}
         };
         
+        $scope.lastQuestion=function(){
+            if($scope.$parent.testpage>0){
+                $scope.$parent.testpage--;
+            }
+        };
+        $scope.nextQuestion=function(){
+            if($scope.$parent.testpage<$scope.$parent.test.questions.length-1){
+                $scope.$parent.testpage++;
+            }
+            else{
+                var data1={
+                    user:$scope.loggedUser,
+                    sid:$scope.$parent.test.session_id
+                };
+                $http({method:'POST',data:data1,url:'php/finishtest.php'})
+                    .then(function(data){
+                        $scope.result=data.data;
+                        $scope.$parent.testactive=false;
+                        $scope.showresult=true;
+                        $interval.cancel($scope.timer);
+                    });
+            }
+        };
+        
         $scope.nextLesson=function(){
+            $scope.showresult=false;
             if($scope.currentLessonIndex>=0){
                 var course=$filter('CourseFilter')($scope.courses,'ids',$scope.currentCourseId);
                 if(course.length>0){
@@ -123,6 +208,7 @@ App.controller('StudentPageController',['$scope','$http','$filter','$interval','
         };
         
         $scope.lastLesson=function(){
+            $scope.showresult=false;
             if($scope.currentLessonIndex>=0){
                 var course=$filter('CourseFilter')($scope.courses,'ids',$scope.currentCourseId);
                 if(course.length>0){

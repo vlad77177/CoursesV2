@@ -16,17 +16,17 @@ $result['threshold']=null;
 
 $result_counter=0;
 
-$session= mysqli_fetch_assoc(mysqli_query($db,'SELECT * FROM test_session_temp WHERE id='.$data['sid'].' AND id IN (SELECT id_session FROM user_result WHERE user_id='.$user['id'].')'));
+$session= mysqli_fetch_assoc(mysqli_query($db,'SELECT * FROM test_session_temp WHERE id='.$data['sid'].' AND id IN (SELECT session_id FROM user_result WHERE user_id='.$user['id'].')'));
 $user_result=mysqli_fetch_assoc(mysqli_query($db,'SELECT * FROM user_result WHERE session_id='.$data['sid'].''));
 $questions=mysqli_query($db,'SELECT * FROM gen_questions_temp WHERE id_gen_session='.$data['sid'].' ORDER BY number');
-$res= mysqli_query($db, 'DELETE FROM gen_questions_temp WHERE id_gen_session='.$data['sid'].'');
+//$res= mysqli_query($db, 'DELETE FROM gen_questions_temp WHERE id_gen_session='.$data['sid'].'');
 
 $q_count=0;
 while($qrow= mysqli_fetch_assoc($questions)){
     $v_count=0;
     $variants=null;
     $variants_session=mysqli_query($db,'SELECT * FROM gen_variants_temp WHERE id_gen_question='.$qrow['id'].' ORDER BY number');
-    $res= mysqli_query($db, 'DELETE FROM gen_variants_temp WHERE id_gen_question='.$qrow['id'].'');
+    //$res= mysqli_query($db, 'DELETE FROM gen_variants_temp WHERE id_gen_question='.$qrow['id'].'');
     
     while($vrow=mysqli_fetch_assoc($variants_session)){
         $variants[$v_count]= mysqli_fetch_assoc(mysqli_query($db, 'SELECT * FROM variants WHERE id='.$vrow['id_variant'].''));
@@ -35,23 +35,45 @@ while($qrow= mysqli_fetch_assoc($questions)){
     
     $qa_count=0;
     $qansvers=mysqli_query($db,'SELECT * FROM gen_questions_ansver_temp WHERE id_gen_question='.$qrow['id'].'');
-    $res= mysqli_query($db, 'DELETE FROM gen_questions_ansver_temp WHERE id_gen_question='.$qrow['id'].'');
+    //$res= mysqli_query($db, 'DELETE FROM gen_questions_ansver_temp WHERE id_gen_question='.$qrow['id'].'');
     
-    $result_enable=false;
-    $ansver_count=0;
-    $right_ansver_count=0;
+    //$correct=true;
+    /*
     while($qarow= mysqli_fetch_assoc($qansvers)){
+        $user_ansvers=0;
+        $system_ansvers=0;
         for($i=0;$i<count($variants);$i++){
             if($variants[$i]['isright']==true){
                 if($qarow['ansver']==$i+1){
-                    $result_enable=true;
-                    $right_ansver_count++;
+                    $user_ansvers++;
                 }
-                $ansver_count++;
+                $system_ansvers++;
             }
         }
+        if($user_ansvers!==$system_ansvers){
+            $correct=false;
+        }
+    }*/
+    $qansv_arr=array();
+    while($qarow=mysqli_fetch_assoc($qansvers)){
+        $qansv_arr[count($qansv_arr)]=$qarow;
     }
-    if($result_enable==true && $ansver_count==$right_ansver_count){
+    
+    $system_ansvers=0;
+    $user_ansvers=0;
+    
+    for($i=0;$i<count($variants);$i++){
+        if($variants[$i]['isright']==true){
+            $system_ansvers++;
+            for($j=0;$j<count($qansv_arr);$j++){
+                if($qansv_arr[$j]['ansver']==$i+1){
+                    $user_ansvers++;
+                }
+            }
+        }        
+    }
+    
+    if($system_ansvers===$user_ansvers){
         $result_counter++;
     }
     

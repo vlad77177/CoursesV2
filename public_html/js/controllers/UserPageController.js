@@ -68,7 +68,7 @@ App.controller('UserPageController',['$scope','$http','$filter','LoggedUserServi
         $scope.selectUser=function(id){
             $scope.selectedUserID=id;
             $scope.currentUser.id=id;
-            var user=$filter('UserFilter')($scope.users,'id',id);
+            var user=$filter('UserFilter')($scope.$parent.users,'id',id);
             $scope.currentUser.login=user[0].login;
             $scope.currentUser.name=user[0].name;
             $scope.currentUser.surname=user[0].surname;
@@ -92,7 +92,7 @@ App.controller('UserPageController',['$scope','$http','$filter','LoggedUserServi
                 
                 //фильтрую сначала неподписанных, потом ищу среди них студентов               
                 var stud=new Array();
-                var curators=$filter('UserFilter')($scope.users,'curator');
+                var curators=$filter('UserFilter')($scope.$parent.users,'curator');
                 /*
                  * Надо выбрать только тех студентов, которые не принадлежат другим кураторам
                  */
@@ -100,7 +100,7 @@ App.controller('UserPageController',['$scope','$http','$filter','LoggedUserServi
                 for(var i=0;i<curators.length;i++){
                     used_students_ids=used_students_ids.concat(curators[i].cur_students);
                 }
-                stud=$filter('UserFilter')($scope.users,'unids',used_students_ids);
+                stud=$filter('UserFilter')($scope.$parent.users,'unids',used_students_ids);
                 
                 if($scope.currentUser.cur_students!==undefined){
                     $scope.unlinkStudents.students=$filter('UserFilter')(($filter('UserFilter')(stud,'unids',$scope.currentUser.cur_students)),'student');
@@ -111,7 +111,7 @@ App.controller('UserPageController',['$scope','$http','$filter','LoggedUserServi
                 
                 //по аналогии
                 var teach=new Array();
-                var curators=$filter('UserFilter')($scope.users,'curator');
+                var curators=$filter('UserFilter')($scope.$parent.users,'curator');
                 /*
                  * Надо выбрать только тех учителей, которые не принадлежат другим кураторам
                  */
@@ -119,7 +119,7 @@ App.controller('UserPageController',['$scope','$http','$filter','LoggedUserServi
                 for(var i=0;i<curators.length;i++){
                     used_teachers_ids=used_teachers_ids.concat(curators[i].cur_teachers);
                 }
-                teach=$filter('UserFilter')($scope.users,'unids',used_teachers_ids);
+                teach=$filter('UserFilter')($scope.$parent.users,'unids',used_teachers_ids);
                 
                 if($scope.currentUser.cur_teachers!==undefined){
                     $scope.unlinkTeachers.teachers=$filter('UserFilter')(($filter('UserFilter')(teach,'unids',$scope.currentUser.cur_teachers)),'teacher');
@@ -132,7 +132,7 @@ App.controller('UserPageController',['$scope','$http','$filter','LoggedUserServi
                 $scope.currentUser.is_curator=false;
             if(user[0].teacher==true){
                 $scope.currentUser.is_teacher=true;
-                $scope.unlinkCourses.courses=$filter('CourseFilter')($scope.courses,'unids',$scope.currentUser.teach_courses);
+                $scope.unlinkCourses.courses=$filter('CourseFilter')($scope.$parent.courses,'unids',$scope.currentUser.teach_courses);
             }
             else
                 $scope.currentUser.is_teacher=false;
@@ -170,7 +170,7 @@ App.controller('UserPageController',['$scope','$http','$filter','LoggedUserServi
                     $http({method:'POST',data:data,url:'php/createnewuser.php'})
                         .then(function(){
                             Users.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(us){
-                                $scope.users=us;
+                                $scope.$parent.users=us;
                             });
                     });
                 }
@@ -193,8 +193,8 @@ App.controller('UserPageController',['$scope','$http','$filter','LoggedUserServi
             $http({method:'POST',data:data,url:'php/linkuser.php'})
                 .then(function(){
                     Users.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(us){
-                        $scope.users=us;
-                        $scope.unlinkStudents.students=$filter('UserFilter')(($filter('UserFilter')($scope.users,'unids',$scope.currentUser.cur_students)),'student');
+                        $scope.$parent.users=us;
+                        $scope.unlinkStudents.students=$filter('UserFilter')(($filter('UserFilter')($scope.$parent.users,'unids',$scope.currentUser.cur_students)),'student');
                         $scope.selectUser($scope.currentUser.id);
                     });
             });
@@ -209,8 +209,8 @@ App.controller('UserPageController',['$scope','$http','$filter','LoggedUserServi
             $http({method:'POST',data:data,url:'php/linkuser.php'})
                 .then(function(){
                     Users.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(us){
-                        $scope.users=us;
-                        $scope.unlinkTeachers.teachers=$filter('UserFilter')(($filter('UserFilter')($scope.users,'unids',$scope.currentUser.cur_teachers)),'teacher');
+                        $scope.$parent.users=us;
+                        $scope.unlinkTeachers.teachers=$filter('UserFilter')(($filter('UserFilter')($scope.$parent.users,'unids',$scope.currentUser.cur_teachers)),'teacher');
                         $scope.selectUser($scope.currentUser.id);
                     });
             });
@@ -225,8 +225,8 @@ App.controller('UserPageController',['$scope','$http','$filter','LoggedUserServi
             $http({method:'POST',data:data,url:'php/unlinkuser.php'})
                 .then(function(){
                     Users.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(us){
-                        $scope.users=us;
-                        $scope.unlinkStudents.students=$filter('UserFilter')(($filter('UserFilter')($scope.users,'unids',$scope.currentUser.cur_students)),'student');
+                        $scope.$parent.users=us;
+                        $scope.unlinkStudents.students=$filter('UserFilter')(($filter('UserFilter')($scope.$parent.users,'unids',$scope.currentUser.cur_students)),'student');
                         $scope.selectUser($scope.currentUser.id);
                     });
             });
@@ -241,8 +241,8 @@ App.controller('UserPageController',['$scope','$http','$filter','LoggedUserServi
             $http({method:'POST',data:data,url:'php/unlinkuser.php'})
                 .then(function(){
                     Users.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(us){
-                        $scope.users=us;
-                        $scope.unlinkTeachers.teachers=$filter('UserFilter')(($filter('UserFilter')($scope.users,'unids',$scope.currentUser.cur_teachers)),'teacher');
+                        $scope.$parent.users=us;
+                        $scope.unlinkTeachers.teachers=$filter('UserFilter')(($filter('UserFilter')($scope.$parent.users,'unids',$scope.currentUser.cur_teachers)),'teacher');
                         $scope.selectUser($scope.currentUser.id);
                     });
             });
@@ -258,13 +258,13 @@ App.controller('UserPageController',['$scope','$http','$filter','LoggedUserServi
             $http({method:'POST',data:data,url:'php/linkcourse.php'})
                 .then(function(){
                     Users.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(us){
-                        $scope.users=us;
-                        $scope.unlinkTeachers.teachers=$filter('UserFilter')(($filter('UserFilter')($scope.users,'unids',$scope.currentUser.cur_teachers)),'teacher');
+                        $scope.$parent.users=us;
+                        $scope.unlinkTeachers.teachers=$filter('UserFilter')(($filter('UserFilter')($scope.$parent.users,'unids',$scope.currentUser.cur_teachers)),'teacher');
                         $scope.selectUser($scope.currentUser.id);
                     });
                     Courses.get($scope.loggedUser.login,$scope.loggedUser.password).then(function(c){
-                        $scope.courses=c;
-                        $scope.unlinkCourses.courses=$filter('CourseFilter')($scope.courses,'unids',$scope.currentUser.teach_courses);
+                        $scope.$parent.courses=c;
+                        $scope.unlinkCourses.courses=$filter('CourseFilter')($scope.$parent.courses,'unids',$scope.currentUser.teach_courses);
                         $scope.selectUser($scope.currentUser.id);
                     });
             });
@@ -279,13 +279,13 @@ App.controller('UserPageController',['$scope','$http','$filter','LoggedUserServi
             $http({method:'POST',data:data,url:'php/unlinkcourse.php'})
                 .then(function(){
                     Users.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(us){
-                        $scope.users=us;
-                        $scope.unlinkTeachers.teachers=$filter('UserFilter')(($filter('UserFilter')($scope.users,'unids',$scope.currentUser.cur_teachers)),'teacher');
+                        $scope.$parent.users=us;
+                        $scope.unlinkTeachers.teachers=$filter('UserFilter')(($filter('UserFilter')($scope.$parent.users,'unids',$scope.currentUser.cur_teachers)),'teacher');
                         $scope.selectUser($scope.currentUser.id);
                     });
                     Courses.get($scope.loggedUser.login,$scope.loggedUser.password).then(function(c){
-                        $scope.courses=c;
-                        $scope.unlinkCourses.courses=$filter('CourseFilter')($scope.courses,'unids',$scope.currentUser.teach_courses);
+                        $scope.$parent.courses=c;
+                        $scope.unlinkCourses.courses=$filter('CourseFilter')($scope.$parent.courses,'unids',$scope.currentUser.teach_courses);
                         $scope.selectUser($scope.currentUser.id);
                     });
             });

@@ -19,6 +19,7 @@ App.controller('PageController',['$scope','$http','LoggedUserService','UsersServ
         
         $scope.openPage=function(flag){
             $scope.openedPage=flag;
+            console.log($scope);
         };
     }]
 );

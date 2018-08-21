@@ -29,26 +29,39 @@ App.controller('CoursesPageController',['$scope','$http','$filter','LoggedUserSe
                     
                     $scope.unlinkCuratorCourse.curators=$filter('UserFilter')($scope.users,'curator');
                     $scope.unlinkCuratorCourse.value=$scope.currentCourse.curator;
-                    console.log("unlink");
-                    console.log($scope.unlinkCuratorCourse);
                     
-                    var cur=$filter('UserFilter')($scope.users,'id',$scope.currentCourse.curator);//куратор, который привязан к курсу
+                    var cur=$filter('UserFilter')($scope.$parent.users,'id',$scope.currentCourse.curator);//куратор, который привязан к курсу
+                    
+                    if(cur[0]!==undefined){
+                        var u=$filter('UserInIDArrayFilter')($scope.users,cur[0].cur_teachers);    //список пользователей, прин куратору                
+                        if($scope.currentCourse.data.teachers!==undefined){                        
+                            $scope.unlinkTeachersCourse.teachers=$filter('UserFilter')(($filter('UserFilter')(u,'unids',$scope.currentCourse.data.teachers)),'teacher');
+                        }
+                        else{
+                            $scope.unlinkTeachersCourse.teachers=$filter('UserFilter')(u,'teacher');
+                        }
 
-                    var u=$filter('UserInIDArrayFilter')($scope.users,cur[0].cur_teachers);    //список пользователей, прин куратору                
-                    if($scope.currentCourse.data.teachers!==undefined){                        
-                        $scope.unlinkTeachersCourse.teachers=$filter('UserFilter')(($filter('UserFilter')(u,'unids',$scope.currentCourse.data.teachers)),'teacher');
+                        var stud=$filter('UserInIDArrayFilter')($scope.users,cur[0].cur_students); //список студентов                    
+                        if($scope.currentCourse.data.users!==undefined){
+                            $scope.unlinkStudentsCourse.students=$filter('UserFilter')(($filter('UserFilter')(stud,'unids',$scope.currentCourse.data.users)),'student');
+                        }
+                        else{
+                            $scope.unlinkStudentsCourse.students=$filter('UserFilter')(stud,'student');
+                        }
                     }
-                    else{
-                        $scope.unlinkTeachersCourse.teachers=$filter('UserFilter')(u,'teacher');
-                    }
-                    
-                    var stud=$filter('UserInIDArrayFilter')($scope.users,cur[0].cur_students); //список студентов                    
-                    if($scope.currentCourse.data.users!==undefined){
-                        $scope.unlinkStudentsCourse.students=$filter('UserFilter')(($filter('UserFilter')(stud,'unids',$scope.currentCourse.data.users)),'student');
-                    }
-                    else{
-                        $scope.unlinkStudentsCourse.students=$filter('UserFilter')(stud,'student');
-                    }
+            });
+        };
+        
+        $scope.createNewCourse=function(){
+            var data={
+                user:$scope.loggedUser
+            };
+            $http({method:'POST',data:data,url:'php/createnewcourse.php'})
+                    .then(function(){
+                        Courses.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(c){
+                            $scope.$parent.courses=c;
+                            $scope.contentDownload.courses=true;
+                        });
             });
         };
         
@@ -67,7 +80,7 @@ App.controller('CoursesPageController',['$scope','$http','$filter','LoggedUserSe
             $http({method:'POST',data:data,url:'php/linkuser.php'})
                 .then(function(){
                     Courses.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(c){
-                        $scope.courses=c;
+                        $scope.$parent.courses=c;
                     });
                     $scope.getCourseInfo($scope.currentCourse.data.description.id_course);
             });
@@ -84,8 +97,8 @@ App.controller('CoursesPageController',['$scope','$http','$filter','LoggedUserSe
                 .then(function(){
                     $scope.getCourseInfo($scope.currentCourse.data.description.id_course);
                     Users.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(us){
-                        $scope.users=us;
-                        $scope.unlinkTeachersCourse.teachers=$filter('UserFilter')(($filter('UserFilter')($scope.users,'unids',$scope.currentCourse.data.teachers)),'teacher');
+                        $scope.$parent.users=us;
+                        $scope.unlinkTeachersCourse.teachers=$filter('UserFilter')(($filter('UserFilter')($scope.$parent.users,'unids',$scope.currentCourse.data.teachers)),'teacher');
                         //$scope.selectUser($scope.currentUser.id);
                     });
             });
@@ -102,7 +115,7 @@ App.controller('CoursesPageController',['$scope','$http','$filter','LoggedUserSe
                 .then(function(){
                     $scope.getCourseInfo($scope.currentCourse.data.description.id_course);
                     Users.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(us){
-                        $scope.users=us;
+                        $scope.$parent.users=us;
                     });
             });
         };
@@ -118,8 +131,8 @@ App.controller('CoursesPageController',['$scope','$http','$filter','LoggedUserSe
                 .then(function(){
                     $scope.getCourseInfo($scope.currentCourse.data.description.id_course);
                     Users.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(us){
-                        $scope.users=us;
-                        $scope.unlinkTeachersCourse.teachers=$filter('UserFilter')(($filter('UserFilter')($scope.users,'unids',$scope.currentCourse.data.teachers)),'teacher');
+                        $scope.$parent.users=us;
+                        $scope.unlinkTeachersCourse.teachers=$filter('UserFilter')(($filter('UserFilter')($scope.$parent.users,'unids',$scope.currentCourse.data.teachers)),'teacher');
                     });
             });
         };
@@ -135,7 +148,7 @@ App.controller('CoursesPageController',['$scope','$http','$filter','LoggedUserSe
                 .then(function(){
                     $scope.getCourseInfo($scope.currentCourse.data.description.id_course);
                     Users.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(us){
-                        $scope.users=us;
+                        $scope.$parent.users=us;
                     });
             });
         };

@@ -44,7 +44,7 @@ for($i=0;$i<count($questions_all);$i++){
     $unused_numbers[$i]=$i;
 }
 
-for($i=0;$i<count($questions_all);$i++){
+for($i=0;$i<$test['display_q'];$i++){
     //случайно выбираю вопросы
     $r=null;
     if($test['mix_q']==true){

@@ -18,7 +18,7 @@ App.controller('TestPageController',['$scope','$http','$filter','$q','LoggedUser
         
         $scope.getTestInfo=function(id){
             for(var i=0;i<$scope.tests.length;i++){
-                if($scope.tests[i].id===id){
+                if($scope.$parent.tests[i].id===id){
                     $scope.currentTest.data=$scope.tests[i];
                 }
             }
@@ -32,7 +32,7 @@ App.controller('TestPageController',['$scope','$http','$filter','$q','LoggedUser
             $http({method:'POST',data:data,url:'php/createnewquestion.php'})
                 .then(function(){
                     Tests.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(t){
-                        $scope.tests=t;//обновленный                            
+                        $scope.$parent.tests=t;//обновленный                            
                     });
             });
         };
@@ -45,7 +45,7 @@ App.controller('TestPageController',['$scope','$http','$filter','$q','LoggedUser
             $http({method:'POST',data:data,url:'php/deletequestion.php'})
                 .then(function(){
                     Tests.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(t){
-                        $scope.tests=t;                         
+                        $scope.$parent.tests=t;                         
                     });
             });
         };
@@ -57,7 +57,7 @@ App.controller('TestPageController',['$scope','$http','$filter','$q','LoggedUser
             $http({method:'POST',data:data,url:'php/createnewtest.php'})
                 .then(function(){
                     Tests.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(t){
-                        $scope.tests=t;//обновленный                            
+                        $scope.$parent.tests=t;//обновленный                            
                     });
             });
         };
@@ -70,7 +70,7 @@ App.controller('TestPageController',['$scope','$http','$filter','$q','LoggedUser
             $http({method:'POST',data:data,url:'php/deletetest.php'})
                 .then(function(){
                     Tests.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(t){
-                        $scope.tests=t;//обновленный                            
+                        $scope.$parent.tests=t;//обновленный                            
                     });
             });
         };
@@ -83,7 +83,7 @@ App.controller('TestPageController',['$scope','$http','$filter','$q','LoggedUser
             $http({method:'POST',data:data,url:'php/createnewvariant.php'})
                 .then(function(){
                     Tests.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(t){
-                        $scope.tests=t;//обновленный                            
+                        $scope.$parent.tests=t;//обновленный                            
                     });
             });
         };
@@ -96,7 +96,7 @@ App.controller('TestPageController',['$scope','$http','$filter','$q','LoggedUser
             $http({method:'POST',data:data,url:'php/deletevariant.php'})
                 .then(function(){
                     Tests.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(t){
-                        $scope.tests=t;//обновленный                            
+                        $scope.$parent.tests=t;//обновленный                            
                     });
             });
         };
@@ -109,10 +109,10 @@ App.controller('TestPageController',['$scope','$http','$filter','$q','LoggedUser
             $http({method:'POST',data:data,url:'php/updatetestsettings.php'})
                 .then(function(){
                     Tests.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(t){
-                        $scope.tests=t;//обновленный                            
-                        for(var i=0;i<$scope.tests.length;i++){
-                            if($scope.tests[i].id===$scope.currentTest.data.id){
-                                $scope.getTestInfo($scope.tests[i].id);
+                        $scope.$parent.tests=t;//обновленный                            
+                        for(var i=0;i<$scope.$parent.tests.length;i++){
+                            if($scope.$parent.tests[i].id===$scope.currentTest.data.id){
+                                $scope.getTestInfo($scope.$parent.tests[i].id);
                             }
                         }                              
                     });
@@ -128,10 +128,10 @@ App.controller('TestPageController',['$scope','$http','$filter','$q','LoggedUser
             $http({method:'POST',data:data,url:'php/updatetestname.php'})
                 .then(function(){
                     Tests.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(t){
-                        $scope.tests=t;//обновленный                            
-                        for(var i=0;i<$scope.tests.length;i++){
-                            if($scope.tests[i].id===$scope.currentTest.data.id){
-                                $scope.getTestInfo($scope.tests[i].id);
+                        $scope.$parent.tests=t;//обновленный                            
+                        for(var i=0;i<$scope.$parent.tests.length;i++){
+                            if($scope.$parent.tests[i].id===$scope.currentTest.data.id){
+                                $scope.getTestInfo($scope.$parent.tests[i].id);
                             }
                         }                              
                     });
@@ -151,7 +151,7 @@ App.controller('TestPageController',['$scope','$http','$filter','$q','LoggedUser
         
         $scope.reloadTest=function(){
             Tests.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(t){
-                $scope.tests=t;//обновленный
+                $scope.$parent.tests=t;//обновленный
                 $scope.getTestInfo($scope.currentTest.data.id);
                 $scope.getQuestionInfo($scope.currentQuestion.data,$scope.currentTest.data.id);
             });
@@ -171,10 +171,10 @@ App.controller('TestPageController',['$scope','$http','$filter','$q','LoggedUser
             $http({method:'POST',data:data,url:'php/changevariantisright.php'})
                 .then(function(){
                     Tests.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(t){
-                        $scope.tests=t;//обновленный                            
-                        for(var i=0;i<$scope.tests.length;i++){
-                            if($scope.tests[i].id===tid){
-                                $scope.getTestInfo($scope.tests[i].id);
+                        $scope.$parent.tests=t;//обновленный                            
+                        for(var i=0;i<$scope.$parent.tests.length;i++){
+                            if($scope.$parent.tests[i].id===tid){
+                                $scope.getTestInfo($scope.$parent.tests[i].id);
                             }
                         } 
                         $scope.getQuestionInfo($scope.currentQuestion.data,tid);                               

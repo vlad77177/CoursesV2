@@ -10,10 +10,16 @@ if($user['student']==0){
     exit(FALSE);
 }
 
-$res=mysqli_query($db,'UPDATE gen_questions_temp SET ansver=1 WHERE id='.$data['qsid'].' AND number='.$data['number'].' AND id_gen_session IN (SELECT id FROM test_session_tmp WHERE id=(SELECT session_id FROM user_result WHERE user_id='.$user['id'].'))');
+//$res=mysqli_query($db,'UPDATE gen_questions_temp SET ansver=1 WHERE id='.$data['qsid'].' AND number='.$data['number'].' AND id_gen_session IN (SELECT id FROM test_session_tmp WHERE id IN (SELECT session_id FROM user_result WHERE user_id='.$user['id'].'))');
+$res=mysqli_query($db,'UPDATE gen_questions_temp SET ansver=1 WHERE id='.$data['qsid'].' AND number='.$data['number'].'');
+$exist= mysqli_fetch_assoc(mysqli_query($db,'SELECT * FROM gen_questions_ansver_temp WHERE id_gen_question IN (SELECT id FROM gen_questions_temp WHERE id='.$data['qsid'].' AND number='.$data['number'].') AND ansver='.$data['ansver'].''));
+if(count($exist)>0){
+    mysqli_query($db,'DELETE FROM gen_questions_ansver_temp WHERE id_gen_question='.$data['qsid'].'');
+    exit();
+}
 $res=mysqli_query($db,'INSERT INTO gen_questions_ansver_temp(id_gen_question,ansver) VALUES('.$data['qsid'].','.$data['ansver'].')');
 
-exit(json_encode($data));
+exit();
 
 ?>
 
