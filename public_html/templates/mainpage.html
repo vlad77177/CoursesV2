@@ -75,9 +75,15 @@
                 <button class="button" ng-click="createNewUser()">Добавить пользователя</button>
             </div>
             
+            <div class="flex row">
+                <input ng-model="searchString">
+                <select ng-model="searchType.model" ng-options="type.id as type.type for type in searchType.types" style="width: 5vw;margin-left: 10px"></select>
+                <div class="search-icon"></div>
+            </div>
+            
             <div class="download-block" ng-show="contentDownload.courses==false"></div>
 
-            <div ng-show="(users | UserFilter:'administrator').length>0">
+            <div ng-show="((users | UserFilter:'administrator') | UserSearch:searchString:searchType.model).length>0">
                 <div title="Администратор обладает максимальными правами в системе" style="cursor: pointer;">Администраторы</div>
                 <div>
                     <table class="list-table">
@@ -88,7 +94,7 @@
                             <td>Имя</td>
                             <td>Фамилия</td>
                         </tr>
-                        <tr ng-repeat="admin in $parent.users | UserFilter:'administrator'" ng-click="selectUser(admin.id)" class="hover">
+                        <tr ng-repeat="admin in (($parent.users | UserFilter:'administrator') | UserSearch:searchString:searchType.model)" ng-click="selectUser(admin.id)" class="hover user-view">
                             <td ng-bind="$index+1"></td>
                             <td ng-bind="admin.id"></td>
                             <td ng-bind="admin.login"></td>
@@ -99,7 +105,7 @@
                 </div>
             </div>
 
-            <div ng-show="($parent.users | UserFilter:'curator').length>0">
+            <div ng-show="(($parent.users | UserFilter:'curator') | UserSearch:searchString:searchType.model).length>0">
                 <div title="Куратор создает свои курсы, преподавателей, студентов и управляет ими" style="cursor: pointer;">Кураторы</div>
                 <div>
                     <table class="list-table">
@@ -110,7 +116,7 @@
                             <td>Имя</td>
                             <td>Фамилия</td>
                         </tr>
-                        <tr ng-repeat="curator in $parent.users | UserFilter:'curator'" ng-click="selectUser(curator.id)" class="hover">
+                        <tr ng-repeat="curator in (($parent.users | UserFilter:'curator') | UserSearch:searchString:searchType.model)" ng-click="selectUser(curator.id)" class="hover user-view">
                             <td ng-bind="$index+1"></td>
                             <td ng-bind="curator.id"></td>
                             <td ng-bind="curator.login"></td>
@@ -121,7 +127,7 @@
                 </div>
             </div>
 
-            <div ng-show="($parent.users | UserFilter:'teacher').length>0">
+            <div ng-show="(($parent.users | UserFilter:'teacher') | UserSearch:searchString:searchType.model).length>0">
                 <div title="Преподаватель наполняет курсы контентом и следит за успеваемостью студентов" style="cursor: pointer;">Преподаватели</div>
                 <div>
                     <table class="list-table">
@@ -132,7 +138,7 @@
                             <td>Имя</td>
                             <td>Фамилия</td>
                         </tr>
-                        <tr ng-repeat="teacher in $parent.users | UserFilter:'teacher'" ng-click="selectUser(teacher.id)" class="hover">
+                        <tr ng-repeat="teacher in (($parent.users | UserFilter:'teacher') | UserSearch:searchString:searchType.model)" ng-click="selectUser(teacher.id)" class="hover user-view">
                             <td ng-bind="$index+1"></td>
                             <td ng-bind="teacher.id"></td>
                             <td ng-bind="teacher.login"></td>
@@ -143,7 +149,7 @@
                 </div>
             </div>
 
-            <div ng-show="($parent.users | UserFilter:'student').length>0">
+            <div ng-show="(($parent.users | UserFilter:'student') | UserSearch:searchString:searchType.model).length>0">
                 <div title="Студенты читают курсы и проходят тестирование" style="cursor: pointer;">Студенты</div>
                 <div>
                     <table class="list-table">
@@ -154,7 +160,7 @@
                             <td>Имя</td>
                             <td>Фамилия</td>
                         </tr>
-                        <tr ng-repeat="student in $parent.users | UserFilter:'student'" ng-click="selectUser(student.id)" class="hover">
+                        <tr ng-repeat="student in (($parent.users | UserFilter:'student') | UserSearch:searchString:searchType.model)" ng-click="selectUser(student.id)" class="hover user-view">
                             <td ng-bind="$index+1"></td>
                             <td ng-bind="student.id"></td>
                             <td ng-bind="student.login"></td>

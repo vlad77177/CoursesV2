@@ -170,3 +170,29 @@ App.filter('InArray',function(){
     }
 });
 
+App.filter('UserSearch',function(){
+    return function(users,search,flag){
+        
+        if(users===undefined || search===undefined || flag===undefined){
+            return users;
+        }
+        
+        var filtered=[];
+        
+        var types=[
+            'id',
+            'login',
+            'name',
+            'surname'
+        ];
+        
+        for(var i=0;i<users.length;i++){
+            if(users[i][types[flag-1]].indexOf(search)!==-1){
+                filtered[filtered.length]=users[i];
+            }
+        }
+        
+        return filtered;
+    }
+});
+

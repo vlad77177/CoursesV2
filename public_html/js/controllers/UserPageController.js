@@ -65,6 +65,18 @@ App.controller('UserPageController',['$scope','$http','$filter','LoggedUserServi
             ]
         };
         
+        $scope.searchType={
+            types:[
+                {id:1,type:'ID'},
+                {id:2,type:'Логин'},
+                {id:3,type:'Имя'},
+                {id:4,type:'Фамилия'}
+            ],
+            model:1
+        };
+        
+        $scope.searchString=undefined;
+        
         $scope.selectUser=function(id){
             $scope.selectedUserID=id;
             $scope.currentUser.id=id;
