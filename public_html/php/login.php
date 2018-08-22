@@ -3,7 +3,10 @@
     
     require 'db.php';
        
-    $user= json_decode(file_get_contents('php://input'),true);  
+    $user= json_decode(file_get_contents('php://input'),true);
+    
+    $user['login']= mysqli_real_escape_string($db,$user['login']);
+    
     $res= mysqli_fetch_assoc(mysqli_query($db, 'SELECT * FROM users WHERE login=\''.$user['login'].'\''));
     
     if(password_verify($user['password'], $res['password'])==true){

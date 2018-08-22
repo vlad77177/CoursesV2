@@ -6,6 +6,9 @@ require 'db.php';
 
 $data=json_decode(file_get_contents('php://input'),true);
 
+$data['user']['login']= mysqli_real_escape_string($db,$data['user']['login']);
+$data['user']['password']= mysqli_real_escape_string($db,$data['user']['password']);
+
 if($user['administrator']==0 and $user['curator']==0 and $user['teacher']==0 and $user['student']==0){
     exit(FALSE);
 }
