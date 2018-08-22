@@ -18,7 +18,7 @@
                     <div ng-bind="course.name" class="course-name-stud hover" ng-click="getCourseInfo(course.id,true);"></div>
                     <div ng-class="{true:'unlearned',false:''}[$index>currentStudent.data.lessons_learned]" ng-repeat="lesson in course.lessons" ng-bind="lesson.name" class="lesson-name-stud hover slideInLeft" ng-click="getLessonInfo(course.id,lesson.id,$index);"></div>
                     <hr>
-                    <button class="button" ng-click="initTest(course)" ng-show="course.lessons.length<=currentStudent.data.lessons_learned+1">Пройти тест</button>
+                    <button class="button" ng-click="initTest(course)" ng-show="course.lessons.length<=currentStudent.data.lessons_learned+1" ng-disabled="">Пройти тест</button>
                 </div>
             </div>            
         </div>

@@ -17,6 +17,9 @@ if($user['administrator']==0 and $user['curator']==0){
     exit();
 }
 
+$visit=date('Y-m-d H:i:s',time());
+mysqli_query($db,'UPDATE users SET last_visit=\''.$visit.'\' WHERE login=\''.$data['user']['login'].'\'');
+
 if($user['administrator']==1){
     $res=mysqli_query($db,'UPDATE courses SET name=\''.$data['name'].'\' WHERE id='.$data['id'].'');
 }

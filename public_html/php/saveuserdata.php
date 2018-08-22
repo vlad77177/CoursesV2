@@ -18,6 +18,9 @@
         exit(FALSE);
     }
     
+    $visit=date('Y-m-d H:i:s',time());
+    mysqli_query($db,'UPDATE users SET last_visit=\''.$visit.'\' WHERE login=\''.$data['user']['login'].'\'');
+    
     $pass= password_hash($data['currentUser']['newpass'],PASSWORD_BCRYPT);
     if($user['administrator']){
         $res=mysqli_query($db,'UPDATE users SET login=\''.$data['currentUser']['login'].'\', password=\''.$pass.'\', email=\''.$data['currentUser']['email'].'\' WHERE id='.$data['currentUser']['id'].'');

@@ -277,6 +277,11 @@ button,.button:hover{
     border:2px solid #999999;
     cursor: pointer;
 }
+.button:disabled{
+    color:#cecece;
+    background-color: #ffffff;
+    border:2px solid #cecece;
+}
 .button-exit{
     position: relative;
     right: -32vw;

@@ -13,6 +13,9 @@
         exit();
     }
     
+    $visit=date('Y-m-d H:i:s',time());
+    mysqli_query($db,'UPDATE users SET last_visit=\''.$visit.'\' WHERE login=\''.$data['user']['login'].'\'');
+    
     $filter='';
     if($user['curator']==1){
         $filter=' AND id_course IN (SELECT id_course FROM curator_course WHERE id_curator='.$user['id'].')';

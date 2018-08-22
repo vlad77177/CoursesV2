@@ -13,6 +13,9 @@
         exit(FALSE);
     }
     
+    $visit=date('Y-m-d H:i:s',time());
+    mysqli_query($db,'UPDATE users SET last_visit=\''.$visit.'\' WHERE login=\''.$data['user']['login'].'\'');
+    
     //$coursesf= mysqli_fetch_all(mysqli_query($db,'SELECT * FROM courses'),MYSQLI_ASSOC);
     $coursesf=[];
     $r=undefined;

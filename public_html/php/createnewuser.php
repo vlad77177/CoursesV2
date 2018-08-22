@@ -19,7 +19,9 @@
     if($user['administrator']==0 and $user['curator']==0){
         exit(FALSE);
     }
-
+    
+    $visit=date('Y-m-d H:i:s',time());
+    mysqli_query($db,'UPDATE users SET last_visit=\''.$visit.'\' WHERE login=\''.$data['user']['login'].'\'');
     
     $pass= password_hash($data['newUser']['password'], PASSWORD_BCRYPT);
     

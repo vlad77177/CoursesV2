@@ -17,6 +17,9 @@ if($user['administrator']==0 and $user['curator']==0 and $user['teacher']==0){
     exit(FALSE);
 }
 
+$visit=date('Y-m-d H:i:s',time());
+mysqli_query($db,'UPDATE users SET last_visit=\''.$visit.'\' WHERE login=\''.$data['user']['login'].'\'');
+
 if($user['administrator']==1){
     $res=mysqli_query($db,'UPDATE tests SET name=\''.$data['name'].'\' WHERE id='.$data['id'].'');
 }

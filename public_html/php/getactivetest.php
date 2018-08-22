@@ -17,6 +17,9 @@ if($user['student']==0){
     exit(FALSE);
 }
 
+$visit=date('Y-m-d H:i:s',time());
+mysqli_query($db,'UPDATE users SET last_visit=\''.$visit.'\' WHERE login=\''.$data['user']['login'].'\'');
+
 $test=null;
 
 $user_result= mysqli_fetch_assoc(mysqli_query($db, 'SELECT * FROM user_result WHERE user_id='.$data['uid'].' AND id_course='.$data['cid'].''));

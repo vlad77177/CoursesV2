@@ -14,6 +14,9 @@ if($user['administrator']==0 and $user['curator']==0){
     exit(FALSE);
 }
 
+$visit=date('Y-m-d H:i:s',time());
+mysqli_query($db,'UPDATE users SET last_visit=\''.$visit.'\' WHERE login=\''.$data['user']['login'].'\'');
+
 $name='Новый тест';
 $question="Текст первого вопроса";
 $question_name="Вопрос 1";

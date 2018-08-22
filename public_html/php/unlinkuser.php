@@ -18,6 +18,9 @@
         exit(FALSE);
     }
     
+    $visit=date('Y-m-d H:i:s',time());
+    mysqli_query($db,'UPDATE users SET last_visit=\''.$visit.'\' WHERE login=\''.$data['user']['login'].'\'');
+    
     switch($data['mode']){
         //отписываю студента от куратора
         case 1:{

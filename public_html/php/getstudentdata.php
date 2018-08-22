@@ -14,6 +14,9 @@ session_start();
         exit(FALSE);
     }
     
+    $visit=date('Y-m-d H:i:s',time());
+    mysqli_query($db,'UPDATE users SET last_visit=\''.$visit.'\' WHERE login=\''.$data['user']['login'].'\'');
+    
     $res=mysqli_fetch_assoc(mysqli_query($db,'SELECT * FROM user_result WHERE user_id='.$user['id'].''));
     
     exit(json_encode($res));
