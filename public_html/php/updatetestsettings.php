@@ -9,6 +9,19 @@ $data=json_decode(file_get_contents('php://input'),true);
 $data['user']['login']= mysqli_real_escape_string($db,$data['user']['login']);
 $data['user']['password']= mysqli_real_escape_string($db,$data['user']['password']);
 
+$data['data']['active']= mysqli_real_escape_string($db,$data['data']['active']);
+$data['data']['mix_q']= mysqli_real_escape_string($db,$data['data']['mix_q']);
+$data['data']['mix_var']= mysqli_real_escape_string($db,$data['data']['mix_var']);
+$data['data']['reload']= mysqli_real_escape_string($db,$data['data']['reload']);
+$data['data']['for_course_id']= mysqli_real_escape_string($db,$data['data']['for_course_id']);
+$data['data']['reload_try']= mysqli_real_escape_string($db,$data['data']['reload_try']);
+$data['data']['can_pass']= mysqli_real_escape_string($db,$data['data']['can_pass']);
+$data['data']['display_q']= mysqli_real_escape_string($db,$data['data']['display_q']);
+$data['data']['threshold']= mysqli_real_escape_string($db,$data['data']['threshold']);
+$data['data']['minute_on_pass']= mysqli_real_escape_string($db,$data['data']['minute_on_pass']);
+$data['data']['id']= mysqli_real_escape_string($db,$data['data']['id']);
+$data['data']['curator_id']= mysqli_real_escape_string($db,$data['data']['curator_id']);
+
 $user= mysqli_fetch_assoc(mysqli_query($db, 'SELECT id,login,email,administrator,curator,teacher,student FROM users WHERE login=\''.$data['user']['login'].'\' AND password=\''.$data['user']['password'].'\''));
 if($user['administrator']==0 and $user['curator']==0 and $user['teacher']==0){
     exit(FALSE);

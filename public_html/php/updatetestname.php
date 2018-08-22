@@ -9,6 +9,9 @@ $data=json_decode(file_get_contents('php://input'),true);
 $data['user']['login']= mysqli_real_escape_string($db,$data['user']['login']);
 $data['user']['password']= mysqli_real_escape_string($db,$data['user']['password']);
 
+$data['name']= mysqli_real_escape_string($db,$data['name']);
+$data['id']= mysqli_real_escape_string($db,$data['id']);
+
 $user= mysqli_fetch_assoc(mysqli_query($db, 'SELECT id,login,email,administrator,curator,teacher,student FROM users WHERE login=\''.$data['user']['login'].'\' AND password=\''.$data['user']['password'].'\''));
 if($user['administrator']==0 and $user['curator']==0 and $user['teacher']==0){
     exit(FALSE);

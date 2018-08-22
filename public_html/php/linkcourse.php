@@ -8,6 +8,9 @@ session_start();
     
     $data['user']['login']= mysqli_real_escape_string($db,$data['user']['login']);
     $data['user']['password']= mysqli_real_escape_string($db,$data['user']['password']);
+    
+    $data['course_id']= mysqli_real_escape_string($db,$data['course_id']);
+    $data['teacher_id']= mysqli_real_escape_string($db,$data['teacher_id']);
 
     $user= mysqli_fetch_assoc(mysqli_query($db, 'SELECT id,login,email,administrator,curator,teacher,student FROM users WHERE login=\''.$data['user']['login'].'\' AND password=\''.$data['user']['password'].'\''));
     if($user['administrator']==0 and $user['curator']==0){

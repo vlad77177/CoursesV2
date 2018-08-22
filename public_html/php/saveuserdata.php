@@ -7,6 +7,11 @@
     
     $data['user']['login']= mysqli_real_escape_string($db,$data['user']['login']);
     $data['user']['password']= mysqli_real_escape_string($db,$data['user']['password']);
+    
+    $data['currentUser']['login']= mysqli_real_escape_string($db,$data['currentUser']['login']);
+    $data['currentUser']['email']= mysqli_real_escape_string($db,$data['currentUser']['email']);
+    $data['currentUser']['id']= mysqli_real_escape_string($db,$data['currentUser']['id']);
+    $data['currentUser']['newpass']= mysqli_real_escape_string($db,$data['currentUser']['newpass']);
 
     $user= mysqli_fetch_assoc(mysqli_query($db, 'SELECT id,login,email,administrator,curator,teacher,student FROM users WHERE login=\''.$data['user']['login'].'\' AND password=\''.$data['user']['password'].'\''));
     if($user['administrator']==0 and $user['curator']==0){
