@@ -32,7 +32,13 @@ App.controller('TestPageController',['$scope','$http','$filter','$q','LoggedUser
             $http({method:'POST',data:data,url:'php/createnewquestion.php'})
                 .then(function(){
                     Tests.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(t){
-                        $scope.$parent.tests=t;//обновленный                            
+                        $scope.$parent.tests=t;//обновленный
+                        for(var i=0;i<$scope.$parent.tests.length;i++){
+                            if($scope.$parent.tests[i].id===$scope.currentTest.data.id){
+                                $scope.getTestInfo($scope.$parent.tests[i].id);
+                            }
+                        }
+                        $scope.isTestCorrect();
                     });
             });
         };
@@ -45,9 +51,15 @@ App.controller('TestPageController',['$scope','$http','$filter','$q','LoggedUser
             $http({method:'POST',data:data,url:'php/deletequestion.php'})
                 .then(function(){
                     Tests.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(t){
-                        $scope.$parent.tests=t;                         
+                        $scope.$parent.tests=t;
+                        for(var i=0;i<$scope.$parent.tests.length;i++){
+                            if($scope.$parent.tests[i].id===$scope.currentTest.data.id){
+                                $scope.getTestInfo($scope.$parent.tests[i].id);
+                            }
+                        }
+                        $scope.isTestCorrect();
                     });
-            });
+            });          
         };
         
         $scope.addTest=function(){
@@ -83,9 +95,15 @@ App.controller('TestPageController',['$scope','$http','$filter','$q','LoggedUser
             $http({method:'POST',data:data,url:'php/createnewvariant.php'})
                 .then(function(){
                     Tests.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(t){
-                        $scope.$parent.tests=t;//обновленный                            
+                        $scope.$parent.tests=t;//обновленный   
+                        for(var i=0;i<$scope.$parent.tests.length;i++){
+                            if($scope.$parent.tests[i].id===$scope.currentTest.data.id){
+                                $scope.getTestInfo($scope.$parent.tests[i].id);
+                            }
+                        }
+                        $scope.isTestCorrect();
                     });
-            });
+            });            
         };
         
         $scope.deleteVariant=function(id){
@@ -96,12 +114,21 @@ App.controller('TestPageController',['$scope','$http','$filter','$q','LoggedUser
             $http({method:'POST',data:data,url:'php/deletevariant.php'})
                 .then(function(){
                     Tests.reset($scope.loggedUser.login,$scope.loggedUser.password).then(function(t){
-                        $scope.$parent.tests=t;//обновленный                            
+                        $scope.$parent.tests=t;//обновленный
+                        for(var i=0;i<$scope.$parent.tests.length;i++){
+                            if($scope.$parent.tests[i].id===$scope.currentTest.data.id){
+                                $scope.getTestInfo($scope.$parent.tests[i].id);
+                            }
+                        }
+                        $scope.isTestCorrect();
                     });
             });
         };
         
         $scope.changeTestSettings=function(){
+            if($scope.isTestCorrect()===false){
+                $scope.currentTest.data.active=0;
+            }
             var data={
                 user:$scope.loggedUser,
                 data:$scope.currentTest.data
@@ -114,7 +141,8 @@ App.controller('TestPageController',['$scope','$http','$filter','$q','LoggedUser
                             if($scope.$parent.tests[i].id===$scope.currentTest.data.id){
                                 $scope.getTestInfo($scope.$parent.tests[i].id);
                             }
-                        }                              
+                        }     
+                        $scope.isTestCorrect();
                     });
             });
         };
@@ -154,6 +182,7 @@ App.controller('TestPageController',['$scope','$http','$filter','$q','LoggedUser
                 $scope.$parent.tests=t;//обновленный
                 $scope.getTestInfo($scope.currentTest.data.id);
                 $scope.getQuestionInfo($scope.currentQuestion.data,$scope.currentTest.data.id);
+                $scope.isTestCorrect();
             });
         };
         
@@ -177,9 +206,37 @@ App.controller('TestPageController',['$scope','$http','$filter','$q','LoggedUser
                                 $scope.getTestInfo($scope.$parent.tests[i].id);
                             }
                         } 
-                        $scope.getQuestionInfo($scope.currentQuestion.data,tid);                               
+                        $scope.getQuestionInfo($scope.currentQuestion.data,tid);
+                        $scope.isTestCorrect();
                     });
             });
+        };
+        
+        $scope.isTestCorrect=function(){
+            if($scope.currentTest.data===undefined){
+                return false;
+            }
+            var test=$scope.currentTest.data;
+            if(test.threshold>test.display_q || test.minute_on_pass<1 || test.display_q>test.questions.length){
+                return false;
+            }
+            for(var i=0;i<test.questions.length;i++){
+                if(test.questions[i].variants===undefined){
+                    return false;
+                }
+                if(test.questions[i].variants.length<2){
+                    return false;
+                }
+                var answers_count=0;
+                for(var j=0;j<test.questions[i].variants.length;j++){
+                    if(test.questions[i].variants[j].isright==true)
+                        answers_count++;
+                }
+                if(answers_count===0){
+                    return false;
+                }
+            }
+            return true;
         };
         
     }]

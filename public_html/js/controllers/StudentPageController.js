@@ -34,11 +34,11 @@ App.controller('StudentPageController',['$scope','$http','$filter','$interval','
             }
         };
         
-        $scope.getActiveTest=function(id){
+        $scope.getActiveTest=function(course){
             var data1={
                 user:$scope.loggedUser,
                 uid:$scope.loggedUser.id,
-                cid:id
+                cid:course.id
             };
             
             $http({method:'POST',data:data1,url:'php/getactivetest.php'})
@@ -64,6 +64,9 @@ App.controller('StudentPageController',['$scope','$http','$filter','$interval','
                             $scope.timer=$interval(function(){$scope.tick();},1000);
                             $scope.continueTest();
                         }
+                    }
+                    else{
+                        $scope.initTest(course);
                     }
                 });
         };
@@ -147,7 +150,7 @@ App.controller('StudentPageController',['$scope','$http','$filter','$interval','
                     if(openflag===true)
                         $scope.textOpen='Course';
             });
-            $scope.getActiveTest(id);
+            //$scope.getActiveTest(id);
         };
         
         $scope.getLessonInfo=function(cid,lid,index){
@@ -214,6 +217,16 @@ App.controller('StudentPageController',['$scope','$http','$filter','$interval','
                 if(course.length>0){
                     $scope.getLessonInfo($scope.currentCourseId,course[0].lessons[$scope.currentLessonIndex-1].id,$scope.currentLessonIndex-1);
                 }
+            }
+        };
+        
+        $scope.isDisabled=function(course){
+            var test=$filter('FindTestForCourseFilter')($scope.$parent.tests,course.id);
+            if(test!==undefined){
+                if(test.active==true)
+                    return false;
+                else
+                    return true;
             }
         };
         

@@ -41,6 +41,8 @@ while($row=mysqli_fetch_assoc($rt)){
 $tests;
 $course_ids;
 $tests_ids;
+
+/*
 if($user['administrator']==0){
     if($user['curator']==1){
         $tests_ids=mysqli_query($db,'SELECT * FROM curator_test WHERE id_curator='.$user['id'].'');
@@ -64,10 +66,12 @@ if($user['administrator']==0){
             }
         }
     }
-}
-else{
-    $tests=$testsf;
-}
+    else{
+        $tests=$testsf;
+    }
+}*/
+
+$tests=$testsf;
 
 for($i=0;$i<count($tests);$i++){
     $curator=mysqli_fetch_assoc(mysqli_query($db,'SELECT * FROM curator_test WHERE id_test='.$tests[$i]['id'].''));

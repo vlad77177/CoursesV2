@@ -174,6 +174,7 @@ App.controller('AppController',['$scope','$http','$interval','LoggedUserService'
                         
             });
         };
+               
     }]
 );
 

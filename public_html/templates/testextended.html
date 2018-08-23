@@ -25,15 +25,15 @@
                 <select ng-model="currentTest.data.for_course_id" ng-options="course.id as course.name for course in courses | CourseFilter:'ids':(users | UserFilter:'id':currentTest.data.curator_id)[0].cur_courses"></select>
             </td>
         </tr>
-        <tr><td>Тест активен:</td><td style="display: flex;justify-content: center;"><input intbooleanvalidation type="checkbox" ng-model="currentTest.data.active" id="b1"/><label for="b1"><span></span></label></td></tr>
+        <tr><td>Тест активен:</td><td style="display: flex;justify-content: center;"><input intbooleanvalidation type="checkbox" ng-model="currentTest.data.active" id="b1"/><label for="b1"><span></span></label></td><td ng-show="!isTestCorrect()"><span style="color: #f00">Тест не корректен!</span></td></tr>
         <tr><td>Перемешивать вопросы:</td><td style="display: flex;justify-content: center;"><input intbooleanvalidation type="checkbox" ng-model="currentTest.data.mix_q" id="b2"/><label for="b2"><span></span></label></td></tr>
         <tr><td>Перемешивать варианты ответов:</td><td style="display: flex;justify-content: center;"><input intbooleanvalidation type="checkbox" ng-model="currentTest.data.mix_var" id="b3"/><label for="b3"><span></span></label></td></tr>
         <tr><td>Разрешить перезапуск теста:</td><td style="display: flex;justify-content: center;"><input intbooleanvalidation type="checkbox" ng-model="currentTest.data.reload" id="b4"/><label for="b4"><span></span></label></td></tr>
         <tr><td>Разрешить пропуск вопросов:</td><td style="display: flex;justify-content: center;"><input intbooleanvalidation type="checkbox" ng-model="currentTest.data.can_pass" id="b5"/><label for="b5"><span></span></label></td></tr>
         <tr><td>Лимит попыток(0-разрешить перезапуск всегда)</td><td><input type="text" ng-model="currentTest.data.reload_try"><label><span></span></label></td></tr>
-        <tr><td>Выводить </td><td><input type="text" ng-model="currentTest.data.display_q"></td><td> вопросов</td></tr>
-        <tr><td>Порог прохождения </td><td><input type="text" ng-model="currentTest.data.threshold"></td><td> вопросов</td></tr>
-        <tr><td>Время на прохождение </td><td><input type="text" ng-model="currentTest.data.minute_on_pass"></td><td> минут</td></tr>
+        <tr><td>Выводить </td><td><input type="text" ng-model="currentTest.data.display_q" ng-keyup="isTestCorrect()"></td><td> вопросов</td></tr>
+        <tr><td>Порог прохождения </td><td><input type="text" ng-model="currentTest.data.threshold" ng-keyup="isTestCorrect()"></td><td> вопросов</td></tr>
+        <tr><td>Время на прохождение </td><td><input type="text" ng-model="currentTest.data.minute_on_pass" ng-keyup="isTestCorrect()"></td><td> минут</td></tr>
     </table>
     <button class="button button-fixed-width" ng-click="changeTestSettings()">Сохранить настройки</button>
     

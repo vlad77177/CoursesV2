@@ -11,14 +11,14 @@
         
     <div class="flex row space-around" ng-controller="StudentPageController">
         
-        <div id="list-of-courses-student" ng-show="$parent.courses.length>0" ng-cloak ng-class="{true:'unlearned',false:''}[]">
+        <div id="list-of-courses-student" ng-cloak>
             <div style="color: #2a9acc;margin-bottom: 15px;font-size: 20pt;">Назначенные курсы:</div>
             <div>
                 <div ng-repeat="course in $parent.courses">
                     <div ng-bind="course.name" class="course-name-stud hover" ng-click="getCourseInfo(course.id,true);"></div>
                     <div ng-class="{true:'unlearned',false:''}[$index>currentStudent.data.lessons_learned]" ng-repeat="lesson in course.lessons" ng-bind="lesson.name" class="lesson-name-stud hover slideInLeft" ng-click="getLessonInfo(course.id,lesson.id,$index);"></div>
                     <hr>
-                    <button class="button" ng-click="initTest(course)" ng-show="course.lessons.length<=currentStudent.data.lessons_learned+1" ng-disabled="">Пройти тест</button>
+                    <button class="button" ng-click="getActiveTest(course)" ng-show="course.lessons.length<=currentStudent.data.lessons_learned+1 && !$parent.testactive" ng-disabled="isDisabled(course)">Пройти тест</button>
                 </div>
             </div>            
         </div>
@@ -36,7 +36,7 @@
         </div>
         
         
-        <div class="fixed-buttons-stud" ng-show="textOpen!==undefined">
+        <div class="fixed-buttons-stud" ng-show="textOpen==='Lesson' && !$parent.testactive">
             <button class="button" ng-click="lastLesson();">Предыдущий урок</button>
             <button class="button" ng-click="nextLesson();">Следующий урок</button>
         </div>

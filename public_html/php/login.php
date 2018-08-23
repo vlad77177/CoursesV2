@@ -18,7 +18,7 @@
             $_SESSION['curator']=$res['curator'];
             $_SESSION['teacher']=$res['teacher'];
             $_SESSION['student']=$res['student'];
-            
+                       
             $visit=date('Y-m-d H:i:s',time());
             mysqli_query($db,'UPDATE users SET last_visit=\''.$visit.'\' WHERE login=\''.$user['login'].'\'');
             

@@ -5,11 +5,15 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <div>
+    <div class="flex row" style="margin:20px 0px 20px 0px">
+        <div>Куратор:</div>
+        <div style="margin-left:10px">{{(users | UserFilter:'id':currentUser.curator)[0].login}}</div>
+    </div>
     <table class="list-table table-student-result">
         <tr>
             <td>Курс</td>
             <td>Преподаватель</td>
-            <td>Результат</td>
+            <td>Последний результат</td>
         </tr>
         <tr ng-repeat="course in courses | CourseFilter:'ids':currentUser.courses">
             <td ng-bind="course.name"></td>

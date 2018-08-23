@@ -150,6 +150,21 @@ App.filter('CourseFilter',function(){
     };
 });
 
+App.filter('FindTestForCourseFilter',function(){
+    return function(tests,id){
+        if(tests===undefined || id===undefined)
+            return;
+        var test;
+        for(var i=0;i<tests.length;i++){
+            if(tests[i].for_course_id===id){
+                test=tests[i];
+                break;
+            }
+        }
+        return test;
+    };
+});
+
 App.filter('trusted', function($sce){
     return function(html){
         return $sce.trustAsHtml(html);
