@@ -29,7 +29,8 @@ App.controller('UserPageController',['$scope','$http','$filter','LoggedUserServi
             need_learns:[],
             curator:undefined,
             teachers:[],
-            courses:[]
+            courses:[],
+            detailed_results:undefined
         };
         
         $scope.unlinkStudents={
@@ -149,11 +150,20 @@ App.controller('UserPageController',['$scope','$http','$filter','LoggedUserServi
             else
                 $scope.currentUser.is_teacher=false;
             if(user[0].student==true){
-                $scope.currentUser.is_student=true;                
+                $scope.currentUser.is_student=true;
+                
+                var data={
+                    user:$scope.loggedUser,
+                    id:$scope.currentUser.id
+                };
+                
+                $http({method:'POST',data:data,url:'php/getuserresults.php'})
+                    .then(function(data){
+                        console.log(data);
+                });
             }
             else
                 $scope.currentUser.is_student=false;
-            console.log($scope.currentUser);
         };
         
         $scope.saveUserData=function(){
