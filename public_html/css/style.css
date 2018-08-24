@@ -245,6 +245,7 @@ input[type=checkbox]:checked + label:before {
 }
 .courses-left-sidebar-name,.tests-left-sidebar-name{
     background-color: #c6c6c6;
+    padding: 5px;
 }
 .lessons-left-sidebar,.questions-left-sidebar{
     margin-left: 2vw;
@@ -316,6 +317,7 @@ button,.button:hover{
     margin-left:10px;
     margin-bottom: 10px;
     font-weight: 700;
+    border-bottom: 1px solid #ffffff;
 }
 .lesson-name-stud:hover{
     border-bottom: 1px solid #2a9acc;
@@ -478,9 +480,6 @@ input[type="checkbox"] + label {
 }
 .table-detailed-result-test tr td:last-child{
     padding-left:10px;
-}
-.answer-default{
-    background-color: #ffffff;
 }
 .answer-right{
     background-color:#a8dda8;
