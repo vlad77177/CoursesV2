@@ -36,7 +36,7 @@ $date_end=date('Y-m-d H:i:s',$date_end);
 $res=mysqli_query($db,'INSERT INTO test_session_temp(date_start,date_end,try_counter) VALUES(\''.$date_start.'\',\''.$date_end.'\',0)');
 $session_id=mysqli_insert_id($db);//id-сессии
 //обновляю статус обучения пользователя
-$res= mysqli_query($db, 'UPDATE user_result SET test_id='.$test['id'].', test_active=1, session_id='.$session_id.' WHERE user_id='.$user['id'].'');
+$res= mysqli_query($db, 'UPDATE user_result SET test_id='.$test['id'].', test_active=1, session_id='.$session_id.' WHERE user_id='.$user['id'].' AND id_course='.$data['cid'].'');
 
 //получаю вопросы, создаю массив всех вопросов, их общее колличество
 $questions_result=mysqli_query($db,'SELECT * FROM questions WHERE id_test='.$test['id'].' ORDER BY number');

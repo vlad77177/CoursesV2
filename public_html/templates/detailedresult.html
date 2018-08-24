@@ -1,0 +1,53 @@
+<div>
+    
+    <div id="result-back"></div>
+    
+    <div id="detailed-result" class="flex column">
+        
+        <div class="flex row space-between" style="margin: 2vh 2vw 2vh 2vw;border-bottom: 1px solid black;padding-bottom: 2vh;">
+            <div>Результаты:</div>
+            <button ng-click="showdetailedresults=false" style="margin-left: 60vw;">Закрыть</button>
+        </div>
+        
+        <div style="margin: 2vh 2vw 2vh 2vw;">
+            <div ng-repeat="session in currentUser.detailed_results.data.sessions" class="detailed-result-block">
+                
+                <table>
+                    <tr>
+                        <td>Тест:</td>
+                        <td ng-bind="session.name"></td>
+                    </tr>
+                    <tr>
+                        <td>Дата начала:</td>
+                        <td ng-bind="session.data_start"></td>
+                    </tr>
+                    <tr>
+                        <td>Дата завершения:</td>
+                        <td ng-bind="session.data_end"></td>
+                    </tr>
+                    <tr>
+                        <td>Всего вопросов:</td>
+                        <td ng-bind="session.question_count"></td>
+                    </tr>
+                    <tr>
+                        <td>Порог прохождения:</td>
+                        <td ng-bind="session.threshold"></td>
+                    </tr>
+                    <tr>
+                        <td>Правильных ответов:</td>
+                        <td ng-bind="session.answers"></td>
+                    </tr>
+                </table>
+                
+                <table class="table-detailed-result-test">
+                    <tr ng-repeat="question in session.questions">
+                        <td ng-bind-html="question.text | trusted"></td>
+                        <td>
+                            <div ng-repeat="variant in question.variants" ng-bind-html="variant.text | trusted" ng-class="getVariantResultClass(variant)"></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>  
+<div>

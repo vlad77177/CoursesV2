@@ -228,6 +228,8 @@ App.controller('StudentPageController',['$scope','$http','$filter','$interval','
                 else
                     return true;
             }
+            else
+                return true;
         };
         
     }]

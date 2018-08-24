@@ -37,7 +37,7 @@
             $i++;
     }
     $courses=array();
-    
+    /*
     if($user['curator']==1){
         $res_courses=mysqli_query($db,'SELECT * FROM curator_course WHERE id_curator='.$user['id'].'');
         while($row=mysqli_fetch_assoc($res_courses)){
@@ -73,9 +73,9 @@
     }
     else{
         $courses=$coursesf;
-    }
+    }*/
     
-    
+    $courses=$coursesf;
     
     for($i=0;$i<count($courses);$i++){
         $lessons=mysqli_query($db,'SELECT * FROM lessons WHERE id_course='.$courses[$i]['id'].' ORDER BY number');

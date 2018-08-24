@@ -1,6 +1,7 @@
 {
     "elements": {
         "test-extended": {},
+        "detailed-result": {},
         "curator-extended": {},
         "login-form": {},
         "question-extended": {},

@@ -2,7 +2,7 @@
     
     <div>       
         <div title="Курсы, которые преподаватель может редактировать" style="cursor: pointer;">Закрепленные курсы:</div>
-        <div ng-show="currentUser.teach_courses.length>0">
+        <div ng-show="$parent.currentUser.teach_courses.length>0">
             <table class="list-table">
                 <tr>
                     <td>№</td>
@@ -10,7 +10,7 @@
                     <td>Название</td>
                     <td></td>
                 </tr>
-                <tr ng-repeat="course in (courses | CourseFilter:'ids':currentUser.teach_courses)" class="hover">
+                <tr ng-repeat="course in (courses | CourseFilter:'ids':$parent.currentUser.teach_courses)" class="hover">
                     <td ng-bind="$index+1"></td>
                     <td ng-bind="course.id"></td>
                     <td ng-bind="course.name"></td>
@@ -21,14 +21,14 @@
 
     <div>
         <div title="Студенты, подписанные на курс, который закреплен за преподавателем" style="cursor: pointer;">Закрепленные cтуденты:</div>
-        <div ng-show="(users | UserFilter:'ids':currentUser.teach_students).length>0">
+        <div ng-show="(users | UserFilter:'ids':$parent.currentUser.teach_students).length>0">
             <table class="list-users-table">
                 <tr>
                     <td>№</td>
                     <td>ID</td>
                     <td>Логин</td>
                 </tr>
-                <tr ng-repeat="student in (users | UserFilter:'ids':currentUser.teach_students)" class="hover">
+                <tr ng-repeat="student in (users | UserFilter:'ids':$parent.currentUser.teach_students)" class="hover">
                     <td ng-bind="$index+1" ng-click="selectUser(student.id)"></td>
                     <td ng-bind="student.id" ng-click="selectUser(student.id)"></td>
                     <td ng-bind="student.login" ng-click="selectUser(student.id)"></td>

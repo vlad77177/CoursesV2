@@ -16,6 +16,33 @@ App.controller('AppController',['$scope','$http','$interval','LoggedUserService'
         $scope.alreadyinit=false;
         $scope.testpage=0;
         
+        $scope.showdetailedresults=false;
+        
+        $scope.currentUser={
+            id:undefined,
+            login:undefined,
+            name:undefined,
+            surname:undefined,
+            email:undefined,
+            newpass:undefined,
+            repeat:undefined,
+            cur_students:[],
+            cur_teachers:[],
+            teach_courses:[],
+            teach_students:[],
+            is_admin:false,
+            is_curator:false,
+            is_teacher:false,
+            is_student:false,
+            results:[],
+            learneds:[],
+            need_learns:[],
+            curator:undefined,
+            teachers:[],
+            courses:[],
+            detailed_results:undefined
+        };
+        
         $scope.currentStudent={
             data:undefined
         };
@@ -173,6 +200,17 @@ App.controller('AppController',['$scope','$http','$interval','LoggedUserService'
                         editable.value=!editable.value;
                         
             });
+        };
+        
+        $scope.getVariantResultClass=function(variant){
+            if(variant.isright==1){
+                return 'answer-right';
+            }
+            else{
+                if(variant.isright!==variant.answer){
+                    return 'answer-false';
+                }
+            }
         };
                
     }]

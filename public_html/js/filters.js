@@ -89,6 +89,23 @@ App.filter('UserFilter',function(){
     };
 });
 
+App.filter('TeacherHaveCourseFilter',function(){
+    return function(teachers,cid){
+        if(teachers===undefined || cid===undefined){
+            return null;
+        }
+        var filtered=[];
+        for(var i=0;i<teachers.length;i++){
+            for(var j=0;j<teachers[i].teach_courses.length;j++){
+                if(teachers[i].teach_courses[j]===cid){
+                    filtered[filtered.length]=teachers[i];
+                }
+            }
+        }
+        return filtered;
+    };
+});
+
 App.filter('UserInIDArrayFilter',function(){
     return function(users,array){
         if(users===undefined)

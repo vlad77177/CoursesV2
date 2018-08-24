@@ -12,11 +12,12 @@ html, body, #wrap { height: 100%; }
 body > #wrap {height: auto; min-height: 100%;}
 #main { padding-bottom: 150px; }  /* must be same height as the footer */
 #footer { 
-        position: relative;
+        /*position: relative;
 	margin-top: -150px; /* negative value of footer height */
         background-color: #c6c6c6;
         height: 150px;                                  
-	clear:both;} 
+	/*clear:both;*/
+} 
 /* CLEAR FIX*/
 .clearfix:after {content: ".";
 	display: block;
@@ -447,4 +448,45 @@ input[type="checkbox"] + label {
     background-size: cover;
     margin-left: 10px;
 }
+
+#result-back{
+    position:fixed;
+    background-color: #000000;
+    opacity: 0.5;
+    width: 100vw;
+    height: 100vh;
+    top:0px;
+}
+#detailed-result{
+    position: fixed;
+    overflow-y: scroll;
+    background-color: #ffffff;
+    width: 80vw;
+    height: 80vh;
+    top:10%;
+    margin-left: 10vw;
+}
+
+.detailed-result-block{
+    padding: 20px 0px 20px 0px;
+    border-bottom: 1px solid black;
+}
+
+.table-detailed-result-test tr td:first-child{
+    background-color: #f3f3f3;
+    padding: 0px 10px 0px 10px;
+}
+.table-detailed-result-test tr td:last-child{
+    padding-left:10px;
+}
+.answer-default{
+    background-color: #ffffff;
+}
+.answer-right{
+    background-color:#a8dda8;
+}
+.answer-false{
+    background-color: #f2957d;
+}
+
 

@@ -105,8 +105,11 @@
                     $user->learneds[count($user->learneds)]=$r['learned'];
                     $course=mysqli_fetch_assoc(mysqli_query($db,'SELECT COUNT(*) AS count FROM lessons WHERE id_course='.$r['id_course'].''));
                     $user->need_learns[count($user->need_learns)]=$course['count'];
-                    $teacher=mysqli_fetch_assoc(mysqli_query($db,'SELECT * FROM teacher_course WHERE id_course='.$r['id_course'].''));
-                    $user->teachers[count($user->teachers)]=$teacher['id_teacher'];
+                    
+                    $teachers=mysqli_query($db,'SELECT * FROM teacher_course WHERE id_course='.$r['id_course'].'');
+                    while($tr= mysqli_fetch_assoc($teachers)){
+                        $user->teachers[count($user->teachers)]=$tr['id_teacher'];
+                    }
                 }
                 $cur=mysqli_fetch_assoc(mysqli_query($db,'SELECT * FROM curator_student WHERE id_student='.$row['id'].''));
                 $user->curator=$cur['id_curator'];
