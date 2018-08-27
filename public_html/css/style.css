@@ -12,11 +12,10 @@ html, body, #wrap { height: 100%; }
 body > #wrap {height: auto; min-height: 100%;}
 #main { padding-bottom: 150px; }  /* must be same height as the footer */
 #footer { 
-        /*position: relative;
-	margin-top: -150px; /* negative value of footer height */
-        background-color: #c6c6c6;
-        height: 150px;                                  
-	/*clear:both;*/
+    font-size: 12pt;
+    color:#ffffff;
+    padding: 30px;
+    background-color: #999999;
 } 
 /* CLEAR FIX*/
 .clearfix:after {content: ".";
@@ -29,6 +28,13 @@ body > #wrap {height: auto; min-height: 100%;}
 * html .clearfix { height: 1%;}
 .clearfix {display: block;}
 /* End hide from IE-mac */
+
+/*
+body{
+    background-image: url(fon2.jpg);
+    background-repeat: no-repeat;
+    background-size:cover;
+}*/
 
 
 
@@ -100,7 +106,7 @@ footer{
     position: absolute;
     bottom: 0px;
     height: 200px;
-    background-color: #c6c6c6;
+    background-color: #c6c6c6;  
 }
 
 input,select{
