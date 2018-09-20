@@ -92,8 +92,8 @@ html{
 .logo{
     background-image: url(logo_kibernetika.png);
     background-repeat: no-repeat;
-    width: 40vw;
-    height: 20vh;
+    width: 50vw;
+    height: 30vh;
     background-size: cover;
     margin-bottom: 30px;
 }
@@ -145,7 +145,7 @@ input[type=checkbox]:checked + label:before {
     height: 10vh;
     color:#ffffff;
     font-size: 21pt;
-    background-color: #2a9acc;
+    background-color: #0070c0;
 }
 /*
 #admin-panel-top{
@@ -168,7 +168,7 @@ input[type=checkbox]:checked + label:before {
 }
 .menu-block > div{
     padding: 5px 20px 5px 20px;
-    background-color: #2a9acc;
+    background-color:#0070c0;
     color:#ffffff;
     border: 1px solid #2a9acc;
     height: 5vh;
@@ -273,7 +273,7 @@ input[type=checkbox]:checked + label:before {
 
 button,.button{
     color:#ffffff;
-    background-color: #2a9acc;
+    background-color: #0070c0;
     border: 2px solid #ffffff;
     font-size: 16pt;
     padding: 5px 10px 5px 10px;
@@ -338,6 +338,7 @@ button,.button:hover{
     position: fixed;
     bottom: 20px;
     left:4vw;
+    max-width:18vw;
 }
 
 #stub{
