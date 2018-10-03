@@ -29,6 +29,8 @@
         <script src="js/controllers/TextPageController.js"></script>
         <script src="js/controllers/TestPageController.js"></script>
         <script src="js/controllers/StudentPageController.js"></script>
+        
+        <script src="js/another_js/slider.js"></script>
     
     </head>
     <body ng-controller="AppController">
@@ -38,13 +40,15 @@
         </div>-->
         <div id="wrap">
             <div id="main">
-            <login-form ng-show="!loggedUser.ulog"></login-form>
-
-            <main-page ng-show="loggedUser.ulog && !loggedUser.ustudent"></main-page>
-            <student-page ng-show="loggedUser.ulog && loggedUser.ustudent"></student-page>
-            
-            <detailed-result ng-show="showdetailedresults"></detailed-result>
                 
+                <welcome-page ng-show="!showloggedform && !loggedUser.ulog"></welcome-page>
+                
+                <login-form ng-show="!loggedUser.ulog && showloggedform"></login-form>
+
+                <main-page ng-show="loggedUser.ulog && !loggedUser.ustudent"></main-page>
+                <student-page ng-show="loggedUser.ulog && loggedUser.ustudent"></student-page>
+
+                <detailed-result ng-show="showdetailedresults"></detailed-result>
             </div>
         </div>
         
