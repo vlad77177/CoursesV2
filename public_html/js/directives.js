@@ -85,6 +85,14 @@ App.directive('detailedResult',function(){
     };
 });
 
+App.directive('welcomePage',function(){
+    return{
+        restrict:'E',
+        templateUrl:'templates/welcome.html',
+        replace:true
+    };
+});
+
 //обработка модели чекбоксов, корректная связь boolean и int 
 App.directive('intbooleanvalidation',function(){
     return{

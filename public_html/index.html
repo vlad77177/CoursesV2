@@ -1,7 +1,8 @@
 <html ng-app="App">
     <head>
         <title>Courses</title>
-        <meta charset="UTF-8">
+        <!--<meta charset="UTF-8">-->
+        <meta http-equiv="content-type" content="text/html; charset=utf8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <link rel="stylesheet" href="css/style.css" />
@@ -28,6 +29,8 @@
         <script src="js/controllers/TextPageController.js"></script>
         <script src="js/controllers/TestPageController.js"></script>
         <script src="js/controllers/StudentPageController.js"></script>
+        
+        <script src="js/another_js/slider.js"></script>
     
     </head>
     <body ng-controller="AppController">
@@ -37,13 +40,15 @@
         </div>-->
         <div id="wrap">
             <div id="main">
-            <login-form ng-show="!loggedUser.ulog"></login-form>
-
-            <main-page ng-show="loggedUser.ulog && !loggedUser.ustudent"></main-page>
-            <student-page ng-show="loggedUser.ulog && loggedUser.ustudent"></student-page>
-            
-            <detailed-result ng-show="showdetailedresults"></detailed-result>
                 
+                <welcome-page ng-show="!showloggedform && !loggedUser.ulog"></welcome-page>
+                
+                <login-form ng-show="!loggedUser.ulog && showloggedform"></login-form>
+
+                <main-page ng-show="loggedUser.ulog && !loggedUser.ustudent"></main-page>
+                <student-page ng-show="loggedUser.ulog && loggedUser.ustudent"></student-page>
+
+                <detailed-result ng-show="showdetailedresults"></detailed-result>
             </div>
         </div>
         
@@ -78,7 +83,11 @@
                     <a href="mailto:info@kibernetika.net" style="color:#0070c0">info@kibernetika.net</a><br>
                     <br>
                     <b>Социальные сети:</b><br>
+<<<<<<< HEAD
                     <a href="https://vk.oookibernetika.com" style="color:#0070c0">https://vk.oookibernetika.com</a><br>
+=======
+                    https://vk.com/oookibernetika<br>
+>>>>>>> 6c5e8a16f5f6cd54e7308109c5ef7a8e773f28a5
                     
                 </div>
                 <div style="background-image: url(css/logo_k_white.png);background-repeat: no-repeat;background-size: contain;width: 33%;background-position: center;">

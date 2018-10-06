@@ -6,6 +6,7 @@ App.controller('AppController',['$scope','$http','$interval','LoggedUserService'
         };
         
         $scope.loggedUser=undefined;
+        $scope.showloggedform=false;
         $scope.users=undefined;
         $scope.courses=undefined;
         $scope.tests=undefined;
@@ -211,6 +212,11 @@ App.controller('AppController',['$scope','$http','$interval','LoggedUserService'
                     return 'answer-false';
                 }
             }
+        };
+        
+        $scope.showLoggedForm=function(){
+            console.log("kek");
+            $scope.showloggedform=true;
         };
                
     }]
