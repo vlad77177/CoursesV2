@@ -6,13 +6,13 @@
 
             
 var slideNow = 1;
-var slideCount = $('#slidewrapper').children().length;
+//var slideCount = $('#slidewrapper').children().length;
+var slideCount=4;
 var slideInterval = 3000;
 var navBtnId = 0;
 var translateWidth = 0;
 
 $(document).ready(function() {
-    console.log('kekeke');
     var switchInterval = setInterval(nextSlide, slideInterval);
 
     $('#viewport').hover(function() {
@@ -32,7 +32,7 @@ $(document).ready(function() {
     $('.slide-nav-btn').click(function() {
         navBtnId = $(this).index();
 
-        if (navBtnId + 1 != slideNow) {
+        if (navBtnId + 1 !== slideNow) {
             translateWidth = -$('#viewport').width() * (navBtnId);
             $('#slidewrapper').css({
                 'transform': 'translate(' + translateWidth + 'px, 0)',
@@ -46,8 +46,7 @@ $(document).ready(function() {
 
 
 function nextSlide() {
-    console.log("next");
-    if (slideNow == slideCount || slideNow <= 0 || slideNow > slideCount) {
+    if (slideNow === slideCount || slideNow <= 0 || slideNow > slideCount) {
         $('#slidewrapper').css('transform', 'translate(0, 0)');
         slideNow = 1;
     } else {
@@ -62,7 +61,7 @@ function nextSlide() {
 };
 
 function prevSlide() {
-    if (slideNow == 1 || slideNow <= 0 || slideNow > slideCount) {
+    if (slideNow === 1 || slideNow <= 0 || slideNow > slideCount) {
         translateWidth = -$('#viewport').width() * (slideCount - 1);
         $('#slidewrapper').css({
             'transform': 'translate(' + translateWidth + 'px, 0)',
