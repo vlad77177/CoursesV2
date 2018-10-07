@@ -1,4 +1,4 @@
-<html ng-app="App">
+<html>
     <head>
         <title>Courses</title>
         <!--<meta charset="UTF-8">-->
@@ -7,7 +7,11 @@
         
         <link rel="stylesheet" href="css/style.css" />
         <link rel="stylesheet" href="css/animate.css" />
+        <link rel="stylesheet" href="css/orbit.css">
         
+        <script type="text/javascript" src="js/jq/jquery-3.1.0.js"></script>
+        <script type="text/javascript" src="js/slider.js"></script>
+              
         <script src="js/lib/angular.min.js"></script>
         <script src="js/lib/angular-sanitize.js"></script>
         <script src="js/lib/angular-animate.js"></script>
@@ -29,17 +33,15 @@
         <script src="js/controllers/TextPageController.js"></script>
         <script src="js/controllers/TestPageController.js"></script>
         <script src="js/controllers/StudentPageController.js"></script>
-        
-        <script src="js/another_js/slider.js"></script>
     
     </head>
-    <body ng-controller="AppController">
+    <body ng-app="App">
         
         <!--
         <div id="stub" ng-show="!all_download">
         </div>-->
         <div id="wrap">
-            <div id="main">
+            <div id="main" ng-controller="AppController">
                 
                 <welcome-page ng-show="!showloggedform && !loggedUser.ulog"></welcome-page>
                 
@@ -82,12 +84,9 @@
                     <b>Email:</b><br>
                     <a href="mailto:info@kibernetika.net" style="color:#0070c0">info@kibernetika.net</a><br>
                     <br>
-                    <b>Социальные сети:</b><br>
-<<<<<<< HEAD
-                    <a href="https://vk.oookibernetika.com" style="color:#0070c0">https://vk.oookibernetika.com</a><br>
-=======
-                    https://vk.com/oookibernetika<br>
->>>>>>> 6c5e8a16f5f6cd54e7308109c5ef7a8e773f28a5
+                    <b>Социальные сети:</b>
+                    <br>
+                    <a href="https://vk.oookibernetika.com" style="color:#0070c0">https://vk.oookibernetika.com</a>
                     
                 </div>
                 <div style="background-image: url(css/logo_k_white.png);background-repeat: no-repeat;background-size: contain;width: 33%;background-position: center;">
