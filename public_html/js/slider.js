@@ -7,7 +7,7 @@
             
 var slideNow = 1;
 //var slideCount = $('#slidewrapper').children().length;
-var slideCount=4;
+var slideCount=2;
 var slideInterval = 3000;
 var navBtnId = 0;
 var translateWidth = 0;
