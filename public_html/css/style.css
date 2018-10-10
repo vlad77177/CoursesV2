@@ -673,3 +673,27 @@ body {
      margin-top: 20px;
      margin-bottom: 40px;
  }
+ 
+ #welcome-forms > div{
+     width:33%;
+     margin-left: 50px;
+     margin-right: 50px;
+ }
+ 
+ .welcome-form hr{
+     color: #999999;
+     height: 300px;
+     margin-right: 40px;
+ }
+ .welcome-form > div{
+     border-top: 1px solid #999999;
+     border-right: 1px solid #999999;
+     border-bottom: 1px solid #999999;
+     margin-top:30px;
+     margin-bottom: 30px;
+     border-width: 2px;
+     padding-top: 30px;
+     width:100%;
+ }
+ 
+ 
