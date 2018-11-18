@@ -162,30 +162,34 @@ input[type=checkbox]:checked + label:before {
 }*/
 .menu-block{
     margin-top:10px;
-    margin-bottom: 10px;
     margin-left: 5vw;
-    margin-right: 5vw;
+    margin-right: 5vw;  
 }
 .menu-block > div{
     padding: 5px 20px 5px 20px;
-    background-color:#0070c0;
-    color:#ffffff;
-    border: 1px solid #2a9acc;
-    height: 5vh;
-    width: 100%;
-    margin: 0px 2px 0px 2px;
+    background-color:#ffffff;
+    color:#000000;
+    border-top: 5px solid #c6c6c6;
+    border-left: 1px solid #c6c6c6;
+    border-right: 1px solid #c6c6c6;
+    height: auto;
+    width: 12.5%;
+    margin: 0px 0px 0px 0px;
     text-align: center;
 }
 .menu-block > div:hover{
     background-color: #ffffff;
-    color:#2a9acc;             
+    color:#0070c0;      
+    border-top: 5px solid #0070c0;
 }
 
 .menu-block > div:first-child{
     margin-left: 0px;
+    border-left: 0px;
 }
 .menu-block > div:last-child{
     margin-right: 0px;
+    border-right: 0px;
 }
 
 #user-info-block{
@@ -508,7 +512,7 @@ body {
 }
 
 #block-for-slider {
-    width: 60%;
+    width: 100%;
     margin: 0 auto;
     /*margin-top: 100px;*/
 }
