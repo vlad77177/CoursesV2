@@ -93,6 +93,30 @@ App.directive('welcomePage',function(){
     };
 });
 
+ App.directive('inDevelopingPage',function(){
+    return{
+        restrict:'E',
+        templateUrl:'templates/indeveloping.html',
+        replace:true
+    };
+});
+
+App.directive('menuBlock',function(){
+    return{
+        restrict:'E',
+        templateUrl:'templates/menublock.html',
+        replace:true
+    };
+});
+
+App.directive('educational',function(){
+    return{
+        restrict:'E',
+        templateUrl:'templates/educational.html',
+        replace:true
+    };
+});
+
 //обработка модели чекбоксов, корректная связь boolean и int 
 App.directive('intbooleanvalidation',function(){
     return{
@@ -115,3 +139,11 @@ App.directive('intbooleanvalidation',function(){
         }
     };
 });
+/*
+App.directive('educationalContent',function(){
+    return{
+        require:'ngBindHtml',
+        restrict:'A',
+        
+    };
+});*/

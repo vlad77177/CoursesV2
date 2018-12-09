@@ -1,0 +1,17 @@
+<div class="flex row" style="margin-left:5%;margin-right:5%;margin-top:5%;">
+    
+    <div id="educational-left-sidebar" class="flex column">
+        <div ng-repeat="section in educational.subsections" ng-bind="section.name" ng-click="chooseEducationalPage($index)" ng-class="{true:'educational-choose',false:'educational-unchoose'}[educationalActivePage===$index]"></div>
+    </div>
+    
+    <div id="educational-right-content" class="flex column">
+        <div ng-repeat="page in educational.subsections[educationalActivePage].pages">
+            <div ng-class="{true:'educational-page-link-fail',false:'educational-page'}[page.downloadfile===true && page.link===null]" ng-bind="page.name" ng-click="educationalPageChangeShow(page)"></div>
+            <div class="educational-page-content" ng-bind-html="page.content" ng-show="page.show"></div>
+            <div class="educational-download" ng-show="page.downloadfile && page.link!==null">
+                <a ng-href="{{page.link}}">Скачать документ</a>
+            </div>
+        </div>
+    </div>
+
+</div>

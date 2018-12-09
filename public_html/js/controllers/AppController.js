@@ -1,15 +1,27 @@
-App.controller('AppController',['$scope','$http','$interval','LoggedUserService','UsersService','CoursesService','TestsService',
-    function AppController($scope, $http,$interval,LoggedUser,Users,Courses,Tests){
+App.controller('AppController',['$scope','$http','$interval','LoggedUserService','UsersService','CoursesService','TestsService','EducationalService',
+    function AppController($scope, $http,$interval,LoggedUser,Users,Courses,Tests,Educational){
         
         $scope.contentDownload={
             courses:false
         };
         
         $scope.loggedUser=undefined;
+        
+        $scope.showwelcomepage=true;
+        $scope.showprojectpage=false;
+        $scope.showattendancepage=false;
+        $scope.showteampage=false;
+        $scope.showprobationpage=false;
+        $scope.showeducationalpage=false;
+        $scope.showcontactspage=false;
         $scope.showloggedform=false;
+        
         $scope.users=undefined;
         $scope.courses=undefined;
         $scope.tests=undefined;
+        
+        $scope.educational=undefined;
+        $scope.educationalActivePage=0;
         
         $scope.test=null;
         $scope.clockmodel=null;
@@ -123,6 +135,11 @@ App.controller('AppController',['$scope','$http','$interval','LoggedUserService'
             }            
         });
         
+        Educational.get().then(function(data){
+            $scope.educational=data;
+        });
+        console.log($scope.educational);
+        
         
         $scope.loginFormModel={
             login:undefined,
@@ -215,8 +232,62 @@ App.controller('AppController',['$scope','$http','$interval','LoggedUserService'
         };
         
         $scope.showLoggedForm=function(){
-            console.log("kek");
             $scope.showloggedform=true;
+        };
+        
+        function erasePages(){
+            console.log("erase");
+            $scope.showwelcomepage=false;
+            $scope.showprojectpage=false;
+            $scope.showattendancepage=false;
+            $scope.showteampage=false;
+            $scope.showprobationpage=false;
+            $scope.showeducationalpage=false;
+            $scope.showcontactspage=false;
+        }
+        
+        $scope.showWelcomePage=function(){
+            erasePages();
+            $scope.showwelcomepage=true;
+        };
+        
+        $scope.showProjectPage=function(){
+            erasePages();
+            $scope.showprojectpage=true;
+        };
+        
+        $scope.showAttendancePage=function(){
+            erasePages();
+            $scope.showattendancepage=true;
+        };
+        
+        $scope.showTeamPage=function(){
+            erasePages();
+            $scope.showteampage=true;
+        };
+        
+        $scope.showProbationPage=function(){
+            erasePages();
+            $scope.showprobationpage=true;
+        };
+        
+        $scope.showEducationalPage=function(){
+            erasePages();
+            $scope.showeducationalpage=true;
+        };
+        
+        $scope.showContactsPage=function(){
+            erasePages();
+            $scope.showcontactspage=true;
+        };
+        
+        $scope.chooseEducationalPage=function(index){
+            $scope.educationalActivePage=index;
+        };
+        
+        $scope.educationalPageChangeShow=function(page){
+            if(!page.downloadfile)
+                page.show=!page.show;
         };
                
     }]

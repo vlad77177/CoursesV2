@@ -43,7 +43,10 @@
         <div id="wrap">
             <div id="main" ng-controller="AppController">
                 
-                <welcome-page ng-show="!showloggedform && !loggedUser.ulog"></welcome-page>
+                <menu-block ng-show="!showloggedform && !loggedUser.ulog"></menu-block>
+                
+                <welcome-page ng-show="!showloggedform && !loggedUser.ulog && showwelcomepage"></welcome-page>
+                <educational ng-show="showeducationalpage"></educational>
                 
                 <login-form ng-show="!loggedUser.ulog && showloggedform"></login-form>
 
@@ -51,6 +54,8 @@
                 <student-page ng-show="loggedUser.ulog && loggedUser.ustudent"></student-page>
 
                 <detailed-result ng-show="showdetailedresults"></detailed-result>
+                
+                <in-developing-page ng-show="showprojectpage || showattendancepage || showteampage || showprobationpage || showcontactspage"></in-developing-page>
             </div>
         </div>
         

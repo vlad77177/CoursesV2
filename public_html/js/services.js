@@ -141,3 +141,19 @@ App.factory('TestsService',function($http){
     return myservice;
 });
 
+App.factory('EducationalService',function(){
+    var promice;
+    var myservice={
+        get:function(){
+            if(!promice || promice===null){
+                console.log('загружаю Educational JSON');
+                promice=$.getJSON('content/educational.json',function(data){
+                    return data;
+                });
+            }
+            return promice;
+        }
+    };
+    return myservice;
+});
+
